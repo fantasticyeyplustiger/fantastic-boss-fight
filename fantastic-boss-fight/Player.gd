@@ -6,7 +6,7 @@ const WALK_SPEED : float = 15.0
 const SPRINT_SPEED : float = 25.0
 
 var SENSITIVITY : float = 0.003
-var speed : float = 5.0
+var speed : float = 15.0
 
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
@@ -49,5 +49,5 @@ func _physics_process(delta: float) -> void:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 5.0)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 5.0)
 	
-	Global.player_position = position
+	Global.player_position = global_position
 	move_and_slide()

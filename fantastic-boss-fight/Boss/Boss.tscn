@@ -1,39 +1,340 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=34 format=3 uid="uid://ccwy8pjw4qgfs"]
 
-[ext_resource type="PackedScene" uid="uid://cikpv3h0akmbf" path="res://Boss/Torso.fbx" id="1_0rlmi"]
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
-[ext_resource type="PackedScene" uid="uid://bmtuja1et8x5y" path="res://Boss/RightArm.fbx" id="2_7ck7k"]
-[ext_resource type="PackedScene" uid="uid://7fhg1v48a7li" path="res://Boss/LeftArm.fbx" id="3_yhums"]
-[ext_resource type="PackedScene" uid="uid://daw74nxi406b0" path="res://Boss/Head.fbx" id="4_xtogi"]
-[ext_resource type="PackedScene" uid="uid://b4w1ra6tudr3j" path="res://Boss/RightLeg.fbx" id="5_6mtrd"]
-[ext_resource type="PackedScene" uid="uid://dwpeoh33lt327" path="res://Boss/LeftLeg.fbx" id="6_g2a8j"]
-[ext_resource type="PackedScene" uid="uid://b6wlfrix2g01x" path="res://Boss/Cape.fbx" id="7_yhums"]
-[ext_resource type="PackedScene" uid="uid://doaihskrumcen" path="res://Boss/Book.fbx" id="8_xtogi"]
+[ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
+[ext_resource type="Texture2D" uid="uid://cpxg0mgh76mjd" path="res://Boss/BossTextures/Cape.png" id="3_b0eo8"]
+[ext_resource type="ArrayMesh" uid="uid://cse5718n5pdny" path="res://Boss/BossOBJ/Head.obj" id="4_p0rjq"]
+[ext_resource type="Texture2D" uid="uid://df6hn34kicsyx" path="res://Boss/BossTextures/Crown.png" id="5_56y8k"]
+[ext_resource type="ArrayMesh" uid="uid://br3b2ulupd7qd" path="res://Boss/BossOBJ/Torso.obj" id="6_i6vrr"]
+[ext_resource type="Texture2D" uid="uid://cin5qevlro73x" path="res://Boss/BossTextures/TorsoTexture.png" id="7_i28eb"]
+[ext_resource type="ArrayMesh" uid="uid://bh0d62vl6o54p" path="res://Boss/BossOBJ/LeftArm.obj" id="8_10u17"]
+[ext_resource type="Texture2D" uid="uid://brlq317ytw2r" path="res://Boss/BossTextures/LeftArm.png" id="9_3q8av"]
+[ext_resource type="ArrayMesh" uid="uid://d04k8jicy2qde" path="res://Boss/BossOBJ/LeftLeg.obj" id="10_48a3m"]
+[ext_resource type="Texture2D" uid="uid://vyf30j50dr6m" path="res://Boss/BossTextures/LeftLeg.png" id="11_nospa"]
+[ext_resource type="ArrayMesh" uid="uid://jknadrgbmysh" path="res://Boss/BossOBJ/SpellBook.obj" id="12_bu51h"]
+[ext_resource type="Texture2D" uid="uid://dtqphnnshwkea" path="res://Boss/BossTextures/Book.png" id="13_f8v66"]
+[ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="14_jr5wi"]
+[ext_resource type="Texture2D" uid="uid://bp4ixlf7s5xe0" path="res://Boss/BossTextures/RightArm.png" id="15_bypl5"]
+[ext_resource type="ArrayMesh" uid="uid://dti73rrp1wpt2" path="res://Boss/BossOBJ/RightLeg.obj" id="16_0s803"]
+[ext_resource type="Texture2D" uid="uid://bx0ljwscbm2y6" path="res://Boss/BossTextures/RightLeg.png" id="17_kxks5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exinx"]
+albedo_texture = ExtResource("3_b0eo8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c22uo"]
+albedo_texture = ExtResource("5_56y8k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vao3h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7utkh"]
+albedo_texture = ExtResource("7_i28eb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_871t7"]
+albedo_texture = ExtResource("9_3q8av")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3n4ec"]
+albedo_texture = ExtResource("11_nospa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m51oy"]
+albedo_texture = ExtResource("13_f8v66")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2cc3"]
+albedo_texture = ExtResource("15_bypl5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcpgp"]
+albedo_texture = ExtResource("17_kxks5")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtogi"]
 size = Vector3(3, 8.22, 1.55)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ujus"]
+size = Vector3(12, 14, 125)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ujus"]
+size = Vector3(12, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ujus"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_8ujus"]
+resource_name = "charge"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.570723, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.420448, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.52367, 0.190241, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/LeftLeg:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/LeftLeg:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.035, 0, -0.205)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torso/LeftArm:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.5708, 0.380482, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.15, 0.18, -0.515)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/RightArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.435275, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.135, 0.25, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_b0eo8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/LeftLeg:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/LeftLeg:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torso/LeftArm:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/RightArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b0eo8"]
+_data = {
+&"RESET": SubResource("Animation_b0eo8"),
+&"charge": SubResource("Animation_8ujus")
+}
 
 [node name="Boss" type="CharacterBody3D"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 collision_layer = 0
 script = ExtResource("1_xtogi")
 
-[node name="Torso" parent="." instance=ExtResource("1_0rlmi")]
+[node name="Cape" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+mesh = ExtResource("2_8ujus")
+surface_material_override/0 = SubResource("StandardMaterial3D_exinx")
 
-[node name="RightArm" parent="." instance=ExtResource("2_7ck7k")]
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+mesh = ExtResource("4_p0rjq")
+surface_material_override/0 = SubResource("StandardMaterial3D_c22uo")
+surface_material_override/1 = SubResource("StandardMaterial3D_vao3h")
 
-[node name="LeftArm" parent="." instance=ExtResource("3_yhums")]
+[node name="Torso" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+mesh = ExtResource("6_i6vrr")
+surface_material_override/0 = SubResource("StandardMaterial3D_7utkh")
 
-[node name="Head" parent="." instance=ExtResource("4_xtogi")]
+[node name="LeftArm" type="MeshInstance3D" parent="Torso"]
+mesh = ExtResource("8_10u17")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_871t7")
 
-[node name="RightLeg" parent="." instance=ExtResource("5_6mtrd")]
+[node name="LeftLeg" type="MeshInstance3D" parent="Torso"]
+mesh = ExtResource("10_48a3m")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3n4ec")
 
-[node name="LeftLeg" parent="." instance=ExtResource("6_g2a8j")]
+[node name="SpellBook" type="MeshInstance3D" parent="Torso/LeftLeg"]
+mesh = ExtResource("12_bu51h")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_m51oy")
 
-[node name="Cape" parent="." instance=ExtResource("7_yhums")]
+[node name="RightArm" type="MeshInstance3D" parent="Torso"]
+mesh = ExtResource("14_jr5wi")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_p2cc3")
 
-[node name="Book" parent="." instance=ExtResource("8_xtogi")]
+[node name="RightLeg" type="MeshInstance3D" parent="Torso"]
+mesh = ExtResource("16_0s803")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
 [node name="EnviromentCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.381836, -0.0121338)
 shape = SubResource("BoxShape3D_xtogi")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="CanWalkCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="ChargePath" type="Area3D" parent="."]
+
+[node name="Hitbox" type="CollisionShape3D" parent="ChargePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -61)
+shape = SubResource("BoxShape3D_8ujus")
+disabled = true
+
+[node name="VisibleHitbox" type="MeshInstance3D" parent="ChargePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+visible = false
+mesh = SubResource("BoxMesh_8ujus")
+surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b0eo8")
+}
+
+[connection signal="timeout" from="AttackCooldown" to="." method="reset_cooldown"]
+[connection signal="timeout" from="CanWalkCooldown" to="." method="can_walk_again"]

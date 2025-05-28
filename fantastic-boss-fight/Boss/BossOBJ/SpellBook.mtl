@@ -1,0 +1,12 @@
+# Blender 4.2.1 LTS MTL File: 'FantasticYey3.blend'
+# www.blender.org
+
+newmtl Handle1Mtl.005
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.062745 0.062745 0.062745
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd E:/FanModels/fantasticyey3roblox/Handle1_diff.png
+map_d E:/FanModels/fantasticyey3roblox/Handle1_diff.png
