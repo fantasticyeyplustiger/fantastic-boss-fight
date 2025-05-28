@@ -9,17 +9,6 @@ var SENSITIVITY : float = 0.003
 var speed : float = 5.0
 
 @onready var head : Node3D = $Head
-@onready var camera : Camera3D = $Head/Camera3D
-
-func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * SENSITIVITY)
-		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 
 func _physics_process(delta: float) -> void:
@@ -36,7 +25,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= GRAVITY * delta
 	
 	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
-	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	var direction : Vector3 = (head.camera_rotation * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	
 	if is_on_floor():
 		if direction:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=5 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
+[ext_resource type="Script" uid="uid://bhfsv2top27hx" path="res://Player/CameraController.gd" id="2_q3lat"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3qydi"]
 
@@ -17,7 +18,12 @@ mesh = SubResource("CapsuleMesh_3qydi")
 shape = SubResource("ConvexPolygonShape3D_3qydi")
 
 [node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("2_q3lat")
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+[node name="CamYaw" type="Node3D" parent="Head"]
+
+[node name="CamPitch" type="Node3D" parent="Head/CamYaw"]
+
+[node name="Camera3D" type="Camera3D" parent="Head/CamYaw/CamPitch"]
 fov = 60.0
