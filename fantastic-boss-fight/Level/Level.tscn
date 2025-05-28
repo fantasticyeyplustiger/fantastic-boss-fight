@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dc2xenywtkenk"]
+[gd_scene load_steps=8 format=3 uid="uid://dc2xenywtkenk"]
 
 [ext_resource type="PackedScene" uid="uid://bc2fo8p0qyxuj" path="res://Player/Player.tscn" id="1_a526m"]
+[ext_resource type="PackedScene" uid="uid://ccwy8pjw4qgfs" path="res://Boss/Boss.tscn" id="2_r3cbp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2gduj"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -12,6 +13,7 @@ sky_material = SubResource("ProceduralSkyMaterial_2gduj")
 [sub_resource type="Environment" id="Environment_r3cbp"]
 background_mode = 2
 sky = SubResource("Sky_a526m")
+ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 glow_enabled = true
 
@@ -58,3 +60,6 @@ material = SubResource("StandardMaterial3D_r3cbp")
 
 [node name="Player" parent="." instance=ExtResource("1_a526m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Boss" parent="." instance=ExtResource("2_r3cbp")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.1, 3)

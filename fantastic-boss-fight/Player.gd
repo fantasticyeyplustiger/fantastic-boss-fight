@@ -2,8 +2,8 @@ extends CharacterBody3D
 
 const JUMP_VELOCITY : float = 9
 const GRAVITY : float = 19.6
-const WALK_SPEED : float = 5.0
-const SPRINT_SPEED : float = 15.0
+const WALK_SPEED : float = 15.0
+const SPRINT_SPEED : float = 25.0
 
 var SENSITIVITY : float = 0.003
 var speed : float = 5.0
@@ -48,6 +48,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 5.0)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 5.0)
-		
 	
+	Global.player_position = position
 	move_and_slide()
