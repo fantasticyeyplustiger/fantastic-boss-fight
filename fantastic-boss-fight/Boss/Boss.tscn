@@ -1,0 +1,28 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccwy8pjw4qgfs"]
+
+[ext_resource type="PackedScene" uid="uid://cikpv3h0akmbf" path="res://Boss/Torso.fbx" id="1_0rlmi"]
+[ext_resource type="PackedScene" uid="uid://bmtuja1et8x5y" path="res://Boss/RightArm.fbx" id="2_7ck7k"]
+[ext_resource type="PackedScene" uid="uid://7fhg1v48a7li" path="res://Boss/LeftArm.fbx" id="3_yhums"]
+[ext_resource type="PackedScene" uid="uid://daw74nxi406b0" path="res://Boss/Head.fbx" id="4_xtogi"]
+[ext_resource type="PackedScene" uid="uid://b4w1ra6tudr3j" path="res://Boss/RightLeg.fbx" id="5_6mtrd"]
+[ext_resource type="PackedScene" uid="uid://dwpeoh33lt327" path="res://Boss/LeftLeg.fbx" id="6_g2a8j"]
+[ext_resource type="PackedScene" uid="uid://b6wlfrix2g01x" path="res://Boss/Cape.fbx" id="7_yhums"]
+[ext_resource type="PackedScene" uid="uid://doaihskrumcen" path="res://Boss/Book.fbx" id="8_xtogi"]
+
+[node name="Boss" type="Node3D"]
+
+[node name="Torso" parent="." instance=ExtResource("1_0rlmi")]
+
+[node name="RightArm" parent="." instance=ExtResource("2_7ck7k")]
+
+[node name="LeftArm" parent="." instance=ExtResource("3_yhums")]
+
+[node name="Head" parent="." instance=ExtResource("4_xtogi")]
+
+[node name="RightLeg" parent="." instance=ExtResource("5_6mtrd")]
+
+[node name="LeftLeg" parent="." instance=ExtResource("6_g2a8j")]
+
+[node name="Cape" parent="." instance=ExtResource("7_yhums")]
+
+[node name="Book" parent="." instance=ExtResource("8_xtogi")]
