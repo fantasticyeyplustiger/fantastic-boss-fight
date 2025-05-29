@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=40 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -48,7 +48,7 @@ albedo_texture = ExtResource("17_kxks5")
 size = Vector3(3, 8.22, 1.55)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8ujus"]
-size = Vector3(12, 14, 125)
+size = Vector3(12, 19, 125)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8ujus"]
 size = Vector3(12, 1, 1)
@@ -56,6 +56,28 @@ size = Vector3(12, 1, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ujus"]
 transparency = 1
 albedo_color = Color(1, 0, 0, 0)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8ujus"]
+height = 20.0
+radius = 25.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8ujus"]
+top_radius = 25.0
+bottom_radius = 25.0
+radial_segments = 16
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b0eo8"]
+height = 30.0
+radius = 10.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_b0eo8"]
+top_radius = 10.0
+bottom_radius = 10.0
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0eo8"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
 
 [sub_resource type="Animation" id="Animation_8ujus"]
 resource_name = "charge"
@@ -67,7 +89,7 @@ tracks/0/path = NodePath("Torso:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, -0.570723, 0)]
@@ -79,7 +101,7 @@ tracks/1/path = NodePath("Torso/RightArm:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.420448, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(1.52367, 0.190241, 0)]
@@ -91,7 +113,7 @@ tracks/2/path = NodePath("Torso/LeftLeg:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0)]
@@ -103,7 +125,7 @@ tracks/3/path = NodePath("Torso/LeftLeg:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(-0.035, 0, -0.205)]
@@ -115,7 +137,7 @@ tracks/4/path = NodePath("Torso/LeftArm:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(1.5708, 0.380482, 0)]
@@ -127,7 +149,7 @@ tracks/5/path = NodePath("Torso/LeftArm:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(-0.15, 0.18, -0.515)]
@@ -139,7 +161,7 @@ tracks/6/path = NodePath("Torso/RightArm:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(0.435275, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.135, 0.25, 0)]
@@ -151,10 +173,22 @@ tracks/7/path = NodePath("ChargePath/VisibleHitbox:surface_material_override/0:a
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.35),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
+"values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ChargePath/VisibleLandingHitbox:surface_material_override/0:albedo_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_b0eo8"]
@@ -255,16 +289,140 @@ tracks/7/keys = {
 "update": 0,
 "values": [Color(1, 0, 0, 0)]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ChargePath/VisibleLandingHitbox:surface_material_override/0:albedo_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AirChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p0rjq"]
+resource_name = "air_charge"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.570723, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.420448, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.52367, 0.190241, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/LeftLeg:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/LeftLeg:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.035, 0, -0.205)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torso/LeftArm:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.5708, 0.380482, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.15, 0.18, -0.515)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/RightArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.435275, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.135, 0.25, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AirChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b0eo8"]
 _data = {
 &"RESET": SubResource("Animation_b0eo8"),
+&"air_charge": SubResource("Animation_p0rjq"),
 &"charge": SubResource("Animation_8ujus")
 }
 
 [node name="Boss" type="CharacterBody3D"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
-collision_layer = 0
 script = ExtResource("1_xtogi")
 
 [node name="Cape" type="MeshInstance3D" parent="."]
@@ -319,17 +477,38 @@ one_shot = true
 one_shot = true
 
 [node name="ChargePath" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="Hitbox" type="CollisionShape3D" parent="ChargePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -61)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -61)
 shape = SubResource("BoxShape3D_8ujus")
 disabled = true
 
 [node name="VisibleHitbox" type="MeshInstance3D" parent="ChargePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-visible = false
 mesh = SubResource("BoxMesh_8ujus")
 surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
+
+[node name="LandingHitbox" type="CollisionShape3D" parent="ChargePath"]
+shape = SubResource("CylinderShape3D_8ujus")
+disabled = true
+
+[node name="VisibleLandingHitbox" type="MeshInstance3D" parent="ChargePath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+mesh = SubResource("CylinderMesh_8ujus")
+surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
+
+[node name="AirChargePath" type="Area3D" parent="."]
+
+[node name="Hitbox" type="CollisionShape3D" parent="AirChargePath"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -16)
+shape = SubResource("CylinderShape3D_b0eo8")
+
+[node name="VisibleHitbox" type="MeshInstance3D" parent="AirChargePath"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_b0eo8")
+surface_material_override/0 = SubResource("StandardMaterial3D_b0eo8")
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,12 +1,18 @@
 extends CharacterBody3D
 
-const JUMP_VELOCITY : float = 9
+const JUMP_VELOCITY : float = 9.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 15.0
 const SPRINT_SPEED : float = 25.0
 
 var SENSITIVITY : float = 0.003
+
 var speed : float = 15.0
+var jump : float = 9.0
+
+var health : float = 500.0
+
+var can_move : bool = true
 
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
@@ -26,11 +32,13 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("dash"):
 		speed = SPRINT_SPEED
+		jump = JUMP_VELOCITY * 2
 	else:
 		speed = WALK_SPEED
+		jump = JUMP_VELOCITY
 	
 	if Input.is_action_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump
 	
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
@@ -38,16 +46,25 @@ func _physics_process(delta: float) -> void:
 	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
 	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	
-	if is_on_floor():
+	if is_on_floor() and can_move:
 		if direction:
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		else:
 			velocity.x = 0.0
 			velocity.z = 0.0
-	else:
+	elif can_move: # Being in mid-air means you have inertia
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 5.0)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 5.0)
 	
+	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
 	move_and_slide()
+
+
+func get_hit(area: Area3D) -> void:
+	print($Area3D.get_overlapping_areas().size())
+	health -= area.get_parent().damage * $Area3D.get_overlapping_areas().size()
+	print(health)
+	if health <= 0.0:
+		can_move = false
