@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://deyfmbyhdj6lj"]
+
+[ext_resource type="ArrayMesh" uid="uid://b412a23gunaxw" path="res://Level/Shockwave.obj" id="1_jeblo"]
+[ext_resource type="Script" uid="uid://dt4fgiwlsna0x" path="res://Level/SpawnedObjects/Shockwave.gd" id="2_n68n2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rg07"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfnlv"]
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vsp7x"]
+cull_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qukvd"]
+cull_mode = 2
+
+[sub_resource type="Animation" id="Animation_n68n2"]
+resource_name = "shockwave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.392292, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5708, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2.82843, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.392292, 1),
+"update": 0,
+"values": [Vector3(3.5, 3.5, 3.5), Vector3(6, 9, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_y0uqt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(5, 5, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vqysv"]
+_data = {
+&"RESET": SubResource("Animation_y0uqt"),
+&"shockwave": SubResource("Animation_n68n2")
+}
+
+[node name="Shockwave" type="MeshInstance3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+visible = false
+mesh = ExtResource("1_jeblo")
+surface_material_override/0 = SubResource("StandardMaterial3D_7rg07")
+surface_material_override/1 = SubResource("StandardMaterial3D_wfnlv")
+surface_material_override/2 = SubResource("StandardMaterial3D_vsp7x")
+surface_material_override/3 = SubResource("StandardMaterial3D_qukvd")
+script = ExtResource("2_n68n2")
+
+[node name="DestroySelf" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vqysv")
+}
+
+[connection signal="timeout" from="DestroySelf" to="." method="destroy_self"]

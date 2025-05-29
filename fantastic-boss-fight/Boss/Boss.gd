@@ -136,6 +136,7 @@ func ground_charge(target_position : Vector3) -> void:
 	
 	walk_cooldown.start(0.5)
 	attack_cd_timer.start(0.75)
+	SpawnObject.ground_shockwave(target_position)
 
 func walk_towards_player() -> void:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)

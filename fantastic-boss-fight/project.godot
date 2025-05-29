@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Global.gd"
+GlobalSpawner="*res://Level/GlobalSpawner.tscn"
+SpawnObject="*res://Level/SpawnObject.gd"
 
 [input]
 
