@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://byownf0n8g04s"]
+[gd_scene load_steps=17 format=3 uid="uid://byownf0n8g04s"]
 
 [ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="1_54uvx"]
 [ext_resource type="Script" uid="uid://b3mlci34x4swv" path="res://Level/SpawnedObjects/RightArm.gd" id="1_rpk7q"]
@@ -8,10 +8,19 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qukvd"]
 albedo_texture = ExtResource("2_rpk7q")
 
+[sub_resource type="SphereMesh" id="SphereMesh_e1rwd"]
+radial_segments = 16
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c4nw0"]
+transparency = 1
+cull_mode = 2
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_54uvx"]
-size = Vector3(0.35, 0.35, 0.75)
+size = Vector3(0.35, 0.35, 0.8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e1rwd"]
+size = Vector3(0.3, 0.3, 0.75)
 
 [sub_resource type="Curve" id="Curve_rpk7q"]
 _data = [Vector2(0, 0.775281), 0.0, 0.0, 0, 0, Vector2(0.551471, 0.707865), 0.0, 0.0, 0, 0, Vector2(0.977941, 0.123596), 0.0, 0.0, 0, 0]
@@ -29,10 +38,95 @@ scale_curve = SubResource("CurveTexture_e1rwd")
 
 [sub_resource type="SphereMesh" id="SphereMesh_8qf71"]
 
+[sub_resource type="Animation" id="Animation_8qf71"]
+resource_name = "explosion"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:mesh:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [0.2, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:mesh:height")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.341, 1),
+"update": 0,
+"values": [0.4, 3.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Explosion:transparency")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(2.37841, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_x3ebt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:mesh:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:mesh:height")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Explosion:transparency")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sb5gs"]
+_data = {
+&"RESET": SubResource("Animation_x3ebt"),
+&"explosion": SubResource("Animation_8qf71")
+}
+
 [node name="RightArm" type="CharacterBody3D"]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
 collision_layer = 0
-collision_mask = 4
+collision_mask = 17
 script = ExtResource("1_rpk7q")
 
 [node name="RightArmMesh" type="MeshInstance3D" parent="."]
@@ -40,26 +134,28 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.56,
 mesh = ExtResource("1_54uvx")
 surface_material_override/0 = SubResource("StandardMaterial3D_qukvd")
 
+[node name="Explosion" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+visible = false
+mesh = SubResource("SphereMesh_e1rwd")
+surface_material_override/0 = SubResource("StandardMaterial3D_c4nw0")
+
 [node name="Hitbox" type="Area3D" parent="."]
 collision_layer = 2
-collision_mask = 8
+collision_mask = 13
 script = ExtResource("4_e1rwd")
 knockback = true
 parryable = true
+knockback_power = 500.0
 
 [node name="Collision" type="CollisionShape3D" parent="Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00878014, -0.00193787)
 shape = SubResource("BoxShape3D_54uvx")
 
 [node name="NoCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.12874e-08)
 visible = false
 shape = SubResource("BoxShape3D_e1rwd")
-disabled = true
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 8.0
-one_shot = true
-autostart = true
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.38)
@@ -68,5 +164,11 @@ lifetime = 1.5
 process_material = SubResource("ParticleProcessMaterial_c4nw0")
 draw_pass_1 = SubResource("SphereMesh_8qf71")
 
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_sb5gs")
+}
+
 [connection signal="area_entered" from="Hitbox" to="." method="hit"]
-[connection signal="timeout" from="Timer" to="." method="destroy_self"]
+[connection signal="body_entered" from="Hitbox" to="." method="explode"]
+[connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

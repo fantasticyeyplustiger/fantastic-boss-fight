@@ -24,6 +24,8 @@ var attacking : bool = false
 var jump_attacking : bool = false
 var attack_cooldown : bool = true
 var can_walk : bool = true
+var should_look_at_player : bool = false
+var parrying : bool = false
 
 var current_attack : int = 1
 
@@ -41,6 +43,9 @@ func _physics_process(delta: float) -> void:
 	elif not attacking and can_walk:
 		walk_towards_player()
 	
+	if should_look_at_player:
+		look_at_player()
+	
 	Global.boss_position = global_position
 
 
@@ -51,14 +56,14 @@ func attack_loop() -> void:
 	can_walk = false
 	
 	match current_attack:
-		1, 2, 3, 4, 5: 
+		1, 2, 3: 
 			if not Global.player_in_air:
 				ground_charge(target_position)
 			else:
 				air_charge(target_position)
-		6: throw_fist()
-		7: pass
-		8: pass # RESET
+		4:
+			throw_fist()
+			current_attack = 0
 	
 	attacking = false
 	current_attack += 1
@@ -146,12 +151,22 @@ func ground_charge(target_position : Vector3) -> void:
 ## Makes the boss throw his right arm/fist towards the player.
 # Constantly chases them until it hits, gets parried, or runs out of time to hit.
 func throw_fist() -> void:
+	
+	$Animations.play("throw_arm")
+	should_look_at_player = true
+	
+	await get_tree().create_timer(1.0).timeout
+	
 	$Torso/RightArm.visible = false
 	SpawnObject.right_arm(global_position + Vector3(0.56, 0, 0))
 	
+	$Animations.play("RESET")
+	
 	walk_cooldown.start(0.45)
-	attack_cd_timer.start(0.5)
+	attack_cd_timer.start(1.2)
 	respawn_right_arm(1.0) # Await is asynchronous
+	
+	should_look_at_player = false
 
 
 func walk_towards_player() -> void:

@@ -4,3 +4,4 @@ extends Area3D
 @export var knockback : bool = false
 @export var launch_up : bool = false
 @export var parryable : bool = false
+@export var knockback_power : float = 10.0

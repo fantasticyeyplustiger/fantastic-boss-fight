@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=42 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -190,6 +190,18 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Torso/RightArm:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_p0rjq"]
@@ -392,11 +404,51 @@ tracks/7/keys = {
 "values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_56y8k"]
+resource_name = "throw_arm"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.5708, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArm:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.995, 0.475, -0.525)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/RightArm:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(7, 7, 7)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b0eo8"]
 _data = {
 &"RESET": SubResource("Animation_b0eo8"),
 &"air_charge": SubResource("Animation_p0rjq"),
-&"charge": SubResource("Animation_8ujus")
+&"charge": SubResource("Animation_8ujus"),
+&"throw_arm": SubResource("Animation_56y8k")
 }
 
 [node name="Boss" type="CharacterBody3D"]
@@ -446,6 +498,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
 [node name="EnviromentCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.381836, -0.0121338)
+visible = false
 shape = SubResource("BoxShape3D_xtogi")
 
 [node name="AttackCooldown" type="Timer" parent="."]
@@ -490,14 +543,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
 
 [node name="AirChargePath" type="Area3D" parent="."]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 24
 script = ExtResource("18_b0eo8")
 knockback = true
+parryable = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="AirChargePath"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -16)
 visible = false
 shape = SubResource("CylinderShape3D_b0eo8")
+disabled = true
 
 [node name="VisibleHitbox" type="MeshInstance3D" parent="AirChargePath"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)

@@ -26,7 +26,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+		$FrontOfBodyPivot.rotate_y(-event.relative.x * SENSITIVITY)
+		$FrontOfBodyPivot/SecondPivot.rotate_x(-event.relative.y * SENSITIVITY)
+		$FrontOfBodyPivot/SecondPivot.rotation.x = clampf(
+			$FrontOfBodyPivot/SecondPivot.rotation.x, deg_to_rad(-80), deg_to_rad(80)
+		)
+		
 
 
 func _physics_process(delta: float) -> void:
@@ -43,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("parry") and not parrying:
 		parrying = true
-		parry()
+		parry() # 0.25-second window for parrying.
 	
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
@@ -65,30 +71,34 @@ func _physics_process(delta: float) -> void:
 	
 	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
+	Global.front_of_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody.global_position
+	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
 	move_and_slide()
 
 func parry() -> void:
-	await get_tree().create_timer(1.0).timeout
+	$Animations.play("parry")
+	await get_tree().create_timer(0.25).timeout
 	parrying = false
+	$Animations.play("RESET")
 
 func get_hit(area: Area3D) -> void:
 	if not parrying or (parrying and not area.parryable):
 		health -= area.get_parent().damage
+		
+		if area.knockback:
+			get_knockbacked(area.global_position, area.launch_up, area.knockback_power)
 	else:
 		print("successful parry")
 	
 	if health <= 0.0:
 		can_move = false
-	
-	if area.knockback:
-		get_knockbacked(area.global_position, area.launch_up)
 
-func get_knockbacked(position_of_kb : Vector3, launch_up : bool) -> void:
-	velocity -= (position_of_kb.normalized() - global_position.normalized()) * 10
-	if launch_up:
-		velocity.y = 35.0
-	else:
-		velocity.y = 0.0
+func get_knockbacked(position_of_kb : Vector3, launch_up : bool, knockback_power : float) -> void:
+	velocity -= (position_of_kb - global_position).normalized() * knockback_power
 	
-	print(velocity)
+	if launch_up:
+		velocity.y = 25.0
+	else:
+		velocity.y = 0.5
+	
 	move_and_slide()
