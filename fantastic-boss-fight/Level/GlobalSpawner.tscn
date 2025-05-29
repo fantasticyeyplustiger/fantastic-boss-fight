@@ -1,9 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6gda610u3aa0"]
+[gd_scene load_steps=2 format=3 uid="uid://b6gda610u3aa0"]
 
 [ext_resource type="Script" uid="uid://dtdkpvtmmg04e" path="res://Level/SpawnObject.gd" id="1_7rg07"]
-[ext_resource type="PackedScene" uid="uid://deyfmbyhdj6lj" path="res://Level/SpawnedObjects/GroundShockwave.tscn" id="2_7rg07"]
 
 [node name="GlobalSpawner" type="Node3D"]
 script = ExtResource("1_7rg07")
-
-[node name="Shockwave" parent="." instance=ExtResource("2_7rg07")]

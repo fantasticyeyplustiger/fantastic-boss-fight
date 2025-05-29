@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://byownf0n8g04s"]
+
+[ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="1_54uvx"]
+[ext_resource type="Script" uid="uid://b3mlci34x4swv" path="res://Level/SpawnedObjects/RightArm.gd" id="1_rpk7q"]
+[ext_resource type="Texture2D" uid="uid://bp4ixlf7s5xe0" path="res://Boss/BossTextures/RightArm.png" id="2_rpk7q"]
+[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="4_e1rwd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qukvd"]
+albedo_texture = ExtResource("2_rpk7q")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54uvx"]
+size = Vector3(0.35, 0.35, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e1rwd"]
+
+[sub_resource type="Curve" id="Curve_rpk7q"]
+_data = [Vector2(0, 0.775281), 0.0, 0.0, 0, 0, Vector2(0.551471, 0.707865), 0.0, 0.0, 0, 0, Vector2(0.977941, 0.123596), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_e1rwd"]
+curve = SubResource("Curve_rpk7q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c4nw0"]
+lifetime_randomness = 0.1
+emission_shape = 3
+emission_box_extents = Vector3(0.15, 0.15, 0.1)
+gravity = Vector3(0, 0, 20)
+scale_curve = SubResource("CurveTexture_e1rwd")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8qf71"]
+
+[node name="RightArm" type="CharacterBody3D"]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_rpk7q")
+
+[node name="RightArmMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.56, 0, 0)
+mesh = ExtResource("1_54uvx")
+surface_material_override/0 = SubResource("StandardMaterial3D_qukvd")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("4_e1rwd")
+knockback = true
+parryable = true
+
+[node name="Collision" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00878014, -0.00193787)
+shape = SubResource("BoxShape3D_54uvx")
+
+[node name="NoCollision" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("BoxShape3D_e1rwd")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.38)
+amount = 64
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_c4nw0")
+draw_pass_1 = SubResource("SphereMesh_8qf71")
+
+[connection signal="area_entered" from="Hitbox" to="." method="hit"]
+[connection signal="timeout" from="Timer" to="." method="destroy_self"]

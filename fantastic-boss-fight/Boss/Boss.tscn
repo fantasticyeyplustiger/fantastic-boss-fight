@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=41 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bp4ixlf7s5xe0" path="res://Boss/BossTextures/RightArm.png" id="15_bypl5"]
 [ext_resource type="ArrayMesh" uid="uid://dti73rrp1wpt2" path="res://Boss/BossOBJ/RightLeg.obj" id="16_0s803"]
 [ext_resource type="Texture2D" uid="uid://bx0ljwscbm2y6" path="res://Boss/BossTextures/RightLeg.png" id="17_kxks5"]
+[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="18_b0eo8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exinx"]
 albedo_texture = ExtResource("3_b0eo8")
@@ -58,7 +59,7 @@ transparency = 1
 albedo_color = Color(1, 0, 0, 0)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8ujus"]
-height = 20.0
+height = 80.0
 radius = 25.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8ujus"]
@@ -456,6 +457,7 @@ one_shot = true
 [node name="ChargePath" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("18_b0eo8")
 
 [node name="Hitbox" type="CollisionShape3D" parent="ChargePath"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -61)
@@ -471,6 +473,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
 [node name="ChargeLanding" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("18_b0eo8")
+knockback = true
+launch_up = true
 
 [node name="LandingHitbox" type="CollisionShape3D" parent="ChargeLanding"]
 visible = false
@@ -486,9 +491,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
 [node name="AirChargePath" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("18_b0eo8")
+knockback = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="AirChargePath"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -16)
+visible = false
 shape = SubResource("CylinderShape3D_b0eo8")
 
 [node name="VisibleHitbox" type="MeshInstance3D" parent="AirChargePath"]

@@ -40,6 +40,8 @@ func _physics_process(delta: float) -> void:
 		attack_loop()
 	elif not attacking and can_walk:
 		walk_towards_player()
+	
+	Global.boss_position = global_position
 
 
 func attack_loop() -> void:
@@ -54,12 +56,14 @@ func attack_loop() -> void:
 				ground_charge(target_position)
 			else:
 				air_charge(target_position)
-		6: pass
+		6: throw_fist()
 		7: pass
 		8: pass # RESET
 	
 	attacking = false
+	current_attack += 1
 
+## Makes the boss charge towards the player in the air.
 func air_charge(target_position : Vector3) -> void:
 	damage = MED_DAMAGE
 	look_at(target_position)
@@ -87,6 +91,7 @@ func air_charge(target_position : Vector3) -> void:
 	walk_cooldown.start(0.2)
 	attack_cd_timer.start(0.25)
 
+## Makes the boss charge towards the player on the ground.
 func ground_charge(target_position : Vector3) -> void:
 	damage = HIGH_DAMAGE
 	
@@ -138,6 +143,17 @@ func ground_charge(target_position : Vector3) -> void:
 	attack_cd_timer.start(0.75)
 	SpawnObject.ground_shockwave(target_position)
 
+## Makes the boss throw his right arm/fist towards the player.
+# Constantly chases them until it hits, gets parried, or runs out of time to hit.
+func throw_fist() -> void:
+	$Torso/RightArm.visible = false
+	SpawnObject.right_arm(global_position + Vector3(0.56, 0, 0))
+	
+	walk_cooldown.start(0.45)
+	attack_cd_timer.start(0.5)
+	respawn_right_arm(1.0) # Await is asynchronous
+
+
 func walk_towards_player() -> void:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
 	var vector2_player_pos = Vector3(Global.player_position.x, 0.0, Global.player_position.z)
@@ -156,6 +172,10 @@ func look_at_player() -> void:
 	look_at(Global.player_position)
 	rotation.x = 0
 	rotation.z = 0
+
+func respawn_right_arm(wait_time : float) -> void:
+	await get_tree().create_timer(wait_time).timeout
+	$Torso/RightArm.visible = true
 
 func reset_cooldown() -> void:
 	attack_cooldown = false
