@@ -65,8 +65,8 @@ func air_charge(target_position : Vector3) -> void:
 	look_at(target_position)
 	
 	var magnitude : float = (target_position - global_position).length()
-	var new_position : Vector3 = Vector3(0, 0, (-magnitude * 2.5) + 1.5)
-	var new_height : float = magnitude * 4.5
+	var new_position : Vector3 = Vector3(0, 0, (-magnitude * 3) + 1.5)
+	var new_height : float = magnitude * 6
 	
 	$AirChargePath/Hitbox.position = new_position
 	$AirChargePath/Hitbox.shape.height = new_height
@@ -106,24 +106,24 @@ func ground_charge(target_position : Vector3) -> void:
 	
 	if is_on_floor():
 		charge_visible_hitbox.mesh.size = size - Vector3(0.0, 16.0, 0.0)
-		$ChargePath/VisibleLandingHitbox.mesh.top_radius = 35.0
-		$ChargePath/VisibleLandingHitbox.mesh.bottom_radius = 35.0
-		$ChargePath/LandingHitbox.shape.radius = 35.0
+		$ChargeLanding/VisibleLandingHitbox.mesh.top_radius = 35.0
+		$ChargeLanding/VisibleLandingHitbox.mesh.bottom_radius = 35.0
+		$ChargeLanding/LandingHitbox.shape.radius = 35.0
 	else:
 		charge_visible_hitbox.mesh.size = size - Vector3(0.0, 1.0, 0.0)
 	
 	charge_visible_hitbox.position = hitbox_pos - Vector3(0.0, 6.0, 0.0)
 	charge_visible_hitbox.visible = true
 	
-	$ChargePath/VisibleLandingHitbox.global_position = Vector3(target_position.x, 0.0, target_position.z)
-	$ChargePath/VisibleLandingHitbox.global_rotation = Vector3.ZERO
-	$ChargePath/LandingHitbox.global_position = Vector3(target_position.x, 0.0, target_position.z)
-	$ChargePath/LandingHitbox.global_rotation = Vector3.ZERO
+	$ChargeLanding/VisibleLandingHitbox.global_position = Vector3(target_position.x, 0.0, target_position.z)
+	$ChargeLanding/VisibleLandingHitbox.global_rotation = Vector3.ZERO
+	$ChargeLanding/LandingHitbox.global_position = Vector3(target_position.x, 0.0, target_position.z)
+	$ChargeLanding/LandingHitbox.global_rotation = Vector3.ZERO
 	
 	$Animations.play("charge")
 	await get_tree().create_timer(0.6).timeout
 	charge_hitbox.set_deferred("disabled", false)
-	$ChargePath/LandingHitbox.set_deferred("disabled", false)
+	$ChargeLanding/LandingHitbox.set_deferred("disabled", false)
 	
 	# reset turns hitbox invisible
 	$Animations.play("RESET")
@@ -132,7 +132,7 @@ func ground_charge(target_position : Vector3) -> void:
 	
 	global_position = Vector3(target_position.x, Y_VALUE_FOR_FLOOR, target_position.z)
 	charge_hitbox.set_deferred("disabled", true)
-	$ChargePath/LandingHitbox.set_deferred("disabled", true)
+	$ChargeLanding/LandingHitbox.set_deferred("disabled", true)
 	
 	walk_cooldown.start(0.5)
 	attack_cd_timer.start(0.75)

@@ -63,8 +63,7 @@ func _physics_process(delta: float) -> void:
 
 
 func get_hit(area: Area3D) -> void:
-	print($Area3D.get_overlapping_areas().size())
-	health -= area.get_parent().damage * $Area3D.get_overlapping_areas().size()
+	health -= area.get_parent().damage
 	print(health)
 	if health <= 0.0:
 		can_move = false
