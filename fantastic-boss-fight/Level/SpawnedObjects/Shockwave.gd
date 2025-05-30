@@ -3,5 +3,5 @@ extends MeshInstance3D
 func _ready() -> void:
 	$Animation.play("shockwave")
 
-func destroy_self() -> void:
+func destroy_self(_anim_name : StringName) -> void:
 	queue_free()

@@ -85,13 +85,16 @@ func air_charge(target_position : Vector3) -> void:
 	$Animations.play("air_charge")
 	
 	await get_tree().create_timer(0.3).timeout
+	# ATTACK will now hit PLAYER
 	$AirChargePath/Hitbox.set_deferred("disabled", false)
 	$Animations.play("RESET")
 	
 	await get_tree().create_timer(0.05).timeout
+	# ATTACK will no longer hit PLAYER
 	$AirChargePath/Hitbox.set_deferred("disabled", true)
 	
 	global_position = target_position
+	SpawnObject.air_shockwave(target_position, global_rotation - Vector3(90.0, 0.0, 0.0))
 	
 	walk_cooldown.start(0.2)
 	attack_cd_timer.start(0.25)
@@ -115,6 +118,7 @@ func ground_charge(target_position : Vector3) -> void:
 	charge_hitbox.position = hitbox_pos
 	
 	if is_on_floor():
+		# LANDING should be bigger due to jumping down
 		charge_visible_hitbox.mesh.size = size - Vector3(0.0, 16.0, 0.0)
 		$ChargeLanding/VisibleLandingHitbox.mesh.top_radius = 35.0
 		$ChargeLanding/VisibleLandingHitbox.mesh.bottom_radius = 35.0
@@ -132,6 +136,7 @@ func ground_charge(target_position : Vector3) -> void:
 	
 	$Animations.play("charge")
 	await get_tree().create_timer(0.6).timeout
+	# ATTACK can now hit the PLAYER
 	charge_hitbox.set_deferred("disabled", false)
 	$ChargeLanding/LandingHitbox.set_deferred("disabled", false)
 	
@@ -139,7 +144,7 @@ func ground_charge(target_position : Vector3) -> void:
 	$Animations.play("RESET")
 	
 	await get_tree().create_timer(0.05).timeout
-	
+	# ATTACK can no longer hit the PLAYER
 	global_position = Vector3(target_position.x, Y_VALUE_FOR_FLOOR, target_position.z)
 	charge_hitbox.set_deferred("disabled", true)
 	$ChargeLanding/LandingHitbox.set_deferred("disabled", true)

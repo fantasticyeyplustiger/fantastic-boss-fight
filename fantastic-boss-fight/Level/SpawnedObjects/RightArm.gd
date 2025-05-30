@@ -3,18 +3,25 @@ extends CharacterBody3D
 var damage : float = 50.0
 var toward_player : bool = true
 var already_hit : bool = false
+var shockwave_cooldown : bool = false
 
 var target_direction : Vector3
 
 func _physics_process(_delta: float) -> void:
 	if toward_player:
-		velocity = (Global.player_position - global_position) * 4.0
+		velocity = (Global.player_position - global_position) * 5.5
 		velocity.y += 0.8
 		look_at(Global.player_position)
 	else:
 		velocity = target_direction * 50.0
 	
+	if not shockwave_cooldown:
+		shockwave_cooldown = true
+		spawn_shockwave()
 	move_and_slide()
+
+func spawn_shockwave() -> void:
+	SpawnObject.air_shockwave(global_position, $RightArmMesh.global_rotation)
 
 func hit(area: Area3D) -> void:
 	$GPUParticles3D.emitting = false
@@ -25,6 +32,7 @@ func hit(area: Area3D) -> void:
 	already_hit = true
 	
 	if area.get_parent().parrying:
+		spawn_shockwave()
 		toward_player = false
 		target_direction = Global.front_of_player - Global.player_position
 		look_at(target_direction)

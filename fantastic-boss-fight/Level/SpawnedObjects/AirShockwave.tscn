@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhio6ur3mq3ol"]
+
+[ext_resource type="Script" uid="uid://dt4fgiwlsna0x" path="res://Level/SpawnedObjects/Shockwave.gd" id="1_xlq6t"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_bj5n8"]
+inner_radius = 0.6
+rings = 32
+ring_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlq6t"]
+
+[sub_resource type="Animation" id="Animation_e5xt6"]
+resource_name = "shockwave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.420448, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.366022, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(20, 2, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:mesh:inner_radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.366022, 1),
+"update": 0,
+"values": [0.6, 0.85]
+}
+
+[sub_resource type="Animation" id="Animation_xlq6t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:mesh:inner_radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q2kbe"]
+_data = {
+&"RESET": SubResource("Animation_xlq6t"),
+&"shockwave": SubResource("Animation_e5xt6")
+}
+
+[node name="AirShockwave" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("TorusMesh_bj5n8")
+surface_material_override/0 = SubResource("StandardMaterial3D_xlq6t")
+script = ExtResource("1_xlq6t")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_q2kbe")
+}
+speed_scale = 2.5
+
+[connection signal="animation_finished" from="Animation" to="." method="destroy_self"]
