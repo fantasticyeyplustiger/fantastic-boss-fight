@@ -13,8 +13,6 @@ func _physics_process(_delta: float) -> void:
 		look_at(Global.player_position)
 	else:
 		velocity = target_direction * 50.0
-		
-		
 	
 	move_and_slide()
 
