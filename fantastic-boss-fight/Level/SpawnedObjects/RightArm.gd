@@ -10,7 +10,7 @@ var target_direction : Vector3
 func _physics_process(_delta: float) -> void:
 	if toward_player:
 		velocity = (Global.player_position - global_position) * 5.5
-		velocity.y += 0.8
+		velocity.y += 0.8 # Add 0.8 because that's where the CAMERA of the player is
 		look_at(Global.player_position)
 	else:
 		velocity = target_direction * 50.0
@@ -37,7 +37,7 @@ func hit(area: Area3D) -> void:
 		target_direction = Global.front_of_player - Global.player_position
 		look_at(target_direction)
 	else:
-		explode(Node3D.new())
+		explode(Node3D.new()) # Node3D doesn't actually do anything, it's only because of the signal used
 
 func explode(_body : Node3D) -> void:
 	if not already_hit:
@@ -46,8 +46,6 @@ func explode(_body : Node3D) -> void:
 	$Explosion.visible = true
 	set_physics_process(false)
 	$Animation.play("explosion")
-	print("exploding")
 
 func destroy_self(_anim_name : StringName) -> void:
-	print("destroying self")
 	queue_free()

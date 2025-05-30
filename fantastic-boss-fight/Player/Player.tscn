@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=10 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
+[ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3qydi"]
 
@@ -116,5 +117,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 libraries = {
 &"": SubResource("AnimationLibrary_ddoul")
 }
+
+[node name="PlayerGUI" parent="." instance=ExtResource("2_q3lat")]
+mouse_filter = 2
 
 [connection signal="area_entered" from="Area3D" to="." method="get_hit"]

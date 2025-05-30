@@ -93,8 +93,8 @@ func air_charge(target_position : Vector3) -> void:
 	# ATTACK will no longer hit PLAYER
 	$AirChargePath/Hitbox.set_deferred("disabled", true)
 	
+	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90.0), 0.0, 0.0))
 	global_position = target_position
-	SpawnObject.air_shockwave(target_position, global_rotation - Vector3(90.0, 0.0, 0.0))
 	
 	walk_cooldown.start(0.2)
 	attack_cd_timer.start(0.25)
@@ -137,6 +137,7 @@ func ground_charge(target_position : Vector3) -> void:
 	$Animations.play("charge")
 	await get_tree().create_timer(0.6).timeout
 	# ATTACK can now hit the PLAYER
+	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90.0), 0.0, 0.0))
 	charge_hitbox.set_deferred("disabled", false)
 	$ChargeLanding/LandingHitbox.set_deferred("disabled", false)
 	

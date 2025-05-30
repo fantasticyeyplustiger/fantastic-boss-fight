@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 const JUMP_VELOCITY : float = 9.0
 const GRAVITY : float = 19.6
-const WALK_SPEED : float = 15.0
+const WALK_SPEED : float = 25.0
 const SPRINT_SPEED : float = 25.0
 
 var SENSITIVITY : float = 0.003
@@ -20,6 +20,7 @@ var parrying : bool = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -27,12 +28,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
-		$FrontOfBodyPivot.rotate_y(-event.relative.x * SENSITIVITY)
-		$FrontOfBodyPivot/SecondPivot.rotate_x(-event.relative.y * SENSITIVITY)
-		$FrontOfBodyPivot/SecondPivot.rotation.x = clampf(
-			$FrontOfBodyPivot/SecondPivot.rotation.x, deg_to_rad(-80), deg_to_rad(80)
-		)
 		
+		$FrontOfBodyPivot.rotation.y = head.rotation.y
+		$FrontOfBodyPivot/SecondPivot.rotation.x = camera.rotation.x
 
 
 func _physics_process(delta: float) -> void:
@@ -84,11 +82,13 @@ func parry() -> void:
 func get_hit(area: Area3D) -> void:
 	if not parrying or (parrying and not area.parryable):
 		health -= area.get_parent().damage
+		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		
 		if area.knockback:
 			get_knockbacked(area.global_position, area.launch_up, area.knockback_power)
 	else:
-		print("successful parry")
+		$PlayerGUI.parry.text = "PARRIED!!!"
+		reset_parry_text()
 	
 	if health <= 0.0:
 		can_move = false
@@ -102,3 +102,7 @@ func get_knockbacked(position_of_kb : Vector3, launch_up : bool, knockback_power
 		velocity.y = 0.5
 	
 	move_and_slide()
+
+func reset_parry_text() -> void:
+	await get_tree().create_timer(1.0).timeout
+	$PlayerGUI.parry.text = ""
