@@ -1,14 +1,14 @@
 extends CharacterBody3D
 
-const JUMP_VELOCITY : float = 9.0
+const JUMP_VELOCITY : float = 18.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 25.0
 const SPRINT_SPEED : float = 25.0
 
 var SENSITIVITY : float = 0.003
 
-var speed : float = 15.0
-var jump : float = 9.0
+var speed : float = 25.0
+var jump : float = 18.0
 
 var health : float = 5000.0
 
@@ -36,11 +36,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("dash"):
-		speed = SPRINT_SPEED
-		jump = JUMP_VELOCITY * 2
-	else:
-		speed = WALK_SPEED
-		jump = JUMP_VELOCITY
+		pass
 	
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = jump
@@ -71,6 +67,7 @@ func _physics_process(delta: float) -> void:
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody.global_position
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
+	Global.boss_to_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody2.global_position + Vector3(0.0, 0.8, 0.0)
 	move_and_slide()
 
 func parry() -> void:

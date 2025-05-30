@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		walk_towards_player()
 	
 	if should_look_at_player:
-		look_at_player()
+		look_at(Global.player_position + Vector3(0.0, 0.8, 0.0))
 	
 	Global.boss_position = global_position
 
@@ -61,8 +61,10 @@ func attack_loop() -> void:
 				ground_charge(target_position)
 			else:
 				air_charge(target_position)
-		4:
-			throw_fist()
+		4: throw_fist()
+		5: clap()
+		6:
+			clap()
 			current_attack = 0
 	
 	attacking = false
@@ -168,12 +170,30 @@ func throw_fist() -> void:
 	
 	$Animations.play("RESET")
 	
-	walk_cooldown.start(0.45)
-	attack_cd_timer.start(1.2)
+	walk_cooldown.start(0.35)
+	attack_cd_timer.start(1.3)
 	respawn_right_arm(1.0) # Await is asynchronous
 	
 	should_look_at_player = false
 
+func clap() -> void:
+	damage = HIGH_DAMAGE
+	should_look_at_player = true
+	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90), 0.0, 0.0))
+	global_position = Global.boss_to_player
+	
+	$Animations.play("clap")
+	
+	await get_tree().create_timer(0.45).timeout
+	$Clap/Hitbox.set_deferred("disabled", false)
+	SpawnObject.colliding_shockwave($Clap/Hitbox.global_position, global_rotation + Vector3(0.0, 0.0, deg_to_rad(90.0)))
+	
+	await get_tree().create_timer(0.1).timeout
+	$Clap/Hitbox.set_deferred("disabled", true)
+	
+	should_look_at_player = false
+	walk_cooldown.start(0.1)
+	attack_cd_timer.start(0.15)
 
 func walk_towards_player() -> void:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)

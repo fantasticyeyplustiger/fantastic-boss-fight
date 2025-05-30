@@ -10,6 +10,8 @@ var target_direction : Vector3
 func _physics_process(_delta: float) -> void:
 	if toward_player:
 		velocity = (Global.player_position - global_position) * 5.5
+		if velocity.length() <= 35.0:
+			velocity *= 2
 		velocity.y += 0.8 # Add 0.8 because that's where the CAMERA of the player is
 		look_at(Global.player_position)
 	else:

@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://brnjukhtuye6r"]
+
+[ext_resource type="Script" uid="uid://b4p63bw2dobng" path="res://Level/SpawnedObjects/CollidingShockwave.gd" id="1_ep61r"]
+[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="2_ep61r"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_73hl3"]
+inner_radius = 0.8
+rings = 24
+ring_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x28ka"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ep61r"]
+size = Vector3(0.8, 0.5, 0.2)
+
+[sub_resource type="Animation" id="Animation_dy32e"]
+resource_name = "shockwave"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 4, 1), Vector3(50, 3, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1.5, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_kin1t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.75]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ng2u"]
+_data = {
+&"RESET": SubResource("Animation_kin1t"),
+&"shockwave": SubResource("Animation_dy32e")
+}
+
+[node name="CollidingShockwave" type="Node3D"]
+script = ExtResource("1_ep61r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.25, 0, 0, 0, 1, 0, 0, 0)
+transparency = 0.75
+mesh = SubResource("TorusMesh_73hl3")
+surface_material_override/0 = SubResource("StandardMaterial3D_x28ka")
+
+[node name="TorusHitbox" type="Area3D" parent="."]
+collision_layer = 2
+monitorable = false
+script = ExtResource("2_ep61r")
+knockback = true
+launch_up = true
+knockback_power = 15.0
+
+[node name="West" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.85)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="East" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.85)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="South" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.85, 0, 0)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="North" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.85, 0, 0)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="SW" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.6, 0, 0.6)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="NE" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -0.6, 0, -0.6)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="SE" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0.6, 0, -0.6)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="NW" type="CollisionShape3D" parent="TorusHitbox"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -0.6, 0, 0.6)
+shape = SubResource("BoxShape3D_ep61r")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7ng2u")
+}
+
+[connection signal="animation_finished" from="Animation" to="." method="destroy_self"]
