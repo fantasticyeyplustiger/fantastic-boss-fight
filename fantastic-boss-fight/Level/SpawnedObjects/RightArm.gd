@@ -9,9 +9,7 @@ var target_direction : Vector3
 
 func _physics_process(_delta: float) -> void:
 	if toward_player:
-		velocity = (Global.player_position - global_position) * 5.5
-		if velocity.length() <= 35.0:
-			velocity *= 2
+		velocity = (Global.player_position - global_position).normalized() * 50.0
 		velocity.y += 0.8 # Add 0.8 because that's where the CAMERA of the player is
 		look_at(Global.player_position)
 	else:
@@ -35,8 +33,13 @@ func hit(area: Area3D) -> void:
 	
 	if area.get_parent().parrying:
 		spawn_shockwave()
+		
+		# Makes it so this object can no longer interact with the Player.
+		$Hitbox.set_collision_mask_value(4, false)
+		set_collision_mask_value(5, false)
+		
 		toward_player = false
-		target_direction = Global.front_of_player - Global.player_position
+		target_direction = (Global.front_of_player - Global.player_position).normalized()
 		look_at(target_direction)
 	else:
 		explode(Node3D.new()) # Node3D doesn't actually do anything, it's only because of the signal used

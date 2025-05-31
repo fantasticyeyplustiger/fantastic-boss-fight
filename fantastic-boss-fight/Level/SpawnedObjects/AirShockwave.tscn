@@ -4,7 +4,7 @@
 
 [sub_resource type="TorusMesh" id="TorusMesh_bj5n8"]
 inner_radius = 0.6
-rings = 32
+rings = 16
 ring_segments = 16
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlq6t"]

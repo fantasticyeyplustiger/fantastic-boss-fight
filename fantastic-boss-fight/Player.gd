@@ -14,6 +14,7 @@ var health : float = 5000.0
 
 var can_move : bool = true
 var parrying : bool = false
+var parry_cooldown : bool = false
 
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
@@ -35,15 +36,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if Input.is_action_pressed("dash"):
-		pass
+	if Input.is_action_just_pressed("dash"):
+		pass # Maybe a movement skill or something later
 	
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = jump
 	
-	if Input.is_action_just_pressed("parry") and not parrying:
+	if Input.is_action_just_pressed("parry") and not parrying and not parry_cooldown:
 		parrying = true
-		parry() # 0.25-second window for parrying.
+		parry_cooldown = true
+		parry() # 0.25-second window for parrying, 0.5-second cooldown.
 	
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
@@ -75,6 +77,8 @@ func parry() -> void:
 	await get_tree().create_timer(0.25).timeout
 	parrying = false
 	$Animations.play("RESET")
+	await get_tree().create_timer(0.25).timeout
+	parry_cooldown = false
 
 func get_hit(area: Area3D) -> void:
 	if not parrying or (parrying and not area.parryable):

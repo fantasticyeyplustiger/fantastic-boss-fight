@@ -17,7 +17,7 @@ transparency = 1
 cull_mode = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_54uvx"]
-size = Vector3(0.35, 0.35, 0.8)
+size = Vector3(0.35, 0.35, 0.85)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e1rwd"]
 size = Vector3(0.3, 0.3, 0.75)

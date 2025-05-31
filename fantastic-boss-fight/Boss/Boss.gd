@@ -62,9 +62,10 @@ func attack_loop() -> void:
 			else:
 				air_charge(target_position)
 		4: throw_fist()
-		5: clap()
-		6:
-			clap()
+		5, 6: clap()
+		7: ground_charge(target_position)
+		8:
+			jump_and_crush()
 			current_attack = 0
 	
 	attacking = false
@@ -127,6 +128,9 @@ func ground_charge(target_position : Vector3) -> void:
 		$ChargeLanding/LandingHitbox.shape.radius = 35.0
 	else:
 		charge_visible_hitbox.mesh.size = size - Vector3(0.0, 1.0, 0.0)
+		$ChargeLanding/VisibleLandingHitbox.mesh.top_radius = 25.0
+		$ChargeLanding/VisibleLandingHitbox.mesh.bottom_radius = 25.0
+		$ChargeLanding/LandingHitbox.shape.radius = 25.0
 	
 	charge_visible_hitbox.position = hitbox_pos - Vector3(0.0, 6.0, 0.0)
 	charge_visible_hitbox.visible = true
@@ -152,8 +156,8 @@ func ground_charge(target_position : Vector3) -> void:
 	charge_hitbox.set_deferred("disabled", true)
 	$ChargeLanding/LandingHitbox.set_deferred("disabled", true)
 	
-	walk_cooldown.start(0.5)
-	attack_cd_timer.start(0.75)
+	walk_cooldown.start(0.4)
+	attack_cd_timer.start(0.45)
 	SpawnObject.ground_shockwave(target_position)
 
 ## Makes the boss throw his right arm/fist towards the player.
@@ -195,6 +199,43 @@ func clap() -> void:
 	walk_cooldown.start(0.1)
 	attack_cd_timer.start(0.15)
 
+func jump_and_crush() -> void:
+	damage = HIGH_DAMAGE
+	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	global_position.y += 30.0
+	
+	$ChargeLanding/VisibleLandingHitbox.mesh.top_radius = 85.0
+	$ChargeLanding/VisibleLandingHitbox.mesh.bottom_radius = 85.0
+	$ChargeLanding/LandingHitbox.shape.radius = 85.0
+	
+	$ChargeLanding/VisibleLandingHitbox.global_position = Vector3(global_position.x, 0.0, global_position.z)
+	$ChargeLanding/VisibleLandingHitbox.global_rotation = Vector3.ZERO
+	$ChargeLanding/LandingHitbox.global_position = Vector3(global_position.x, 0.0, global_position.z)
+	$ChargeLanding/LandingHitbox.global_rotation = Vector3.ZERO
+	$ChargePath/VisibleHitbox.visible = false
+	
+	$Animations.play("crush")
+	await get_tree().create_timer(1.0).timeout
+	
+	$ChargeLanding/LandingHitbox.set_deferred("disabled", false)
+	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	
+	await get_tree().create_timer(0.05).timeout
+	
+	global_position.y = Y_VALUE_FOR_FLOOR
+	SpawnObject.ground_shockwave(global_position)
+	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	SpawnObject.colliding_shockwave(global_position, Vector3.ZERO)
+	
+	await get_tree().create_timer(0.05).timeout
+	
+	$ChargeLanding/LandingHitbox.set_deferred("disabled", true)
+	$ChargePath/VisibleHitbox.visible = true
+	
+	reset_anim()
+	walk_cooldown.start(0.4)
+	attack_cd_timer.start(0.45)
+
 func walk_towards_player() -> void:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
 	var vector2_player_pos = Vector3(Global.player_position.x, 0.0, Global.player_position.z)
@@ -209,7 +250,8 @@ func walk_towards_player() -> void:
 ## Rotates the boss' body to look at the player.
 # Only rotates the y-axis.
 func look_at_player() -> void:
-	#warning_ignore:unused_argument
+	if global_position.cross(Global.player_position).is_zero_approx():
+		return
 	look_at(Global.player_position)
 	rotation.x = 0
 	rotation.z = 0
@@ -217,6 +259,13 @@ func look_at_player() -> void:
 func respawn_right_arm(wait_time : float) -> void:
 	await get_tree().create_timer(wait_time).timeout
 	$Torso/RightArm.visible = true
+
+func reset_anim_in(seconds : float) -> void:
+	await get_tree().create_timer(seconds).timeout
+	$Animations.play("RESET")
+
+func reset_anim() -> void:
+	$Animations.play("RESET")
 
 func reset_cooldown() -> void:
 	attack_cooldown = false
