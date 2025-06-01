@@ -21,7 +21,6 @@ var health : float = 1_000_000
 var damage : float
 
 var attacking : bool = false
-var jump_attacking : bool = false
 var attack_cooldown : bool = true
 var can_walk : bool = true
 var should_look_at_player : bool = false
@@ -34,7 +33,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if not is_on_floor() or not jump_attacking:
+	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
 	
 	if not attacking and not attack_cooldown:
@@ -74,6 +73,9 @@ func attack_loop() -> void:
 
 ## Makes the boss charge towards the player in the air.
 func air_charge(target_position : Vector3) -> void:
+	
+	$Parryable.emitting = true
+	
 	damage = MED_DAMAGE
 	look_at(target_position)
 	
@@ -97,6 +99,7 @@ func air_charge(target_position : Vector3) -> void:
 	# ATTACK will no longer hit PLAYER
 	$AirChargePath/Hitbox.set_deferred("disabled", true)
 	
+	$Parryable.emitting = false
 	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90.0), 0.0, 0.0))
 	global_position = target_position
 	
@@ -165,6 +168,7 @@ func ground_charge(target_position : Vector3) -> void:
 # Constantly chases them until it hits, gets parried, or runs out of time to hit.
 func throw_fist() -> void:
 	
+	$Parryable.emitting = true
 	$Animations.play("throw_arm")
 	should_look_at_player = true
 	
@@ -174,6 +178,7 @@ func throw_fist() -> void:
 	SpawnObject.right_arm(global_position + Vector3(0.56, 0, 0))
 	
 	$Animations.play("RESET")
+	$Parryable.emitting = false
 	
 	walk_cooldown.start(0.35)
 	attack_cd_timer.start(1.3)
@@ -238,12 +243,14 @@ func jump_and_crush() -> void:
 	attack_cd_timer.start(0.45)
 
 func summon_cone() -> void:
+	$Aura.emitting = true
 	$Animations.play("summon_cone")
 	await get_tree().create_timer(1.0).timeout
 	
 	SpawnObject.ice_cream_cone(global_position + Vector3(0.0, 4.0, 0.0))
 	await get_tree().create_timer(0.8).timeout
 	reset_anim()
+	$Aura.emitting = false
 	
 	walk_cooldown.start(0.1)
 	attack_cd_timer.start(0.75)
