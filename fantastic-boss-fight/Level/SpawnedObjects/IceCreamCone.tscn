@@ -1,37 +1,240 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpmqgdsynm3d8"]
+[gd_scene load_steps=29 format=3 uid="uid://cpmqgdsynm3d8"]
 
 [ext_resource type="ArrayMesh" uid="uid://c5rntv2ar8bgq" path="res://Boss/BossOBJ/IceCreamCone.obj" id="1_ci0rk"]
 [ext_resource type="Texture2D" uid="uid://daydynn6s5wfd" path="res://ParticleTextures/Flash.png" id="2_df0p0"]
+[ext_resource type="Script" uid="uid://xfo1nb7vb323" path="res://Level/SpawnedObjects/Cone.gd" id="2_wbqxm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ci0rk"]
 albedo_color = Color(0.348266, 0.168576, 9.62615e-08, 1)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_df0p0"]
-gravity = Vector3(0, 0, 0)
+[sub_resource type="CylinderMesh" id="CylinderMesh_px67a"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.01
+radial_segments = 6
+rings = 1
+cap_bottom = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbqxm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlbve"]
+albedo_color = Color(0.34902, 0.168627, 0, 1)
+
+[sub_resource type="Curve" id="Curve_j3c2l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.580882, 0.764045), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_x8t0e"]
+curve = SubResource("Curve_j3c2l")
+
+[sub_resource type="Gradient" id="Gradient_pmwed"]
+colors = PackedColorArray(0.941176, 1, 1, 1, 0.254902, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7p58f"]
+gradient = SubResource("Gradient_pmwed")
+
+[sub_resource type="Curve" id="Curve_87t5t"]
+_data = [Vector2(0.00735295, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ipqsu"]
+curve = SubResource("Curve_87t5t")
+
+[sub_resource type="Curve" id="Curve_df0p0"]
+_data = [Vector2(0, 0.898876), 0.0, 0.0, 0, 0, Vector2(0.0955882, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wbqxm"]
+curve = SubResource("Curve_df0p0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_px67a"]
+gravity = Vector3(0, 0, 0)
+scale_min = 12.0
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_wbqxm")
+color_ramp = SubResource("GradientTexture1D_7p58f")
+alpha_curve = SubResource("CurveTexture_x8t0e")
+emission_curve = SubResource("CurveTexture_ipqsu")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tlbve"]
+load_path = "res://.godot/imported/FlashTwinkle.png-8b6c52a650074a91692aac178c75f027.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3c2l"]
 transparency = 1
-albedo_texture = ExtResource("2_df0p0")
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 0.5
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = SubResource("CompressedTexture2D_tlbve")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_px67a"]
-material = SubResource("StandardMaterial3D_wbqxm")
+[sub_resource type="QuadMesh" id="QuadMesh_muj7o"]
+material = SubResource("StandardMaterial3D_j3c2l")
+
+[sub_resource type="Curve" id="Curve_x8t0e"]
+_data = [Vector2(0, 0.146068), 0.0, 0.0, 0, 0, Vector2(1, 0.146068), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_pmwed"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7p58f"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_87t5t"]
+curve_x = SubResource("Curve_x8t0e")
+curve_y = SubResource("Curve_pmwed")
+curve_z = SubResource("Curve_7p58f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gxpvo"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 25.0
+initial_velocity_min = 6.0
+initial_velocity_max = 12.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 3.0
+scale_curve = SubResource("CurveXYZTexture_87t5t")
+color_ramp = SubResource("GradientTexture1D_7p58f")
+alpha_curve = SubResource("CurveTexture_x8t0e")
+emission_curve = SubResource("CurveTexture_ipqsu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipqsu"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_df0p0")
+emission_enabled = true
+disable_receive_shadows = true
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_eieo0"]
+material = SubResource("StandardMaterial3D_ipqsu")
+
+[sub_resource type="Animation" id="Animation_wbqxm"]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConeCap:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.5708, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_px67a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConeCap:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlbve"]
+_data = {
+&"RESET": SubResource("Animation_px67a"),
+&"appear": SubResource("Animation_wbqxm")
+}
 
 [node name="IceCreamCone" type="MeshInstance3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 mesh = ExtResource("1_ci0rk")
 surface_material_override/0 = SubResource("StandardMaterial3D_ci0rk")
+script = ExtResource("2_wbqxm")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-cast_shadow = 0
+[node name="ConeCap" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("CylinderMesh_px67a")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlbve")
+
+[node name="Twinkle" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.766667, 0)
+emitting = false
 amount = 1
 lifetime = 0.4
-process_material = SubResource("ParticleProcessMaterial_df0p0")
-draw_pass_1 = SubResource("QuadMesh_px67a")
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_px67a")
+draw_pass_1 = SubResource("QuadMesh_muj7o")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+emitting = false
+amount = 20
+lifetime = 0.8
+one_shot = true
+speed_scale = 4.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gxpvo")
+draw_pass_1 = SubResource("QuadMesh_eieo0")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tlbve")
+}
+
+[connection signal="finished" from="Twinkle" to="." method="attack"]

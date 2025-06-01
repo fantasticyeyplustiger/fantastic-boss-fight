@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://bdo5f1yf784g8"]
+
+[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="1_1gap8"]
+[ext_resource type="Script" uid="uid://bbp0mn4a0d3j1" path="res://Level/SpawnedObjects/Bombardment.gd" id="1_24pju"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_24pju"]
+height = 9.0
+radius = 5.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uttis"]
+top_radius = 5.0
+bottom_radius = 5.0
+height = 0.5
+radial_segments = 16
+cap_bottom = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xutb"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_8rcc6"]
+resource_name = "bomb"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.666667, 0.9, 1),
+"transitions": PackedFloat32Array(1.5, 2.54912, 1, 1, 1),
+"update": 0,
+"values": [0.8, 0.5, 1.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ffest"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d10aw"]
+_data = {
+&"RESET": SubResource("Animation_ffest"),
+&"bomb": SubResource("Animation_8rcc6")
+}
+
+[node name="Mortar" type="Node3D"]
+script = ExtResource("1_24pju")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_1gap8")
+knockback = true
+knockback_power = 5.0
+
+[node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shape = SubResource("CylinderShape3D_24pju")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+transparency = 1.0
+mesh = SubResource("CylinderMesh_uttis")
+surface_material_override/0 = SubResource("StandardMaterial3D_8xutb")
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d10aw")
+}
+
+[connection signal="animation_finished" from="Animations" to="." method="bomb"]

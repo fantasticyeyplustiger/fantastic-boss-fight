@@ -62,10 +62,11 @@ func attack_loop() -> void:
 			else:
 				air_charge(target_position)
 		4: throw_fist()
-		5, 6: clap()
+		5, 6, 9: clap()
 		7: ground_charge(target_position)
-		8:
-			jump_and_crush()
+		8: jump_and_crush()
+		10:
+			summon_cone()
 			current_attack = 0
 	
 	attacking = false
@@ -235,6 +236,17 @@ func jump_and_crush() -> void:
 	reset_anim()
 	walk_cooldown.start(0.4)
 	attack_cd_timer.start(0.45)
+
+func summon_cone() -> void:
+	$Animations.play("summon_cone")
+	await get_tree().create_timer(1.0).timeout
+	
+	SpawnObject.ice_cream_cone(global_position + Vector3(0.0, 4.0, 0.0))
+	await get_tree().create_timer(0.8).timeout
+	reset_anim()
+	
+	walk_cooldown.start(0.1)
+	attack_cd_timer.start(0.75)
 
 func walk_towards_player() -> void:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)

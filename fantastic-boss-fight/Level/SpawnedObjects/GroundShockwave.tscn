@@ -100,7 +100,6 @@ _data = {
 
 [node name="Shockwave" type="MeshInstance3D"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-visible = false
 cast_shadow = 0
 mesh = ExtResource("1_jeblo")
 surface_material_override/0 = SubResource("StandardMaterial3D_7rg07")
