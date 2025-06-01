@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	
 	Global.boss_position = global_position
 
-
+## The main attack loop for the boss.
 func attack_loop() -> void:
 	
 	var target_position : Vector3 = Global.player_position
@@ -61,11 +61,12 @@ func attack_loop() -> void:
 			else:
 				air_charge(target_position)
 		4: throw_fist()
-		5, 6, 9: clap()
+		5, 6, 9, 11: clap()
 		7: ground_charge(target_position)
 		8: jump_and_crush()
-		10:
-			summon_cone()
+		10: summon_cone()
+		12:
+			throw_fist()
 			current_attack = 0
 	
 	attacking = false
