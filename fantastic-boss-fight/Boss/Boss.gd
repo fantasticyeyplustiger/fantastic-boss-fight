@@ -60,13 +60,15 @@ func attack_loop() -> void:
 				ground_charge(target_position)
 			else:
 				air_charge(target_position)
-		4: throw_fist()
+		4, 12: throw_fist()
 		5, 6, 9, 11: clap()
 		7: ground_charge(target_position)
 		8: jump_and_crush()
 		10: summon_cone()
-		12:
-			throw_fist()
+		# SUMMON SWORD
+		13: ground_sword_attack()
+		14:
+			ground_sword_attack()
 			current_attack = 0
 	
 	attacking = false
@@ -256,11 +258,21 @@ func summon_cone() -> void:
 	walk_cooldown.start(0.1)
 	attack_cd_timer.start(0.75)
 
-func walk_towards_player() -> void:
-	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
-	var vector2_player_pos = Vector3(Global.player_position.x, 0.0, Global.player_position.z)
+func ground_sword_attack() -> void:
+	$Parryable.emitting = true
+	#Animations.play("ground_sword_attack")
+	look_at_player()
+	SpawnObject.ground_slash(global_position, global_rotation)
 	
-	var direction : Vector3 = vector2_pos.direction_to(vector2_player_pos)
+	await get_tree().create_timer(1.0).timeout
+	reset_anim()
+	$Parryable.emitting = false
+	
+	walk_cooldown.start(0.1)
+	attack_cd_timer.start(0.2)
+
+func walk_towards_player() -> void:
+	var direction = get_angle_to_player()
 	
 	velocity = direction * WALK_SPEED
 	
@@ -275,6 +287,14 @@ func look_at_player() -> void:
 	look_at(Global.player_position)
 	rotation.x = 0
 	rotation.z = 0
+
+func get_angle_to_player() -> Vector3:
+	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
+	var vector2_player_pos = Vector3(Global.player_position.x, 0.0, Global.player_position.z)
+	
+	var direction : Vector3 = vector2_pos.direction_to(vector2_player_pos)
+	
+	return direction
 
 func respawn_right_arm(wait_time : float) -> void:
 	await get_tree().create_timer(wait_time).timeout
