@@ -11,11 +11,12 @@ extends Node3D
 @onready var ice_cream_cone_mesh = preload("res://Level/SpawnedObjects/IceCreamCone.tscn")
 
 @onready var mortar_attack = preload("res://Level/SpawnedObjects/Bombardment.tscn")
+@onready var sword_attack = preload("res://Level/SpawnedObjects/GroundSwordSlash.tscn")
 
 ## This script essentially spawns an object at a given position (and maybe angle) whenever needed.
 ## Mainly used for spawning shockwaves and globally placed attacks.
 #
-## Methods don't have "spawn" in their names, as the script itself makes it self-explanatory.
+## Methods don't have "spawn" in their names, as the script name itself makes it self-explanatory.
 
 func ground_shockwave(target_position : Vector3) -> void:
 	var new_shockwave : MeshInstance3D = ground_shockwave_mesh.instantiate()
@@ -76,3 +77,12 @@ func bombardment(target_position : Vector3) -> void:
 		new_mortar.position = target_position
 		add_child(new_mortar)
 		
+
+func ground_slash(target_position : Vector3, angle : Vector3) -> void:
+	var new_slash = sword_attack.instantiate()
+	new_slash.position = Vector3(target_position.x, 0.0, target_position.z)
+	
+	# Angle y has 180 degrees added because boss faces the other way around...
+	new_slash.rotation = Vector3(0.0, angle.y + deg_to_rad(180.0), 0.0)
+	
+	add_child(new_slash)

@@ -50,6 +50,9 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
 	
+	if Input.is_action_just_pressed("crush"):
+		velocity.y -= 70.0
+	
 	# (For movement direction.)
 	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
 	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()

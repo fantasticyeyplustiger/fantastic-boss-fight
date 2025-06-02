@@ -1,0 +1,181 @@
+[gd_scene load_steps=9 format=3 uid="uid://bhxminkcndok7"]
+
+[ext_resource type="Script" uid="uid://dmkond4ke71k3" path="res://GroundSwordSlash.gd" id="1_42anq"]
+[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="2_y4h30"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y4h30"]
+size = Vector3(1, 5, 72)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y4h30"]
+size = Vector3(1, 1, 72)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4h30"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_y4h30"]
+resource_name = "swing"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Meshes/Mesh:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Meshes/Mesh:surface_material_override/0:emission")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 0.784314, 0.784314, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bmptw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Meshes/Mesh:surface_material_override/0:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Meshes/Mesh:surface_material_override/0:emission")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f6deo"]
+_data = {
+&"RESET": SubResource("Animation_bmptw"),
+&"swing": SubResource("Animation_y4h30")
+}
+
+[node name="GroundSwordSlash" type="Node3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_42anq")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("2_y4h30")
+knockback = true
+parryable = true
+knockback_power = 20.0
+
+[node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 35)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 9.059, 1, 33.807)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox3" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -9.059, 1, 33.807)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox4" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 17.5, 1, 30.311)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox5" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -17.5, 1, 30.311)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox6" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 24.749, 1, 24.749)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Hitbox7" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -24.749, 1, 24.749)
+visible = false
+shape = SubResource("BoxShape3D_y4h30")
+disabled = true
+
+[node name="Meshes" type="Node3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 35)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh2" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 9.059, 0, 33.807)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh3" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -9.059, 0, 33.807)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh4" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 17.5, 0, 30.311)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh5" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -17.5, 0, 30.311)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh6" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 24.749, 0, 24.749)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Mesh7" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -24.749, 0, 24.749)
+mesh = SubResource("BoxMesh_y4h30")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_f6deo")
+}
+
+[connection signal="animation_finished" from="Animation" to="." method="attack"]
