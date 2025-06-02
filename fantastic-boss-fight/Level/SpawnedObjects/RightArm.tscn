@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byownf0n8g04s"]
+[gd_scene load_steps=29 format=3 uid="uid://byownf0n8g04s"]
 
 [ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="1_54uvx"]
 [ext_resource type="Script" uid="uid://b3mlci34x4swv" path="res://Level/SpawnedObjects/RightArm.gd" id="1_rpk7q"]
@@ -37,6 +37,75 @@ gravity = Vector3(0, 0, 20)
 scale_curve = SubResource("CurveTexture_e1rwd")
 
 [sub_resource type="SphereMesh" id="SphereMesh_8qf71"]
+
+[sub_resource type="Curve" id="Curve_e1rwd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.720588, 0.191011), -2.03745, -2.03745, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_c4nw0"]
+curve = SubResource("Curve_e1rwd")
+
+[sub_resource type="Curve" id="Curve_8qf71"]
+_limits = [-15.0, 15.0, 0.0, 1.0]
+_data = [Vector2(0, 12.1349), 0.0, 0.0, 0, 0, Vector2(1, -12.1348), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x3ebt"]
+curve = SubResource("Curve_8qf71")
+
+[sub_resource type="Gradient" id="Gradient_sb5gs"]
+colors = PackedColorArray(1, 0.843137, 0.843137, 1, 1, 0.27451, 0.235294, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dfy3x"]
+gradient = SubResource("Gradient_sb5gs")
+
+[sub_resource type="Curve" id="Curve_4bbov"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.69963, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_li15v"]
+curve = SubResource("Curve_4bbov")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5u3nt"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0.1, 0.1)
+angle_min = -45.0
+angle_max = 45.0
+angle_curve = SubResource("CurveTexture_x3ebt")
+direction = Vector3(0, 1, -1)
+spread = 15.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 9.49949e-08
+radial_velocity_min = -1.00002
+radial_velocity_max = 0.999978
+gravity = Vector3(0, 19.6, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_li15v")
+color_ramp = SubResource("GradientTexture1D_dfy3x")
+alpha_curve = SubResource("CurveTexture_c4nw0")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7imle"]
+load_path = "res://.godot/imported/FlashTwinkle.png-8b6c52a650074a91692aac178c75f027.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bs751"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = SubResource("CompressedTexture2D_7imle")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_lx842"]
+material = SubResource("StandardMaterial3D_bs751")
 
 [sub_resource type="Animation" id="Animation_x3ebt"]
 length = 0.001
@@ -163,6 +232,13 @@ amount = 32
 lifetime = 1.5
 process_material = SubResource("ParticleProcessMaterial_c4nw0")
 draw_pass_1 = SubResource("SphereMesh_8qf71")
+
+[node name="Parryable" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.142857, -0.5)
+amount = 16
+lifetime = 0.4
+process_material = SubResource("ParticleProcessMaterial_5u3nt")
+draw_pass_1 = SubResource("QuadMesh_lx842")
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {

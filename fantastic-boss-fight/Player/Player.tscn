@@ -19,7 +19,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera3D/MeshInstance3D:position")
+tracks/0/path = NodePath("Head/Camera3D/LeftArm:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -31,7 +31,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/Camera3D/MeshInstance3D:rotation")
+tracks/1/path = NodePath("Head/Camera3D/LeftArm:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -47,7 +47,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera3D/MeshInstance3D:position")
+tracks/0/path = NodePath("Head/Camera3D/LeftArm:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -59,7 +59,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Head/Camera3D/MeshInstance3D:rotation")
+tracks/1/path = NodePath("Head/Camera3D/LeftArm:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -93,7 +93,7 @@ shape = SubResource("ConvexPolygonShape3D_3qydi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 fov = 70.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera3D"]
+[node name="LeftArm" type="MeshInstance3D" parent="Head/Camera3D"]
 transform = Transform3D(0.491481, 0.25, 0.834234, -0.0669873, 0.965926, -0.25, -0.868308, 0.0669871, 0.491481, -0.3, -0.4, -0.4)
 mesh = SubResource("BoxMesh_3qydi")
 

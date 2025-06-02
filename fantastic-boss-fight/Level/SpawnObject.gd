@@ -65,7 +65,7 @@ func bombardment(target_position : Vector3) -> void:
 	var random_x : float
 	var random_z : float
 	
-	for i in 2:
+	for i in 3:
 		var new_mortar : Node3D = mortar_attack.instantiate()
 		
 		random_x = randf_range(target_position.x - 12.0, target_position.x + 12.0)
