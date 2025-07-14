@@ -18,6 +18,7 @@ extends Node3D
 #
 ## Methods don't have "spawn" in their names, as the script name itself makes it self-explanatory.
 
+#region shockwaves
 func ground_shockwave(target_position : Vector3) -> void:
 	var new_shockwave : MeshInstance3D = ground_shockwave_mesh.instantiate()
 	new_shockwave.position = Vector3(target_position.x, 0.0, target_position.z)
@@ -39,7 +40,7 @@ func colliding_shockwave(target_position : Vector3, angle : Vector3) -> void:
 	new_shockwave.position = target_position
 	new_shockwave.rotation = angle
 	add_child(new_shockwave)
-
+#endregion
 
 func colored_bomb(target_position : Vector3, hex_code : String) -> void:
 	var new_bomb : Node3D = colored_bomb_mesh.instantiate()
@@ -47,19 +48,19 @@ func colored_bomb(target_position : Vector3, hex_code : String) -> void:
 	new_bomb.set_color(hex_code)
 	add_child(new_bomb)
 
-
+## Spawns from the boss' right arm. Homes into the player.
 func right_arm(arm_position : Vector3) -> void:
 	var new_arm : CharacterBody3D = right_arm_mesh.instantiate()
 	new_arm.position = arm_position
 	add_child(new_arm)
 
-
+## Spawns an ice cream cone that launches projectiles.
 func ice_cream_cone(cone_position : Vector3) -> void:
 	var cone : MeshInstance3D = ice_cream_cone_mesh.instantiate()
 	cone.position = cone_position
 	add_child(cone)
 
-
+## Spawns 3 attacks at once on the floor.
 func bombardment(target_position : Vector3) -> void:
 	target_position = Vector3(target_position.x, 0.0, target_position.z)
 	
