@@ -3,8 +3,13 @@ extends CharacterBody3D
 const JUMP_VELOCITY : float = 18.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 15.0
-const SPRINT_SPEED : float = 25.0
+const DASH_SPEED : float = 40.0
+
+## In seconds.
+const DASH_TIME : float = 0.2
+
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
+const FORWARD_DIRECTION : Vector3 = Vector3(0.0, 0.0, -1.0)
 
 var CAMERA_SENSITIVITY : float = 0.003
 
@@ -16,6 +21,8 @@ var health : float = 5000.0
 var can_move : bool = true
 var parrying : bool = false
 var parry_cooldown : bool = false
+var dashing : bool = false
+var should_fall : bool = true
 
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
@@ -37,26 +44,27 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if Input.is_action_just_pressed("dash"):
-		pass # Maybe a movement skill or something later
-	
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = jump
+	
+	if Input.is_action_just_pressed("dash") and not dashing:
+		dashing = true
+		can_move = false
+		velocity.y = 0.5
+		dash()
 	
 	if Input.is_action_just_pressed("parry") and not parrying and not parry_cooldown:
 		parrying = true
 		parry_cooldown = true
 		parry() # 0.25-second window for parrying, 0.5-second cooldown.
 	
-	if not is_on_floor():
+	if not is_on_floor() and should_fall:
 		velocity.y -= GRAVITY * delta
 	
 	if Input.is_action_just_pressed("crush"):
 		velocity.y -= 70.0
 	
-	# (For movement direction.)
-	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
-	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	var direction = get_movement_direction()
 	
 	if is_on_floor() and can_move:
 		if direction:
@@ -65,9 +73,38 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = 0.0
 			velocity.z = 0.0
-	elif can_move: # Being in mid-air means you have inertia
+		
+	# Being in mid-air means you have inertia
+	elif can_move: 
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 5.0)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 5.0)
+	
+	set_global_variables()
+	
+	move_and_slide()
+
+## Dashes in the direction the player is moving for 0.2 seconds.
+# If not moving, dash forward.
+func dash() -> void:
+	var direction = get_movement_direction()
+	
+	# Must dash even if no movement input
+	if direction == Vector3.ZERO:
+		direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
+	
+	velocity.x = direction.x * DASH_SPEED
+	velocity.z = direction.z * DASH_SPEED
+	
+	move_and_slide()
+	
+	await get_tree().create_timer(DASH_TIME).timeout
+	
+	dashing = false
+	can_move = true
+	velocity = Vector3.ZERO
+
+## Set global variables for boss to use
+func set_global_variables() -> void:
 	
 	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
@@ -75,7 +112,6 @@ func _physics_process(delta: float) -> void:
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
 	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position - Vector3(0.0, 0.3, 0.0)
 	Global.player_velocity = velocity
-	move_and_slide()
 
 func parry() -> void:
 	$Animations.play("parry")
@@ -85,8 +121,15 @@ func parry() -> void:
 	await get_tree().create_timer(0.25).timeout
 	parry_cooldown = false
 
+## Gets the movement direction from the player. Calculates from both input and camera rotation.
+func get_movement_direction() -> Vector3:
+	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
+	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	return direction
+
 func get_hit(area: Area3D) -> void:
-	if not parrying or (parrying and not area.parryable):
+	if (not parrying or not area.parryable) and not dashing:
+		
 		health -= area.get_parent().damage
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		

@@ -25,7 +25,7 @@ var damage : float
 var attacking : bool = true
 var can_walk : bool = true
 
-## If turned true, have 'dash_towards' used right after.
+## If turned true, have 'dash_towards()' used right after.
 var dashing : bool = false
 
 var should_fall : bool = false
@@ -40,20 +40,29 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if not is_on_floor() or should_fall:
-		velocity.y -= GRAVITY * delta
-	
+	# Prevent constant attack calls
 	if not attacking:
 		attacking = true
 		choose_attack()
+	# Shouldn't walk towards player while attacking
 	elif not attacking and can_walk:
 		walk_towards_player()
 	
+	# Difference between look_at_player() is that this includes X and Z rotation
 	if should_look_at_player:
 		look_at(Global.player_position + PLAYER_HEAD_POSITION)
 	
 	if dashing:
+		
+		if should_fall:
+			velocity.y -= GRAVITY * delta
+		
 		move_and_slide()
+		
+	elif not can_walk and should_fall:
+		velocity = Vector3.ZERO
+		velocity.y -= GRAVITY * delta
+	
 	Global.boss_position = global_position
 
 func choose_attack() -> void:
@@ -62,10 +71,11 @@ func choose_attack() -> void:
 	pass
 
 func punch_rush() -> void:
+	should_fall = true
 	# Wait for each attack before starting the next one.
 	await right_hook()
 	await left_uppercut()
-	await set_atk_cooldown_in_seconds(2.0)
+	await set_atk_cooldown_in_seconds(1.0)
 
 ## Makes the boss throw a right hook while dashing towards the player.
 func right_hook() -> void:
@@ -93,6 +103,7 @@ func right_hook() -> void:
 	
 	await get_tree().create_timer(0.1).timeout # COOLDOWN
 
+## Makes the boss throw a left uppercut while dashing towards the player. Launches the player up.
 func left_uppercut() -> void:
 	damage = HIGH_DAMAGE
 	$Animations.play("left_uppercut")
@@ -101,7 +112,7 @@ func left_uppercut() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90.0), 0.0, 0.0))
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
 	look_at_player()
 	
@@ -116,9 +127,10 @@ func left_uppercut() -> void:
 	dashing = false
 	toggle_hitbox($LeftUppercut/CollisionShape3D)
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1).timeout # COOLDOWN
 
 ## Turns the corresponding collision on for x seconds before turning it off again.
+# Mainly for turning attack hitboxes on and off.
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
 
@@ -145,6 +157,7 @@ func walk_towards_player() -> void:
 	# play walk animation
 	
 	velocity = direction * WALK_SPEED
+	velocity.y -= GRAVITY * (1.0/60.0)
 	
 	look_at_player()
 	move_and_slide()
