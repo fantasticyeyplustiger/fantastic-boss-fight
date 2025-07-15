@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=54 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://bp4ixlf7s5xe0" path="res://Boss/BossTextures/RightArm.png" id="15_bypl5"]
 [ext_resource type="ArrayMesh" uid="uid://dti73rrp1wpt2" path="res://Boss/BossOBJ/RightLeg.obj" id="16_0s803"]
 [ext_resource type="Texture2D" uid="uid://bx0ljwscbm2y6" path="res://Boss/BossTextures/RightLeg.png" id="17_kxks5"]
-[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="18_b0eo8"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="19_p0rjq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exinx"]
@@ -48,43 +47,6 @@ albedo_texture = ExtResource("17_kxks5")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtogi"]
 size = Vector3(3, 8.22, 1.55)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_8ujus"]
-size = Vector3(12, 19, 125)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8ujus"]
-size = Vector3(12, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ujus"]
-transparency = 1
-albedo_color = Color(1, 0, 0, 0)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_8ujus"]
-height = 80.0
-radius = 25.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_8ujus"]
-top_radius = 25.0
-bottom_radius = 25.0
-radial_segments = 16
-cap_bottom = false
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_b0eo8"]
-height = 30.0
-radius = 10.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_b0eo8"]
-top_radius = 10.0
-bottom_radius = 10.0
-radial_segments = 16
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0eo8"]
-transparency = 1
-cull_mode = 1
-albedo_color = Color(1, 1, 1, 0)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_b0eo8"]
-size = Vector3(5, 15, 18)
 
 [sub_resource type="Curve" id="Curve_p0rjq"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.720588, 0.191011), -2.03745, -2.03745, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -220,781 +182,14 @@ material = SubResource("StandardMaterial3D_f8v66")
 
 [sub_resource type="Animation" id="Animation_b0eo8"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/RightArm:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/LeftLeg:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/LeftLeg:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/LeftArm:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/LeftArm:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/RightArm:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 0)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("AirChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Torso/RightArm:scale")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Torso/RightLeg:rotation")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("Torso/RightLeg:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("Head:rotation")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("ChargeLanding/VisibleLandingHitbox:surface_material_override/0:albedo_color")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 0)]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("Head:position")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_p0rjq"]
-resource_name = "air_charge"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.570723, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/RightArm:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.420448, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.52367, 0.190241, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/LeftLeg:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/LeftLeg:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.035, 0, -0.205)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/LeftArm:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.5708, 0.380482, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/LeftArm:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.15, 0.18, -0.515)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/RightArm:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.435275, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.135, 0.25, 0)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("AirChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_8ujus"]
-resource_name = "charge"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.570723, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/RightArm:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.420448, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.52367, 0.190241, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/LeftLeg:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/LeftLeg:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.035, 0, -0.205)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/LeftArm:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.5708, 0.380482, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/LeftArm:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.15, 0.18, -0.515)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/RightArm:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.435275, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.135, 0.25, 0)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ChargePath/VisibleHitbox:surface_material_override/0:albedo_color")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 0.333333), Color(1, 0, 0, 0.333333), Color(1, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_i6vrr"]
-resource_name = "clap"
-length = 0.45
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso/LeftArm:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(-0.905, 0.23, -0.3), Vector3(-0.905, 0.23, -0.3), Vector3(0.055, 0.23, -0.3)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/LeftArm:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(1.75406, 1.79594, 0), Vector3(1.75406, 1.79594, 0), Vector3(1.75406, -0.698132, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/RightArm:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(0.905, 0.23, -0.3), Vector3(0.905, 0.23, -0.3), Vector3(-0.055, 0.23, -0.3)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/RightArm:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(1.75406, -1.79594, 0), Vector3(1.75406, -1.79594, 0), Vector3(1.75406, 0.698132, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/RightLeg:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(-0.760964, -0.190241, 0), Vector3(-0.760964, -0.190241, 0), Vector3(-0.190241, -0.190241, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/RightLeg:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(0.175, 0.075, -0.73), Vector3(0.175, 0.075, -0.73), Vector3(0.105, 0.075, -0.455)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/LeftLeg:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(0, 0, -0.215), Vector3(0, 0, -0.215), Vector3(0, 0, -0.215)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Torso/LeftLeg:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(-0.190241, 0.174533, 0), Vector3(-0.190241, 0.174533, 0), Vector3(0.190241, 0.174533, 0)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Head:rotation")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.45),
-"transitions": PackedFloat32Array(1, 0.329877, 1),
-"update": 0,
-"values": [Vector3(0.261799, 0, 0), Vector3(0.261799, 0, 0), Vector3(-0.174533, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_i28eb"]
-resource_name = "crush"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso/LeftArm:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -2.58309)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/LeftArm:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.406126, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-1.13, 0.325, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/RightArm:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.406126, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.13, 0.325, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/RightArm:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 2.58309)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/RightLeg:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.125, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/LeftLeg:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.380482, 0, 0)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/LeftLeg:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.42, -0.57)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ChargeLanding/VisibleLandingHitbox:surface_material_override/0:albedo_color")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_10u17"]
-resource_name = "summon_cone"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.191986)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.436332, 0.190241, -0.191986)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Head:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.27, 0.21, -0.83)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Torso/RightArm:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0, 0.174533)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Torso/RightArm:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.035, -0.065, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Torso/LeftArm:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -3.05433)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Torso/LeftArm:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-1.16, 0.885, 0)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Torso/RightLeg:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, -0.190241, 0.190241)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Torso/RightLeg:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.085)]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Torso/LeftLeg:rotation")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.190241, 0.380482, 0.380482)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("Torso/LeftLeg:position")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.265, 0, -0.125)]
-}
-
-[sub_resource type="Animation" id="Animation_56y8k"]
-resource_name = "throw_arm"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Torso/RightArm:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.366667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.5708, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Torso/RightArm:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.366667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-1.995, 0.475, -0.525)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Torso/RightArm:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(7, 7, 7)]
-}
+resource_name = "right_hook"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b0eo8"]
 _data = {
 &"RESET": SubResource("Animation_b0eo8"),
-&"air_charge": SubResource("Animation_p0rjq"),
-&"charge": SubResource("Animation_8ujus"),
-&"clap": SubResource("Animation_i6vrr"),
-&"crush": SubResource("Animation_i28eb"),
-&"summon_cone": SubResource("Animation_10u17"),
-&"throw_arm": SubResource("Animation_56y8k")
+&"right_hook": SubResource("Animation_p0rjq")
 }
 
 [node name="Boss" type="CharacterBody3D"]
@@ -1002,123 +197,73 @@ transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 script = ExtResource("1_xtogi")
 
 [node name="Cape" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.4, 0)
 mesh = ExtResource("2_8ujus")
 surface_material_override/0 = SubResource("StandardMaterial3D_exinx")
 
-[node name="Head" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+[node name="HeadPivot" type="Node3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 6.8, 0)
+
+[node name="Head" type="MeshInstance3D" parent="HeadPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 mesh = ExtResource("4_p0rjq")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_c22uo")
 surface_material_override/1 = SubResource("StandardMaterial3D_vao3h")
 
 [node name="Torso" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.4, 0)
 mesh = ExtResource("6_i6vrr")
 surface_material_override/0 = SubResource("StandardMaterial3D_7utkh")
 
-[node name="LeftArm" type="MeshInstance3D" parent="Torso"]
+[node name="LeftArmPivot" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56, 0, 0)
+
+[node name="LeftArm" type="MeshInstance3D" parent="Torso/LeftArmPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56, 0, 0)
 mesh = ExtResource("8_10u17")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_871t7")
 
-[node name="LeftLeg" type="MeshInstance3D" parent="Torso"]
+[node name="LeftLegPivot" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, -0.748, 0)
+
+[node name="LeftLeg" type="MeshInstance3D" parent="Torso/LeftLegPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.174658, 0.747603, 0)
 mesh = ExtResource("10_48a3m")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3n4ec")
 
-[node name="SpellBook" type="MeshInstance3D" parent="Torso/LeftLeg"]
+[node name="SpellBook" type="MeshInstance3D" parent="Torso/LeftLegPivot/LeftLeg"]
 mesh = ExtResource("12_bu51h")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_m51oy")
 
-[node name="RightArm" type="MeshInstance3D" parent="Torso"]
+[node name="RightArmPivot" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56, 0, 0)
+
+[node name="RightArm" type="MeshInstance3D" parent="Torso/RightArmPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56, 0, 0)
 mesh = ExtResource("14_jr5wi")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_p2cc3")
 
-[node name="RightLeg" type="MeshInstance3D" parent="Torso"]
+[node name="RightLegPivot" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, -0.748, 0)
+
+[node name="RightLeg" type="MeshInstance3D" parent="Torso/RightLegPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, 0.748, 0)
 mesh = ExtResource("16_0s803")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
 [node name="EnviromentCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.381836, -0.0121338)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01816, -0.0121338)
 visible = false
 shape = SubResource("BoxShape3D_xtogi")
 
-[node name="AttackCooldown" type="Timer" parent="."]
-one_shot = true
-
-[node name="CanWalkCooldown" type="Timer" parent="."]
-one_shot = true
-
-[node name="ChargePath" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("18_b0eo8")
-
-[node name="Hitbox" type="CollisionShape3D" parent="ChargePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -61)
-visible = false
-shape = SubResource("BoxShape3D_8ujus")
-disabled = true
-
-[node name="VisibleHitbox" type="MeshInstance3D" parent="ChargePath"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-mesh = SubResource("BoxMesh_8ujus")
-surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
-
-[node name="ChargeLanding" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("18_b0eo8")
-knockback = true
-launch_up = true
-
-[node name="LandingHitbox" type="CollisionShape3D" parent="ChargeLanding"]
-shape = SubResource("CylinderShape3D_8ujus")
-disabled = true
-
-[node name="VisibleLandingHitbox" type="MeshInstance3D" parent="ChargeLanding"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-mesh = SubResource("CylinderMesh_8ujus")
-skeleton = NodePath("../../ChargePath")
-surface_material_override/0 = SubResource("StandardMaterial3D_8ujus")
-
-[node name="AirChargePath" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("18_b0eo8")
-knockback = true
-parryable = true
-
-[node name="Hitbox" type="CollisionShape3D" parent="AirChargePath"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -16)
-visible = false
-shape = SubResource("CylinderShape3D_b0eo8")
-disabled = true
-
-[node name="VisibleHitbox" type="MeshInstance3D" parent="AirChargePath"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-mesh = SubResource("CylinderMesh_b0eo8")
-surface_material_override/0 = SubResource("StandardMaterial3D_b0eo8")
-
-[node name="Clap" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("18_b0eo8")
-knockback = true
-knockback_power = 25.0
-
-[node name="Hitbox" type="CollisionShape3D" parent="Clap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.03979)
-visible = false
-shape = SubResource("BoxShape3D_b0eo8")
-disabled = true
-
 [node name="Aura" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 emitting = false
 amount = 32
 lifetime = 0.8
@@ -1127,7 +272,7 @@ process_material = SubResource("ParticleProcessMaterial_i6vrr")
 draw_pass_1 = SubResource("QuadMesh_f8v66")
 
 [node name="Parryable" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 emitting = false
 amount = 64
 lifetime = 0.8
@@ -1139,6 +284,3 @@ draw_pass_1 = SubResource("QuadMesh_56y8k")
 libraries = {
 &"": SubResource("AnimationLibrary_b0eo8")
 }
-
-[connection signal="timeout" from="AttackCooldown" to="." method="reset_cooldown"]
-[connection signal="timeout" from="CanWalkCooldown" to="." method="can_walk_again"]

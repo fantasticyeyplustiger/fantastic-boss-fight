@@ -4,8 +4,9 @@ const JUMP_VELOCITY : float = 18.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 25.0
 const SPRINT_SPEED : float = 25.0
+const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 
-var SENSITIVITY : float = 0.003
+var CAMERA_SENSITIVITY : float = 0.003
 
 var speed : float = 25.0
 var jump : float = 18.0
@@ -26,8 +27,8 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		head.rotate_y(-event.relative.x * SENSITIVITY)
-		camera.rotate_x(-event.relative.y * SENSITIVITY)
+		head.rotate_y(-event.relative.x * CAMERA_SENSITIVITY)
+		camera.rotate_x(-event.relative.y * CAMERA_SENSITIVITY)
 		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 		
 		$FrontOfBodyPivot.rotation.y = head.rotation.y
@@ -72,7 +73,8 @@ func _physics_process(delta: float) -> void:
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody.global_position
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
-	Global.boss_to_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody2.global_position + Vector3(0.0, 0.8, 0.0)
+	Global.boss_to_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody2.global_position + PLAYER_HEAD_POSITION
+	Global.player_velocity = velocity
 	move_and_slide()
 
 func parry() -> void:
