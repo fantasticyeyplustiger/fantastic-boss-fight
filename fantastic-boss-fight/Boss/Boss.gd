@@ -14,10 +14,18 @@ const SPRINT_SPEED : float = 35.0
 const GRAVITY : float = 19.6
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
-## 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
-const RIGHT_X_ANGLE : Vector3 = Vector3(0.5, 0.0, 0.0)
 
-const MAX_HEALTH : float = 1_000_000 # in case i ever want to have healing abilities
+## 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
+const RIGHT_X_ANGLE : Vector3 = Vector3(1.571, 0.0, 0.0)
+
+## Has no use as of now, because boss doesn't heal.
+const MAX_HEALTH : float = 1_000_000
+
+## All of these trails move with their corresponding body parts.
+@onready var right_arm_side_trail = $Torso/RightArmPivot/SideTrail
+@onready var left_arm_side_trail = $Torso/LeftArmPivot/SideTrail
+@onready var left_arm_behind_trail = $Torso/LeftArmPivot/BehindTrail
+@onready var torso_trail = $Torso/Trail
 
 var health : float = 1_000_000
 var damage : float
@@ -86,20 +94,23 @@ func right_hook() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	toggle_trail(right_arm_side_trail)
+	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
+	position.y = 0.0
 	look_at_player()
 	
 	await get_tree().create_timer(0.2).timeout
 	
 	dashing = true
-	dash_towards(Global.player_position)
+	dash_towards_on_ground(Global.player_position)
 	toggle_hitbox($RightHook/CollisionShape3D)
 	
 	await get_tree().create_timer(0.2).timeout
 	
 	dashing = false
 	toggle_hitbox($RightHook/CollisionShape3D)
+	toggle_trail(right_arm_side_trail)
 	
 	await get_tree().create_timer(0.1).timeout # COOLDOWN
 
@@ -112,8 +123,10 @@ func left_uppercut() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	toggle_trail(left_arm_behind_trail)
+	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
+	position.y = 0.0
 	look_at_player()
 	
 	await get_tree().create_timer(0.2).timeout
@@ -128,9 +141,20 @@ func left_uppercut() -> void:
 	toggle_hitbox($LeftUppercut/CollisionShape3D)
 	
 	await get_tree().create_timer(0.1).timeout # COOLDOWN
+	
+	toggle_trail(left_arm_behind_trail)
 
-## Turns the corresponding collision on for x seconds before turning it off again.
-# Mainly for turning attack hitboxes on and off.
+## Switches 'visible' of trail to be the opposite state.
+# Also edits the length to make trail emitting less noticeable when visible is true again.
+func toggle_trail(trail : GPUTrail3D) -> void:
+	trail.visible = not trail.visible
+	
+	if not trail.length <= 1:
+		trail.length = 1
+	else:
+		trail.length = 60 # Frames.
+
+## Switches 'disabled' of collision to be the opposite state.
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
 
@@ -150,6 +174,16 @@ func dash_towards(target_position : Vector3) -> void:
 	rotation.z = 0
 	
 	velocity = (direction * SPRINT_SPEED) * 1.5
+
+## Makes the boss go to the ground and dash towards another position on the ground.
+# Also makes the boss look at that direction.
+# 'target_position' does not need its y-value set to 0.
+func dash_towards_on_ground(target_position : Vector3) -> void:
+	global_position.y = 0.0
+	
+	var ground_target = Vector3(target_position.x, 0.0, target_position.z)
+	
+	dash_towards(ground_target)
 
 ## Makes the boss walk towards the player.
 func walk_towards_player() -> void:

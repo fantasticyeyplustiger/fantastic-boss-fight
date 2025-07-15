@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=77 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -11,12 +11,16 @@
 [ext_resource type="Texture2D" uid="uid://brlq317ytw2r" path="res://Boss/BossTextures/LeftArm.png" id="9_3q8av"]
 [ext_resource type="ArrayMesh" uid="uid://d04k8jicy2qde" path="res://Boss/BossOBJ/LeftLeg.obj" id="10_48a3m"]
 [ext_resource type="Texture2D" uid="uid://vyf30j50dr6m" path="res://Boss/BossTextures/LeftLeg.png" id="11_nospa"]
+[ext_resource type="Texture2D" uid="uid://crk6pkb7e5rwc" path="res://GPUTrail-main/defaults/texture.tres" id="12_10u17"]
 [ext_resource type="ArrayMesh" uid="uid://jknadrgbmysh" path="res://Boss/BossOBJ/SpellBook.obj" id="12_bu51h"]
 [ext_resource type="Texture2D" uid="uid://dtqphnnshwkea" path="res://Boss/BossTextures/Book.png" id="13_f8v66"]
 [ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="14_jr5wi"]
 [ext_resource type="Texture2D" uid="uid://bp4ixlf7s5xe0" path="res://Boss/BossTextures/RightArm.png" id="15_bypl5"]
 [ext_resource type="ArrayMesh" uid="uid://dti73rrp1wpt2" path="res://Boss/BossOBJ/RightLeg.obj" id="16_0s803"]
+[ext_resource type="Shader" uid="uid://dpqvjo58nkoj2" path="res://GPUTrail-main/shaders/trail.gdshader" id="16_i28eb"]
+[ext_resource type="Shader" uid="uid://blhjp1p0iqbje" path="res://GPUTrail-main/shaders/trail_draw_pass.gdshader" id="17_10u17"]
 [ext_resource type="Texture2D" uid="uid://bx0ljwscbm2y6" path="res://Boss/BossTextures/RightLeg.png" id="17_kxks5"]
+[ext_resource type="Script" uid="uid://cr8knack2mui6" path="res://GPUTrail-main/GPUTrail3D.gd" id="18_3q8av"]
 [ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="18_p0rjq"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="19_p0rjq"]
 
@@ -34,6 +38,51 @@ albedo_texture = ExtResource("7_i28eb")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_871t7"]
 albedo_texture = ExtResource("9_3q8av")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_48a3m"]
+shader = ExtResource("16_i28eb")
+
+[sub_resource type="Gradient" id="Gradient_10u17"]
+colors = PackedColorArray(0, 1, 1, 1, 0.901961, 1, 1, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3q8av"]
+gradient = SubResource("Gradient_10u17")
+
+[sub_resource type="Curve" id="Curve_48a3m"]
+bake_resolution = 16
+_data = [Vector2(0, 1), 0.0, -2.64477, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bu51h"]
+curve = SubResource("Curve_48a3m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bypl5"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("17_10u17")
+shader_parameter/tex = ExtResource("12_10u17")
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/color_ramp = SubResource("GradientTexture1D_3q8av")
+shader_parameter/curve = SubResource("CurveTexture_bu51h")
+shader_parameter/emmission_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/flags = 40
+
+[sub_resource type="QuadMesh" id="QuadMesh_0s803"]
+material = SubResource("ShaderMaterial_bypl5")
+
+[sub_resource type="Gradient" id="Gradient_3q8av"]
+colors = PackedColorArray(0, 1, 1, 1, 0.901961, 1, 1, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nospa"]
+gradient = SubResource("Gradient_3q8av")
+
+[sub_resource type="Curve" id="Curve_bu51h"]
+bake_resolution = 16
+_data = [Vector2(0, 0.494382), 0.0, 1.93054, 0, 0, Vector2(0.1, 1), -3.03371, -3.03371, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_f8v66"]
+curve = SubResource("Curve_bu51h")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3n4ec"]
 albedo_texture = ExtResource("11_nospa")
 
@@ -42,6 +91,20 @@ albedo_texture = ExtResource("13_f8v66")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2cc3"]
 albedo_texture = ExtResource("15_bypl5")
+
+[sub_resource type="Gradient" id="Gradient_nospa"]
+colors = PackedColorArray(0, 1, 1, 1, 0.901961, 1, 1, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bu51h"]
+gradient = SubResource("Gradient_nospa")
+
+[sub_resource type="Curve" id="Curve_f8v66"]
+bake_resolution = 16
+_data = [Vector2(0, 0.505618), 0.0, 5.5618, 0, 0, Vector2(0.1, 1), -2.50786, -2.50786, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jr5wi"]
+curve = SubResource("Curve_f8v66")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcpgp"]
 albedo_texture = ExtResource("17_kxks5")
@@ -671,6 +734,38 @@ mesh = ExtResource("8_10u17")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_871t7")
 
+[node name="SideTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.481, -0.591, 0)
+visible = false
+amount = 1
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 1
+length_seconds = 0.0166667
+color_ramp = SubResource("GradientTexture1D_nospa")
+curve = SubResource("CurveTexture_f8v66")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
+[node name="BehindTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0.0282638, -0.591, 0.402593)
+visible = false
+amount = 1
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 1
+length_seconds = 0.0166667
+color_ramp = SubResource("GradientTexture1D_3q8av")
+curve = SubResource("CurveTexture_bu51h")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
 [node name="LeftLegPivot" type="Node3D" parent="Torso"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, -0.748, 0)
 
@@ -694,6 +789,22 @@ mesh = ExtResource("14_jr5wi")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_p2cc3")
 
+[node name="SideTrail" type="GPUParticles3D" parent="Torso/RightArmPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.481437, -0.591062, 0)
+visible = false
+amount = 1
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 1
+length_seconds = 0.0166667
+color_ramp = SubResource("GradientTexture1D_bu51h")
+curve = SubResource("CurveTexture_jr5wi")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
 [node name="RightLegPivot" type="Node3D" parent="Torso"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, -0.748, 0)
 
@@ -702,6 +813,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, 0.748, 0)
 mesh = ExtResource("16_0s803")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
+
+[node name="Trail" type="GPUParticles3D" parent="Torso"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+amount = 60
+lifetime = 60.0
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 60
+length_seconds = 1.0
+color_ramp = SubResource("GradientTexture1D_3q8av")
+curve = SubResource("CurveTexture_bu51h")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
 
 [node name="RightHook" type="Area3D" parent="."]
 collision_layer = 2
