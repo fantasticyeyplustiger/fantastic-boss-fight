@@ -71,9 +71,9 @@ func _physics_process(delta: float) -> void:
 	
 	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
-	Global.front_of_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody.global_position
+	Global.front_of_player = $FrontOfBodyPivot/FrontOfBody.global_position
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
-	Global.boss_to_player = $FrontOfBodyPivot/SecondPivot/FrontOfBody2.global_position + PLAYER_HEAD_POSITION
+	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position
 	Global.player_velocity = velocity
 	move_and_slide()
 

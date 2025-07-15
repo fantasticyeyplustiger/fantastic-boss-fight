@@ -60,8 +60,6 @@ script = ExtResource("1_24pju")
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_1gap8")
-knockback = true
-knockback_power = 5.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)

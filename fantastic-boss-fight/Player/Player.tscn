@@ -108,13 +108,13 @@ shape = SubResource("CylinderShape3D_3qydi")
 [node name="FrontOfBodyPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.23517e-08, 0)
 
-[node name="SecondPivot" type="Node3D" parent="FrontOfBodyPivot"]
-
-[node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot/SecondPivot"]
+[node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="FrontOfBody2" type="Node3D" parent="FrontOfBodyPivot/SecondPivot"]
+[node name="FrontOfBody2" type="Node3D" parent="FrontOfBodyPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="SecondPivot" type="Node3D" parent="FrontOfBodyPivot"]
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 libraries = {

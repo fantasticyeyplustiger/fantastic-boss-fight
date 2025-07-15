@@ -173,8 +173,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_kwn00")
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_325l1")
-knockback = true
-launch_up = true
 knockback_power = 15.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
