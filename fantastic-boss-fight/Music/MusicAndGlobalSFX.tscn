@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu07mqa2acbq7"]
+
+[ext_resource type="AudioStream" uid="uid://nf3j18y6mibd" path="res://Music/Order.mp3" id="1_35syu"]
+
+[node name="MusicAndGlobalSFX" type="Node"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_35syu")
+volume_db = -15.0
+autoplay = true

@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+## Make sure all Area3Ds correlated to attack hitboxes have Knockback.gd as a script!
+
 enum attacks {PUNCH_RUSH}
 
 const LOW_DAMAGE : float = 15.0
