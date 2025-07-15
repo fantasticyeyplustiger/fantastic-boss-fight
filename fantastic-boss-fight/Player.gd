@@ -2,13 +2,13 @@ extends CharacterBody3D
 
 const JUMP_VELOCITY : float = 18.0
 const GRAVITY : float = 19.6
-const WALK_SPEED : float = 25.0
+const WALK_SPEED : float = 15.0
 const SPRINT_SPEED : float = 25.0
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 
 var CAMERA_SENSITIVITY : float = 0.003
 
-var speed : float = 25.0
+var speed : float = 15.0
 var jump : float = 18.0
 
 var health : float = 5000.0
@@ -73,7 +73,7 @@ func _physics_process(delta: float) -> void:
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/FrontOfBody.global_position
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
-	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position
+	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position - Vector3(0.0, 0.3, 0.0)
 	Global.player_velocity = velocity
 	move_and_slide()
 
@@ -90,8 +90,7 @@ func get_hit(area: Area3D) -> void:
 		health -= area.get_parent().damage
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		
-		if area.knockback:
-			get_knockbacked(area.global_position, area.launch_up, area.knockback_power)
+		get_knockbacked(area.global_position, area.launch_power, area.knockback_power)
 	else:
 		$PlayerGUI.parry.text = "PARRIED!!!"
 		reset_parry_text()
@@ -99,14 +98,9 @@ func get_hit(area: Area3D) -> void:
 	if health <= 0.0:
 		can_move = false
 
-func get_knockbacked(position_of_kb : Vector3, launch_up : bool, knockback_power : float) -> void:
+func get_knockbacked(position_of_kb : Vector3, launch_power : float, knockback_power : float) -> void:
 	velocity -= (position_of_kb - global_position).normalized() * knockback_power
-	
-	if launch_up:
-		velocity.y = 25.0
-	else:
-		velocity.y = 0.5
-	
+	velocity.y = launch_power
 	move_and_slide()
 
 func reset_parry_text() -> void:

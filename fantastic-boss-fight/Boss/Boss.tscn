@@ -639,6 +639,7 @@ _data = {
 
 [node name="Boss" type="CharacterBody3D"]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+collision_layer = 0
 script = ExtResource("1_xtogi")
 
 [node name="Cape" type="MeshInstance3D" parent="."]
@@ -702,20 +703,27 @@ mesh = ExtResource("16_0s803")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
-[node name="BodyAttacks" type="Node3D" parent="."]
-
-[node name="PunchRush" type="Area3D" parent="BodyAttacks"]
+[node name="RightHook" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
+knockback_power = 100.0
+launch_power = 1.0
 
-[node name="RightHook" type="CollisionShape3D" parent="BodyAttacks/PunchRush"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHook"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.908875, 5.88119, -4.81201)
 visible = false
 shape = SubResource("BoxShape3D_p0rjq")
 disabled = true
 
-[node name="LeftUppercut" type="CollisionShape3D" parent="BodyAttacks/PunchRush"]
+[node name="LeftUppercut" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("18_p0rjq")
+knockback_power = 10.0
+launch_power = 20.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftUppercut"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.432165, 7.64357, -4.81201)
 visible = false
 shape = SubResource("BoxShape3D_56y8k")

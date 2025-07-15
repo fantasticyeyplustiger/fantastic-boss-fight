@@ -2,9 +2,9 @@ extends CharacterBody3D
 
 enum attacks {PUNCH_RUSH}
 
-const LOW_DAMAGE : float = 25.0
-const MED_DAMAGE : float = 50.0
-const HIGH_DAMAGE : float = 100.0
+const LOW_DAMAGE : float = 15.0
+const MED_DAMAGE : float = 30.0
+const HIGH_DAMAGE : float = 50.0
 
 const WALK_SPEED : float = 7.5
 const SPRINT_SPEED : float = 35.0
@@ -12,15 +12,21 @@ const SPRINT_SPEED : float = 35.0
 const GRAVITY : float = 19.6
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
+## 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
+const RIGHT_X_ANGLE : Vector3 = Vector3(0.5, 0.0, 0.0)
 
 const MAX_HEALTH : float = 1_000_000 # in case i ever want to have healing abilities
 
 var health : float = 1_000_000
+var damage : float
 
-var attacking : bool = false
-var attack_cooldown : bool = true
+var attacking : bool = true
 var can_walk : bool = true
+
+## If turned true, have 'dash_towards' used right after.
 var dashing : bool = false
+
+var should_fall : bool = false
 var should_look_at_player : bool = false
 var parrying : bool = false
 
@@ -32,7 +38,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if not is_on_floor():
+	if not is_on_floor() or should_fall:
 		velocity.y -= GRAVITY * delta
 	
 	if not attacking:
@@ -54,59 +60,82 @@ func choose_attack() -> void:
 	pass
 
 func punch_rush() -> void:
+	# Wait for each attack before starting the next one.
+	await right_hook()
+	await left_uppercut()
+	await set_atk_cooldown_in_seconds(2.0)
+
+## Makes the boss throw a right hook while dashing towards the player.
+func right_hook() -> void:
+	damage = MED_DAMAGE
 	$Animations.play("right_hook")
 	
-	await get_tree().create_timer(0.2).timeout
-	
-	global_position = Global.boss_to_player
 	look_at_player()
-	
-	await get_tree().create_timer(0.25).timeout
-	
-	dash_towards_player_for_seconds(0.2)
-	flash_hitbox_on_for_seconds($BodyAttacks/PunchRush/RightHook, 0.2)
-	
-	await get_tree().create_timer(2.0).timeout
-	
-	$Animations.play("left_uppercut")
 	
 	await get_tree().create_timer(0.3).timeout
 	
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
 	look_at_player()
 	
 	await get_tree().create_timer(0.2).timeout
 	
-	dash_towards_player_for_seconds(0.2)
-	flash_hitbox_on_for_seconds($BodyAttacks/PunchRush/LeftUppercut, 0.2)
+	dashing = true
+	dash_towards(Global.player_position)
+	toggle_hitbox($RightHook/CollisionShape3D)
 	
-	set_atk_cooldown_in_seconds(2.0)
+	await get_tree().create_timer(0.2).timeout
+	
+	dashing = false
+	toggle_hitbox($RightHook/CollisionShape3D)
+	
+	await get_tree().create_timer(0.1).timeout # COOLDOWN
+
+func left_uppercut() -> void:
+	damage = HIGH_DAMAGE
+	$Animations.play("left_uppercut")
+	
+	look_at_player()
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	SpawnObject.air_shockwave(global_position, global_rotation + Vector3(deg_to_rad(90.0), 0.0, 0.0))
+	global_position = Global.boss_to_player
+	look_at_player()
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	dashing = true
+	dash_towards(Global.player_position)
+	toggle_hitbox($LeftUppercut/CollisionShape3D)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	dashing = false
+	toggle_hitbox($LeftUppercut/CollisionShape3D)
+	
+	await get_tree().create_timer(0.1).timeout
 
 ## Turns the corresponding collision on for x seconds before turning it off again.
-func flash_hitbox_on_for_seconds(collision : CollisionShape3D, seconds : float) -> void:
-	collision.set_deferred("disabled", false)
-	get_tree().create_timer(seconds)
-	collision.set_deferred("disabled", true)
+func toggle_hitbox(collision : CollisionShape3D) -> void:
+	collision.set_deferred("disabled", not collision.disabled)
 
 ## Predicts where the player will be at x seconds and makes boss go in front of that position.
 func go_to_predicted_position_at_seconds(seconds : float) -> void:
 	var predicted_position : Vector3 = Global.predict_player_position_at_seconds_for_boss(seconds)
 	position = predicted_position
 
-## Makes the boss dash towards the player at a high speed.
-func dash_towards_player_for_seconds(seconds : float) -> void:
-	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
-	var predicted_pos = Global.predict_player_position_at_seconds(seconds + 0.1)
-	var vector2_predicted_pos = Vector3(predicted_pos.x, 0.0, predicted_pos.z)
+## Makes the boss dash towards the position at a high speed.
+# Also makes the boss look at that direction.
+func dash_towards(target_position : Vector3) -> void:
+	var direction = global_position.direction_to(target_position)
 	
-	var direction = vector2_pos.direction_to(vector2_predicted_pos)
+	# add to global_position so that direction is actually relative to boss
+	look_at(global_position + direction)
+	rotation.x = 0
+	rotation.z = 0
 	
-	velocity = direction * WALK_SPEED
-	look_at_player()
-	
-	dashing = true
-	await get_tree().create_timer(seconds).timeout
-	dashing = false
+	velocity = (direction * SPRINT_SPEED) * 1.5
 
 ## Makes the boss walk towards the player.
 func walk_towards_player() -> void:
