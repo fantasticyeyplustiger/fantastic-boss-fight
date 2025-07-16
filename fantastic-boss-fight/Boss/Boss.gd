@@ -80,13 +80,17 @@ func choose_attack() -> void:
 	# Later on, make dynamic attack loop
 	punch_rush()
 
+#region ATTACKS
+
+## Launches rush of 4 attacks one after another
 func punch_rush() -> void:
+	previous_attack = attacks.PUNCH_RUSH
 	can_walk = false
 	should_fall = true
 	
 	$Aura.emitting = true
 	
-	# Wait for each attack before starting the next one.
+	# Wait for each attack to happen before starting the next one.
 	await right_hook()
 	await left_uppercut()
 	
@@ -113,6 +117,8 @@ func right_hook() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
+	$DashSFX.pitch_scale = randf_range(0.2, 0.4)
+	$DashSFX.play()
 	toggle_trail(right_arm_side_trail)
 	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
@@ -121,6 +127,8 @@ func right_hook() -> void:
 	
 	await get_tree().create_timer(0.2).timeout
 	
+	$DashSFX.pitch_scale = 1.0
+	$DashSFX.play()
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
 	toggle_hitbox($RightHook/CollisionShape3D)
@@ -142,6 +150,8 @@ func left_uppercut() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
+	$DashSFX.pitch_scale = randf_range(0.2, 0.4)
+	$DashSFX.play()
 	toggle_trail(left_arm_behind_trail)
 	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
@@ -150,6 +160,8 @@ func left_uppercut() -> void:
 	
 	await get_tree().create_timer(0.2).timeout
 	
+	$DashSFX.pitch_scale = 1.0
+	$DashSFX.play()
 	dashing = true
 	dash_towards(Global.player_position)
 	toggle_hitbox($LeftUppercut/CollisionShape3D)
@@ -181,12 +193,15 @@ func slam() -> void:
 	
 	await get_tree().create_timer(0.25).timeout
 	
+	$DashSFX.pitch_scale = randf_range(0.6, 0.9)
+	$DashSFX.play()
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
 	
 	await get_tree().create_timer(0.2).timeout
 	
 	SpawnObject.ground_shockwave(global_position)
+	$ExplosionSFX.play()
 	
 	toggle_trail(left_fist_trail)
 	toggle_trail(right_fist_trail)
@@ -206,6 +221,9 @@ func air_chop() -> void:
 	damage = HIGH_DAMAGE
 	$Animations.play("air_chop")
 	
+	$DashSFX.pitch_scale = 1.5
+	$DashSFX.play()
+	
 	toggle_trail(right_fist_trail)
 	toggle_trail(right_arm_side_trail)
 	look_at_player()
@@ -213,6 +231,11 @@ func air_chop() -> void:
 	go_to_predicted_position_at_seconds(0.3)
 	
 	await get_tree().create_timer(0.4).timeout
+	
+	$CraterSFX.pitch_scale = randf_range(1.0, 2.0)
+	$CraterSFX.play()
+	$DashSFX.pitch_scale = randf_range(0.3, 0.5)
+	$DashSFX.play()
 	
 	dashing = true
 	dash_towards(Global.player_position)
@@ -226,6 +249,8 @@ func air_chop() -> void:
 	toggle_trail(right_fist_trail)
 	
 	await get_tree().create_timer(0.1).timeout # ATTACK COOLDOWN
+
+#endregion
 
 ## Switches 'visible' of trail to be the opposite state.
 # Also edits the length to make trail emitting less noticeable when visible is true again.
