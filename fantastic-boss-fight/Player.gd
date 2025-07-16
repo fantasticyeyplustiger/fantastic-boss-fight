@@ -54,6 +54,7 @@ func _physics_process(delta: float) -> void:
 		dash()
 	
 	if Input.is_action_just_pressed("parry") and not parrying and not parry_cooldown:
+		$PunchSFX.play()
 		parrying = true
 		parry_cooldown = true
 		parry() # 0.25-second window for parrying, 0.5-second cooldown.
@@ -135,8 +136,13 @@ func get_hit(area: Area3D) -> void:
 		
 		get_knockbacked(area.global_position, area.launch_power, area.knockback_power)
 	else:
-		$PlayerGUI.parry.text = "PARRIED!!!"
-		reset_parry_text()
+		if parrying:
+			$ParrySFX.play()
+			$PlayerGUI.parry.text = "PARRIED!!!"
+			reset_parry_text()
+		else:
+			$PlayerGUI.parry.text = "I-FRAMED!"
+			reset_parry_text()
 	
 	if health <= 0.0:
 		can_move = false

@@ -1,24 +1,29 @@
 extends CharacterBody3D
 
 ## Make sure all Area3Ds correlated to attack hitboxes have Knockback.gd as a script!
+## Additionally, every hitbox collision should be DISABLED at start.
 
-enum attacks {PUNCH_RUSH}
+enum attacks {PUNCH_RUSH, CLAP}
 
 const LOW_DAMAGE : float = 15.0
 const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
 const WALK_SPEED : float = 5.0
-const SPRINT_SPEED : float = 35.0
+const SPRINT_SPEED : float = 40.0
 
 const GRAVITY : float = 19.6
 
+## Where the player's camera is located relative to 'player_position'.
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 
 ## Approximately 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
 const RIGHT_X_ANGLE : Vector3 = Vector3(1.571, 0.0, 0.0)
 
-## Has no use as of now, because boss doesn't heal.
+## Approximately 90 degrees on the y-axis. Makes air shockwaves perpendicular to the boss' face.
+const RIGHT_Y_ANGLE : Vector3 = Vector3(0.0, 1.571, 0.0)
+
+## Has no use as of now because boss doesn't heal.
 #const MAX_HEALTH : float = 1_000_000
 
 ## All of these trails move with their corresponding body parts.
@@ -77,12 +82,75 @@ func _physics_process(delta: float) -> void:
 	Global.boss_position = global_position
 
 func choose_attack() -> void:
-	# Later on, make dynamic attack loop
-	punch_rush()
+	
+	var attack_cooldown : float
+	
+	if Global.player_in_air:
+		if not previous_attack == attacks.CLAP:
+			await clap()
+			attack_cooldown = 0.2
+	
+	else:
+		await punch_rush()
+		attack_cooldown = 0.5
+	
+	set_atk_cooldown_in_seconds(attack_cooldown)
 
 #region ATTACKS
+## NOTE: All attacks are related to the corresponding animation that plays with them.
+## Sync all attacks to the animation!
 
-## Launches rush of 4 attacks one after another
+## Claps the player and produces a massive, damaging shockwave.
+func clap() -> void:
+	previous_attack = attacks.CLAP
+	should_fall = false
+	can_walk = false
+	damage = HIGH_DAMAGE
+	
+	$Aura.emitting = true
+	$Animations.play("clap")
+	
+	look_at_player()
+	
+	await get_tree().create_timer(0.15).timeout
+	
+	$DashSFX.pitch_scale = 0.3
+	$DashSFX.play()
+	
+	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
+	
+	go_to_predicted_position_at_seconds(0.05)
+	look_at_player()
+	
+	toggle_trail(right_arm_side_trail)
+	toggle_trail(left_arm_side_trail)
+	
+	await get_tree().create_timer(0.35).timeout
+	
+	dashing = true
+	dash_towards(Global.player_position)
+	toggle_hitbox($Clap/CollisionShape3D)
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	var shockwave_position = $Clap/CollisionShape3D.global_position
+	
+	dashing = false
+	$AirExplosionSFX.play()
+	SpawnObject.colliding_shockwave(shockwave_position, global_rotation - RIGHT_X_ANGLE - RIGHT_Y_ANGLE)
+	toggle_hitbox($Clap/CollisionShape3D)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	can_walk = true
+	should_fall = true
+	
+	await get_tree().create_timer(0.5).timeout
+	
+	toggle_trail(right_arm_side_trail)
+	toggle_trail(left_arm_side_trail)
+
+## Launches rush of 4 attacks one after another.
 func punch_rush() -> void:
 	previous_attack = attacks.PUNCH_RUSH
 	can_walk = false
@@ -103,9 +171,8 @@ func punch_rush() -> void:
 	
 	$Aura.emitting = false
 	
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.2).timeout
 	can_walk = true
-	await set_atk_cooldown_in_seconds(1.5)
 
 ## Makes the boss throw a right hook while dashing towards the player.
 func right_hook() -> void:
@@ -117,7 +184,7 @@ func right_hook() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	$DashSFX.pitch_scale = randf_range(0.2, 0.4)
+	$DashSFX.pitch_scale = randf_range(0.1, 0.2)
 	$DashSFX.play()
 	toggle_trail(right_arm_side_trail)
 	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
@@ -143,14 +210,14 @@ func right_hook() -> void:
 
 ## Makes the boss throw a left uppercut while dashing towards the player. Launches the player up.
 func left_uppercut() -> void:
-	damage = HIGH_DAMAGE
+	damage = MED_DAMAGE
 	$Animations.play("left_uppercut")
 	
 	look_at_player()
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	$DashSFX.pitch_scale = randf_range(0.2, 0.4)
+	$DashSFX.pitch_scale = randf_range(0.1, 0.2)
 	$DashSFX.play()
 	toggle_trail(left_arm_behind_trail)
 	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)

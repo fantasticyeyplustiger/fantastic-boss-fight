@@ -1,6 +1,6 @@
 extends Node3D
 
-const damage : float = 200.0
+const damage : float = 25.0
 
 func _ready() -> void:
 	$Animation.play("shockwave")

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d2nmg74r4j40l"
-path="res://.godot/imported/punch_projectile.wav-f508fd32482f8c0f9ae7bacc812d24f2.sample"
+path="res://.godot/imported/Parry.wav-378762d4f6397d9093fc6ee309beadb7.sample"
 
 [deps]
 
-source_file="res://SFX/punch_projectile.wav"
-dest_files=["res://.godot/imported/punch_projectile.wav-f508fd32482f8c0f9ae7bacc812d24f2.sample"]
+source_file="res://SFX/Parry.wav"
+dest_files=["res://.godot/imported/Parry.wav-378762d4f6397d9093fc6ee309beadb7.sample"]
 
 [params]
 

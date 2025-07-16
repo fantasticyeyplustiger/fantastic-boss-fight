@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=13 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
 [ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/LandingHeavy.wav" id="3_tok1r"]
+[ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/PunchSwoosh.ogg" id="4_ddoul"]
+[ext_resource type="AudioStream" uid="uid://d2nmg74r4j40l" path="res://SFX/Parry.wav" id="5_8g4oa"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3qydi"]
 
@@ -131,5 +133,13 @@ mouse_filter = 2
 
 [node name="LandingSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tok1r")
+
+[node name="PunchSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ddoul")
+volume_db = -10.0
+
+[node name="ParrySFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8g4oa")
+volume_db = -10.0
 
 [connection signal="area_entered" from="Hurtbox" to="." method="get_hit"]

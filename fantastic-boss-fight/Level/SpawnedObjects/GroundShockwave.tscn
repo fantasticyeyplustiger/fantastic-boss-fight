@@ -112,6 +112,5 @@ script = ExtResource("2_n68n2")
 libraries = {
 &"": SubResource("AnimationLibrary_vqysv")
 }
-speed_scale = 2.5
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]
