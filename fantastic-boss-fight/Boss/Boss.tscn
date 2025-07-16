@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene load_steps=90 format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -49,7 +49,7 @@ gradient = SubResource("Gradient_10u17")
 
 [sub_resource type="Curve" id="Curve_48a3m"]
 bake_resolution = 16
-_data = [Vector2(0, 1), 0.0, -2.64477, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -2.64477, 0, 0, Vector2(1, 0), -0.373851, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_bu51h"]
@@ -83,6 +83,20 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_f8v66"]
 curve = SubResource("Curve_bu51h")
 
+[sub_resource type="Gradient" id="Gradient_48a3m"]
+colors = PackedColorArray(0, 1, 1, 1, 0.901961, 1, 1, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f8v66"]
+gradient = SubResource("Gradient_48a3m")
+
+[sub_resource type="Curve" id="Curve_jr5wi"]
+bake_resolution = 16
+_data = [Vector2(0, 0.505618), 0.0, 5.5618, 0, 0, Vector2(0.1, 1), -2.50786, -2.50786, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bypl5"]
+curve = SubResource("Curve_jr5wi")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3n4ec"]
 albedo_texture = ExtResource("11_nospa")
 
@@ -106,6 +120,20 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_jr5wi"]
 curve = SubResource("Curve_f8v66")
 
+[sub_resource type="Gradient" id="Gradient_0s803"]
+colors = PackedColorArray(0, 1, 1, 1, 0.901961, 1, 1, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kxks5"]
+gradient = SubResource("Gradient_0s803")
+
+[sub_resource type="Curve" id="Curve_exinx"]
+bake_resolution = 16
+_data = [Vector2(0, 0.505618), 0.0, 5.5618, 0, 0, Vector2(0.1, 1), -2.50786, -2.50786, 0, 0, Vector2(1, 0.1), -0.373851, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_c22uo"]
+curve = SubResource("Curve_exinx")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcpgp"]
 albedo_texture = ExtResource("17_kxks5")
 
@@ -114,6 +142,13 @@ size = Vector3(13, 5, 9)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_56y8k"]
 size = Vector3(5.1, 15, 12)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_10u17"]
+height = 35.0
+radius = 20.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_10u17"]
+size = Vector3(9, 16, 13)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtogi"]
 size = Vector3(3, 8.22, 1.55)
@@ -693,11 +728,456 @@ tracks/11/keys = {
 "values": [Vector3(0, 0, 0), Vector3(-0.380482, 0.380482, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_10u17"]
+resource_name = "slam"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso/RightArmPivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 0.4, 1),
+"update": 0,
+"values": [Vector3(0.56, 0, 0), Vector3(0.5, 0.725, 0.355), Vector3(0.5, 0.725, 0.355), Vector3(0.5, 0, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArmPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 0.4, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.190241), Vector3(3.60061, 0, -0.190241), Vector3(3.60061, 0, -0.190241), Vector3(1.31598, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/LeftArmPivot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 0.4, 1),
+"update": 0,
+"values": [Vector3(-0.56, 0, 0), Vector3(-0.5, 0.725, 0.355), Vector3(-0.5, 0.725, 0.355), Vector3(-0.5, 0, -1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/LeftArmPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 0.4, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.190241), Vector3(3.60061, 0, 0.190241), Vector3(3.60061, 0, 0.190241), Vector3(1.31598, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HeadPivot:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.591667),
+"transitions": PackedFloat32Array(2, 0.5, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.380482, 0, 0), Vector3(-1.33343, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftLegPivot:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.195, -0.748, -0.05), Vector3(-0.195, -0.618, 0.245), Vector3(-0.195, -0.618, -0.12)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/LeftLegPivot:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.190241, 0), Vector3(-0.760964, 0.190241, 0), Vector3(0, 0.190241, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Torso/RightLegPivot:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.190241, 0, 0), Vector3(-0.570723, 0, 0), Vector3(-0.570723, 0, 0), Vector3(0.762709, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Torso/RightLegPivot:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.691667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.175, -0.708, -0.14), Vector3(0.175, -0.388, -0.375), Vector3(0.175, -0.388, -0.375), Vector3(0.175, -0.448, -0.615)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Torso:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.591667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.190241, 0, 0), Vector3(-0.95295, 0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Cape:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.591667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.190241, 0, 0), Vector3(-0.95295, 0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HeadPivot:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.591667),
+"transitions": PackedFloat32Array(2, 0.5, 1),
+"update": 0,
+"values": [Vector3(0, 6.8, 0), Vector3(0, 6.33, 0.505), Vector3(0, 5.71, -2.235)]
+}
+
+[sub_resource type="Animation" id="Animation_3q8av"]
+resource_name = "slam_to_reset"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso/RightArmPivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.5, 0, -1), Vector3(0.56, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torso/RightArmPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.31598, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/LeftArmPivot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.5, 0, -1), Vector3(-0.56, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/LeftArmPivot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.31598, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HeadPivot:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.33343, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftLegPivot:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.195, -0.618, -0.12), Vector3(-0.175, -0.748, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/LeftLegPivot:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.190241, 0), Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Torso/RightLegPivot:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.762709, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Torso/RightLegPivot:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.175, -0.448, -0.615), Vector3(0.175, -0.748, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Torso:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.95295, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Cape:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.95295, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HeadPivot:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 5.71, -2.235), Vector3(0, 6.8, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_48a3m"]
+resource_name = "air_chop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.533333, 0.6),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.349066, 0), Vector3(0, -0.760964, 0), Vector3(0, -0.760964, 0), Vector3(-0.190241, 0.572468, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cape:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.533333, 0.6),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.349066, 0), Vector3(0, -0.760964, 0), Vector3(0, -0.760964, 0), Vector3(-0.190241, 0.572468, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torso/RightArmPivot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.533333, 0.6, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.760964, 0), Vector3(3.42608, -1.14319, 0.190241), Vector3(3.42608, -1.14319, 0.190241), Vector3(3.32136, -1.45735, -0.809833), Vector3(3.23584, -1.71391, -2.66512)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torso/RightArmPivot:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.533333, 0.6, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.56, 0, 0), Vector3(0.74, 1.06, 0), Vector3(0.74, 1.06, 0), Vector3(0.74, 0.667, -0.711), Vector3(0.74, -0.555, -0.965)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torso/LeftArmPivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.3, 0.566667, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.655, 0.04, 0.095), Vector3(-0.655, -0.07, 0.095), Vector3(-0.655, -0.07, 0.095), Vector3(-0.655, 0.06, 0.315)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Torso/LeftArmPivot:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.4, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.190241, -0.380482, -0.174533), Vector3(-0.190241, 0.760964, -0.174533), Vector3(-0.190241, 0.760964, -0.364774)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Torso/RightLegPivot:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.295, -0.658, -0.18), Vector3(0.295, -0.533, -0.3), Vector3(0.295, -0.533, -0.3), Vector3(0.065, -0.748, 0.245)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Torso/RightLegPivot:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.190241, -0.380482, 0), Vector3(-0.570723, -0.380482, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Torso/LeftLegPivot:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.175, -0.748, 0), Vector3(-0.27, -0.813, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Torso/LeftLegPivot:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.190241, 0, 0), Vector3(-0.190241, 0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("HeadPivot:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.366667, 0.5, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.380482, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(-0.380482, 0.380482, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HeadPivot:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.466667, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 6.8, 0), Vector3(0, 6.8, 0), Vector3(-0.32, 6.8, -0.43)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b0eo8"]
 _data = {
 &"RESET": SubResource("Animation_b0eo8"),
+&"air_chop": SubResource("Animation_48a3m"),
 &"left_uppercut": SubResource("Animation_i6vrr"),
-&"right_hook": SubResource("Animation_p0rjq")
+&"right_hook": SubResource("Animation_p0rjq"),
+&"slam": SubResource("Animation_10u17"),
+&"slam_to_reset": SubResource("Animation_3q8av")
 }
 
 [node name="Boss" type="CharacterBody3D"]
@@ -766,6 +1246,22 @@ curve = SubResource("CurveTexture_bu51h")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
+[node name="FistTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+transform = Transform3D(-1.74846e-08, 0.4, -1.74846e-08, 0, -1.74846e-08, -0.4, -0.4, -1.74846e-08, 7.64274e-16, -0.01, -0.452, -0.3)
+visible = false
+amount = 1
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 1
+length_seconds = 0.0166667
+color_ramp = SubResource("GradientTexture1D_f8v66")
+curve = SubResource("CurveTexture_bypl5")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
 [node name="LeftLegPivot" type="Node3D" parent="Torso"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, -0.748, 0)
 
@@ -805,6 +1301,22 @@ curve = SubResource("CurveTexture_jr5wi")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
+[node name="FistTrail" type="GPUParticles3D" parent="Torso/RightArmPivot"]
+transform = Transform3D(-1.74846e-08, 0.4, -1.74846e-08, 0, -1.74846e-08, -0.4, -0.4, -1.74846e-08, 7.64274e-16, -0.01, -0.452, -0.3)
+visible = false
+amount = 1
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 1
+length_seconds = 0.0166667
+color_ramp = SubResource("GradientTexture1D_kxks5")
+curve = SubResource("CurveTexture_c22uo")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
 [node name="RightLegPivot" type="Node3D" parent="Torso"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, -0.748, 0)
 
@@ -815,7 +1327,6 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
 [node name="Trail" type="GPUParticles3D" parent="Torso"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 amount = 60
 lifetime = 60.0
 explosiveness = 1.0
@@ -825,6 +1336,22 @@ draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 60
 length_seconds = 1.0
+color_ramp = SubResource("GradientTexture1D_3q8av")
+curve = SubResource("CurveTexture_bu51h")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
+
+[node name="Trail2" type="GPUParticles3D" parent="Torso"]
+transform = Transform3D(-2.18557e-08, 0.5, -2.18557e-08, 0, -2.18557e-08, -0.5, -0.5, -2.18557e-08, 9.55343e-16, 0, 0, 0)
+amount = 45
+lifetime = 45.0
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_48a3m")
+draw_pass_1 = SubResource("QuadMesh_0s803")
+script = ExtResource("18_3q8av")
+length = 45
+length_seconds = 0.75
 color_ramp = SubResource("GradientTexture1D_3q8av")
 curve = SubResource("CurveTexture_bu51h")
 _defaults_have_been_set = true
@@ -856,6 +1383,32 @@ visible = false
 shape = SubResource("BoxShape3D_56y8k")
 disabled = true
 
+[node name="Slam" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("18_p0rjq")
+knockback_power = 20.0
+launch_power = 30.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slam"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.9073, -4.057)
+visible = false
+shape = SubResource("CylinderShape3D_10u17")
+disabled = true
+
+[node name="AirChop" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("18_p0rjq")
+knockback_power = 15.0
+launch_power = -60.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirChop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.39433, -4.057)
+visible = false
+shape = SubResource("BoxShape3D_10u17")
+disabled = true
+
 [node name="EnviromentCollision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01816, -0.0121338)
 shape = SubResource("BoxShape3D_xtogi")
@@ -864,8 +1417,8 @@ shape = SubResource("BoxShape3D_xtogi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 emitting = false
 amount = 32
-lifetime = 0.8
-speed_scale = 2.0
+lifetime = 0.5
+explosiveness = 0.1
 process_material = SubResource("ParticleProcessMaterial_i6vrr")
 draw_pass_1 = SubResource("QuadMesh_f8v66")
 

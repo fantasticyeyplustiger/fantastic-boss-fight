@@ -8,24 +8,27 @@ const LOW_DAMAGE : float = 15.0
 const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
-const WALK_SPEED : float = 7.5
+const WALK_SPEED : float = 5.0
 const SPRINT_SPEED : float = 35.0
 
 const GRAVITY : float = 19.6
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 
-## 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
+## Approximately 90 degrees on the x-axis. Mainly for air shockwaves to be rotated.
 const RIGHT_X_ANGLE : Vector3 = Vector3(1.571, 0.0, 0.0)
 
 ## Has no use as of now, because boss doesn't heal.
-const MAX_HEALTH : float = 1_000_000
+#const MAX_HEALTH : float = 1_000_000
 
 ## All of these trails move with their corresponding body parts.
 @onready var right_arm_side_trail = $Torso/RightArmPivot/SideTrail
 @onready var left_arm_side_trail = $Torso/LeftArmPivot/SideTrail
 @onready var left_arm_behind_trail = $Torso/LeftArmPivot/BehindTrail
-@onready var torso_trail = $Torso/Trail
+@onready var right_fist_trail = $Torso/RightArmPivot/FistTrail
+@onready var left_fist_trail = $Torso/LeftArmPivot/FistTrail
+#@onready var torso_trail = $Torso/Trail
+#@onready var horizontal_torso_trail = $Torso/Trail2
 
 var health : float = 1_000_000
 var damage : float
@@ -53,7 +56,7 @@ func _physics_process(delta: float) -> void:
 		attacking = true
 		choose_attack()
 	# Shouldn't walk towards player while attacking
-	elif not attacking and can_walk:
+	elif can_walk:
 		walk_towards_player()
 	
 	# Difference between look_at_player() is that this includes X and Z rotation
@@ -76,14 +79,29 @@ func _physics_process(delta: float) -> void:
 func choose_attack() -> void:
 	# Later on, make dynamic attack loop
 	punch_rush()
-	pass
 
 func punch_rush() -> void:
+	can_walk = false
 	should_fall = true
+	
+	$Aura.emitting = true
+	
 	# Wait for each attack before starting the next one.
 	await right_hook()
 	await left_uppercut()
-	await set_atk_cooldown_in_seconds(1.0)
+	
+	if Global.player_in_air:
+		await air_chop()
+	else:
+		await right_hook()
+	
+	await slam()
+	
+	$Aura.emitting = false
+	
+	await get_tree().create_timer(0.5).timeout
+	can_walk = true
+	await set_atk_cooldown_in_seconds(1.5)
 
 ## Makes the boss throw a right hook while dashing towards the player.
 func right_hook() -> void:
@@ -91,6 +109,7 @@ func right_hook() -> void:
 	$Animations.play("right_hook")
 	
 	look_at_player()
+	position.y = 0.0
 	
 	await get_tree().create_timer(0.3).timeout
 	
@@ -112,7 +131,7 @@ func right_hook() -> void:
 	toggle_hitbox($RightHook/CollisionShape3D)
 	toggle_trail(right_arm_side_trail)
 	
-	await get_tree().create_timer(0.1).timeout # COOLDOWN
+	# NO COOLDOWN
 
 ## Makes the boss throw a left uppercut while dashing towards the player. Launches the player up.
 func left_uppercut() -> void:
@@ -139,10 +158,74 @@ func left_uppercut() -> void:
 	
 	dashing = false
 	toggle_hitbox($LeftUppercut/CollisionShape3D)
-	
-	await get_tree().create_timer(0.1).timeout # COOLDOWN
-	
 	toggle_trail(left_arm_behind_trail)
+	
+	# NO COOLDOWN
+
+## Makes the boss slam his arms into the ground. Launches the player up.
+func slam() -> void:
+	damage = HIGH_DAMAGE
+	$Animations.play("slam")
+	$Parryable.emitting = true
+	
+	look_at_player()
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	SpawnObject.air_shockwave(global_position, global_rotation - RIGHT_X_ANGLE)
+	toggle_trail(left_fist_trail)
+	toggle_trail(right_fist_trail)
+	global_position = Global.boss_to_player
+	position.y = 0.0
+	look_at_player()
+	
+	await get_tree().create_timer(0.25).timeout
+	
+	dashing = true
+	dash_towards_on_ground(Global.player_position)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	SpawnObject.ground_shockwave(global_position)
+	
+	toggle_trail(left_fist_trail)
+	toggle_trail(right_fist_trail)
+	dashing = false
+	toggle_hitbox($Slam/CollisionShape3D)
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	toggle_hitbox($Slam/CollisionShape3D)
+	$Animations.play("slam_to_reset")
+	$Parryable.emitting = false
+	
+	await get_tree().create_timer(0.5).timeout # ATTACK COOLDOWN
+
+## Makes the boss predict where the player will be and air chop them to the ground in the air.
+func air_chop() -> void:
+	damage = HIGH_DAMAGE
+	$Animations.play("air_chop")
+	
+	toggle_trail(right_fist_trail)
+	toggle_trail(right_arm_side_trail)
+	look_at_player()
+	SpawnObject.air_shockwave(global_position, global_rotation)
+	go_to_predicted_position_at_seconds(0.3)
+	
+	await get_tree().create_timer(0.4).timeout
+	
+	dashing = true
+	dash_towards(Global.player_position)
+	toggle_hitbox($AirChop/CollisionShape3D)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	dashing = false
+	toggle_hitbox($AirChop/CollisionShape3D)
+	toggle_trail(right_arm_side_trail)
+	toggle_trail(right_fist_trail)
+	
+	await get_tree().create_timer(0.1).timeout # ATTACK COOLDOWN
 
 ## Switches 'visible' of trail to be the opposite state.
 # Also edits the length to make trail emitting less noticeable when visible is true again.
