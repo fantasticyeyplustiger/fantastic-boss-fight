@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://defkvfvmwwamc"
-path="res://.godot/imported/Bluezone-Autobots-footstep-013.wav-75cf2b5093c483da5f2c29d636626d86.sample"
+path="res://.godot/imported/PlayerJump.wav-478865310226a4afefc068585d5223d1.sample"
 
 [deps]
 
-source_file="res://SFX/Bluezone-Autobots-footstep-013.wav"
-dest_files=["res://.godot/imported/Bluezone-Autobots-footstep-013.wav-75cf2b5093c483da5f2c29d636626d86.sample"]
+source_file="res://SFX/PlayerJump.wav"
+dest_files=["res://.godot/imported/PlayerJump.wav-478865310226a4afefc068585d5223d1.sample"]
 
 [params]
 

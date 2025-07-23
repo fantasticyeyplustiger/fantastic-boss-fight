@@ -124,7 +124,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dy32e")
 collision_layer = 2
 monitorable = false
 script = ExtResource("2_ep61r")
-knockback_power = 15.0
+knockback_power = 50.0
+launch_power = 15.0
 
 [node name="West" type="CollisionShape3D" parent="TorusHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.85)

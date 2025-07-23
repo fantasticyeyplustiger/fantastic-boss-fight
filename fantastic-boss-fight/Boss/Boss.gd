@@ -26,6 +26,8 @@ const RIGHT_Y_ANGLE : Vector3 = Vector3(0.0, 1.571, 0.0)
 ## Has no use as of now because boss doesn't heal.
 #const MAX_HEALTH : float = 1_000_000
 
+@export var testing : bool = false
+
 ## All of these trails move with their corresponding body parts.
 @onready var right_arm_side_trail = $Torso/RightArmPivot/SideTrail
 @onready var left_arm_side_trail = $Torso/LeftArmPivot/SideTrail
@@ -52,6 +54,10 @@ var previous_attack : attacks
 var current_attack : attacks = attacks.PUNCH_RUSH
 
 func _ready() -> void:
+	
+	if testing:
+		set_physics_process(false)
+	
 	set_atk_cooldown_in_seconds(2.0)
 
 func _physics_process(delta: float) -> void:
@@ -395,6 +401,13 @@ func get_2d_angle_to_player() -> Vector3:
 ## Gets the distance to the player in LENGTH, not as a pure Vector3.
 func get_distance_to_player() -> float:
 	return (global_position - Global.player_position).length()
+
+## Gets the distance to the player on a 2D plane in LENGTH, not as a pure Vector3.
+func get_2d_distance_to_player() -> float:
+	var boss_position : Vector2 = Vector2(global_position.x, global_position.z)
+	var player_position : Vector2 = Vector2(Global.player_position.x, Global.player_position.z)
+	
+	return (boss_position - player_position).length()
 
 ## Resets 'attacking' after the amount of seconds inputted to be false.
 func set_atk_cooldown_in_seconds(seconds : float) -> void:
