@@ -30,7 +30,7 @@ var parrying : bool = false
 var parry_cooldown : bool = false
 var sliding : bool = false
 var slide_jumped : bool = false
-var slam_jump : bool = false
+#var slam_jump : bool = false
 
 var dashing : bool = false
 var dash_jumped : bool = false
@@ -72,7 +72,9 @@ func _physics_process(delta: float) -> void:
 	#elif Input.is_action_pressed("jump") and on_floor and slam_jump:
 		#$JumpSFX.play()
 		#velocity.y = jump * 2.0
-	elif Input.is_action_just_pressed("jump") and on_floor:
+	
+	## CANNOT BE is_action_just_pressed otherwise dash and slide jump don't work as intended.
+	elif Input.is_action_pressed("jump") and on_floor:
 		$JumpSFX.play()
 		velocity.y = jump
 	
@@ -116,6 +118,7 @@ func _physics_process(delta: float) -> void:
 	if not on_floor and Input.is_action_just_pressed("crush"):
 		velocity.y -= 70.0
 		crushing = true
+		dashing = false # Cancels dash
 	if on_floor and crushing:
 		SpawnObject.air_shockwave(global_position, Vector3.ZERO)
 		$LandingSFX.play()
@@ -271,4 +274,5 @@ func reset_slide_jump() -> void:
 	slide_jumped = false
 
 func reset_slam_jump() -> void:
-	slam_jump = false
+	pass
+	#slam_jump = false
