@@ -9,6 +9,7 @@ const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
 ## In seconds.
 const DASH_TIME : float = 0.2
+const SLIDE_JUMP_TIME_WINDOW : float = 0.3
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 const SLIDING_HEAD_POSITION : Vector3 = Vector3(0.0, 0.4, 0.0)
@@ -22,6 +23,7 @@ var CAMERA_SENSITIVITY : float = 0.003
 var speed : float = 15.0
 var jump : float = 18.0
 var dash_multiplier : float = 1.0
+var slide_jump_time : float = 0.0
 
 var health : float = 5000.0
 
@@ -103,7 +105,7 @@ func _physics_process(delta: float) -> void:
 	#region Slide and Crush logic
 	if on_floor and Input.is_action_just_pressed("crush"):
 		begin_slide()
-		switch_hurtboxes(false)
+		switch_hurtboxes(false) # Because player is on the floor when sliding
 		sliding = true
 	elif not Input.is_action_pressed("crush"):
 		sliding = false
@@ -111,8 +113,13 @@ func _physics_process(delta: float) -> void:
 		$Head/Camera3D.position = PLAYER_HEAD_POSITION
 		switch_hurtboxes(true)
 	
-	if sliding:
-		velocity *= 0.99 # Slows slide down over time
+	# Prevents player from always being in slide_jump state
+	if on_floor and slide_jumped:
+		slide_jump_time += delta
+		
+		if slide_jump_time >= SLIDE_JUMP_TIME_WINDOW:
+			slide_jumped = false
+			slide_jump_time = 0
 	
 	# Can't be on floor, otherwise LandingSFX can be spammed
 	if not on_floor and Input.is_action_just_pressed("crush"):
