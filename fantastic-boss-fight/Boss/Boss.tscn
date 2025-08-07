@@ -1,6 +1,6 @@
 [gd_scene load_steps=91 format=3 uid="uid://ccwy8pjw4qgfs"]
 
-[ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/Boss.gd" id="1_xtogi"]
+[ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/IceCreamBoss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
 [ext_resource type="Texture2D" uid="uid://cpxg0mgh76mjd" path="res://Boss/BossTextures/Cape.png" id="3_b0eo8"]
 [ext_resource type="ArrayMesh" uid="uid://cse5718n5pdny" path="res://Boss/BossOBJ/Head.obj" id="4_p0rjq"]
@@ -1313,7 +1313,6 @@ _data = {
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 collision_layer = 0
 script = ExtResource("1_xtogi")
-testing = true
 
 [node name="Cape" type="MeshInstance3D" parent="."]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.4, 0)
