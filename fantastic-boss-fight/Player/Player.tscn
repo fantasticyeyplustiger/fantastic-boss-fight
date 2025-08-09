@@ -139,6 +139,10 @@ libraries = {
 [node name="PlayerGUI" parent="." instance=ExtResource("2_q3lat")]
 mouse_filter = 2
 
+[node name="Crosshair" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+target_position = Vector3(0, 0, -1)
+
 [node name="LandingSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tok1r")
 volume_db = -15.0
@@ -163,10 +167,10 @@ volume_db = -10.0
 wait_time = 0.2
 one_shot = true
 
-[node name="ResetSlamJump" type="Timer" parent="."]
+[node name="ResetSlamTime" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="get_hit"]
 [connection signal="timeout" from="ResetSlideJump" to="." method="reset_slide_jump"]
-[connection signal="timeout" from="ResetSlamJump" to="." method="reset_slam_jump"]
+[connection signal="timeout" from="ResetSlamTime" to="." method="reset_slam_time"]

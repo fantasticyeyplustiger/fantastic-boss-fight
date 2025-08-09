@@ -3,12 +3,12 @@ extends CharacterBody3D
 const JUMP_VELOCITY : float = 18.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 15.0
-const DASH_SPEED : float = 40.0
+const DASH_SPEED : float = 80.0
 
 const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
 ## In seconds.
-const DASH_TIME : float = 0.2
+const DASH_TIME : float = 0.15
 const SLIDE_JUMP_TIME_WINDOW : float = 0.3
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
@@ -24,6 +24,7 @@ var speed : float = 15.0
 var jump : float = 18.0
 var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
+var slam_time : float = 0.0
 
 var health : float = 5000.0
 
@@ -32,7 +33,7 @@ var parrying : bool = false
 var parry_cooldown : bool = false
 var sliding : bool = false
 var slide_jumped : bool = false
-#var slam_jump : bool = false
+var slam_jump : bool = false
 
 var dashing : bool = false
 var dash_jumped : bool = false
@@ -47,7 +48,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 
-
+## Handles camera rotation from player.
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * CAMERA_SENSITIVITY)
@@ -57,12 +58,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		$FrontOfBodyPivot.rotation.y = head.rotation.y
 		$FrontOfBodyPivot/SecondPivot.rotation.x = camera.rotation.x
 
-
+## Movement logic
 func _physics_process(delta: float) -> void:
 	
 	# Just so it doesn't have to repeat the same call over and over
 	var on_floor = is_on_floor()
 	
+	#region Jump logic
 	if Input.is_action_just_pressed("jump") and dashing and was_on_floor:
 		dash_multiplier = 2.0
 		dash_jumped = true
@@ -71,14 +73,16 @@ func _physics_process(delta: float) -> void:
 		$ResetSlideJump.stop()
 		slide_velocity.y = jump / 1.5
 		slide_jumped = true
-	#elif Input.is_action_pressed("jump") and on_floor and slam_jump:
-		#$JumpSFX.play()
-		#velocity.y = jump * 2.0
+	elif Input.is_action_pressed("jump") and on_floor and slam_jump:
+		$JumpSFX.play()
+		velocity.y = jump * (1.5 + slam_time)
+		slam_jump = false
 	
 	## CANNOT BE is_action_just_pressed otherwise dash and slide jump don't work as intended.
 	elif Input.is_action_pressed("jump") and on_floor:
 		$JumpSFX.play()
 		velocity.y = jump
+	#endregion
 	
 	#region Dash logic
 	if Input.is_action_just_pressed("dash") and not dashing:
@@ -105,7 +109,6 @@ func _physics_process(delta: float) -> void:
 	#region Slide and Crush logic
 	if on_floor and Input.is_action_just_pressed("crush"):
 		begin_slide()
-		switch_hurtboxes(false) # Because player is on the floor when sliding
 		sliding = true
 	elif not Input.is_action_pressed("crush"):
 		sliding = false
@@ -124,13 +127,15 @@ func _physics_process(delta: float) -> void:
 	# Can't be on floor, otherwise LandingSFX can be spammed
 	if not on_floor and Input.is_action_just_pressed("crush"):
 		velocity.y -= 70.0
+		slam_time += delta
 		crushing = true
 		dashing = false # Cancels dash
 	if on_floor and crushing:
 		SpawnObject.air_shockwave(global_position, Vector3.ZERO)
 		$LandingSFX.play()
 		crushing = false
-		#slam_jump = true
+		slam_jump = true
+		$ResetSlamTime.start()
 	
 	#endregion
 	
@@ -175,6 +180,8 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+## Begins sliding.
+# If player jumps during SLIDE_JUMP_TIME_WINDOW, velocity increases.
 func begin_slide() -> void:
 	if sliding: return
 	
@@ -182,7 +189,7 @@ func begin_slide() -> void:
 	
 	var direction = get_movement_direction()
 	
-	# Must slide no matter what
+	# Must slide somewhere no matter what
 	if direction == Vector3.ZERO:
 			direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
 	
@@ -191,14 +198,15 @@ func begin_slide() -> void:
 		var angle : float = velocity.normalized().angle_to(direction)
 		
 		if velocity.length() < SLIDE_JUMP_SPEED_LIMIT:
-			velocity *= 1.5
+			velocity *= 1.5 + slam_time
 		velocity = velocity.rotated(Vector3(0.0, 1.0, 0.0), angle)
 	else:
-		velocity = direction * speed * 1.5
+		velocity = direction * speed * (1.5 + slam_time)
 	
 	velocity.y = 0.0
 	$SlideSFX.play()
 	$Head/Camera3D.position = SLIDING_HEAD_POSITION
+	switch_hurtboxes(false) # Because player is on the floor when sliding
 
 ## Dashes in the direction the player is moving for 0.2 seconds.
 # If not moving, dash forward.
@@ -280,6 +288,6 @@ func switch_hurtboxes(standing : bool) -> void:
 func reset_slide_jump() -> void:
 	slide_jumped = false
 
-func reset_slam_jump() -> void:
-	pass
-	#slam_jump = false
+
+func reset_slam_time() -> void:
+	slam_time = 0.0
