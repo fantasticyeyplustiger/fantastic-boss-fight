@@ -2943,6 +2943,9 @@ transform = Transform3D(0.011431, -0.999922, 0.00508107, 0.0918969, 0.00611044, 
 bone_name = "Index3.R"
 bone_idx = 7
 
+[node name="FingerTip" type="Node3D" parent="Armature/Skeleton3D/IndexFingerEnd"]
+transform = Transform3D(1, 0, 0, 9.31323e-10, 1, -1.28057e-09, -2.23517e-08, -1.39698e-09, 1, 0.00255033, 0.0178092, -0.000344653)
+
 [node name="Animations" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_24vl1")

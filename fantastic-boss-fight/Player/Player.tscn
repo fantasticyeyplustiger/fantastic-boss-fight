@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=18 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://d2nmg74r4j40l" path="res://SFX/Parry.wav" id="5_8g4oa"]
 [ext_resource type="AudioStream" uid="uid://defkvfvmwwamc" path="res://SFX/PlayerJump.wav" id="6_6ysni"]
 [ext_resource type="AudioStream" uid="uid://bb5csxigxj37x" path="res://SFX/Slide.mp3" id="7_vlldt"]
+[ext_resource type="AudioStream" uid="uid://btlrjbvyks27a" path="res://SFX/Dodge.ogg" id="9_j23h2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3qydi"]
 
@@ -84,7 +85,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 17
+collision_layer = 16
 script = ExtResource("1_3qydi")
 
 [node name="Body" type="MeshInstance3D" parent="."]
@@ -105,7 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 fov = 70.0
 
 [node name="RightHand" parent="Head/Camera3D" instance=ExtResource("2_s1rgi")]
-transform = Transform3D(0.0868241, 0.00759613, -0.996195, -0.0871557, 0.996195, 0, 0.992404, 0.0868241, 0.0871558, 0.06, -0.07, -0.15)
+transform = Transform3D(0.25111, 0.0219693, -0.967709, -0.0871557, 0.996195, 0, 0.964027, 0.0843414, 0.252069, 0.06, -0.07, -0.15)
 
 [node name="LeftArm" type="MeshInstance3D" parent="Head/Camera3D"]
 transform = Transform3D(0.491481, 0.25, 0.834234, -0.0669873, 0.965926, -0.25, -0.868308, 0.0669871, 0.491481, -0.3, -0.4, -0.4)
@@ -167,6 +168,11 @@ volume_db = -12.0
 [node name="SlideSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_vlldt")
 volume_db = -10.0
+
+[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_j23h2")
+volume_db = -11.0
+pitch_scale = 1.2
 
 [node name="ResetSlideJump" type="Timer" parent="."]
 wait_time = 0.2

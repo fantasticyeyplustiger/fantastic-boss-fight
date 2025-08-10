@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://otctnfu5rfb3"]
+
+[ext_resource type="Script" uid="uid://7ilf0425idih" path="res://Player/WeaponProjectiles/HitscanTrail.gd" id="1_15y54"]
+[ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="1_v5evj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15y54"]
+transparency = 1
+albedo_color = Color(0, 0.862745, 1, 1)
+emission_enabled = true
+emission = Color(1, 0.784314, 0.784314, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="Animation" id="Animation_txfq0"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 0.541176, 0.541176, 1), Color(1, 0.541176, 0.541176, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Color(1, 0.541176, 0.541176, 1), Color(1, 0.541176, 0.541176, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7g6bn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.862745, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.862745, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oflsw"]
+_data = {
+&"RESET": SubResource("Animation_7g6bn"),
+&"fade": SubResource("Animation_txfq0")
+}
+
+[node name="PistolTrailRMB" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_15y54")
+script = ExtResource("1_15y54")
+trail_height = 0.015
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oflsw")
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
+modulate = Color(0, 0.862745, 1, 1)
+texture = ExtResource("1_v5evj")

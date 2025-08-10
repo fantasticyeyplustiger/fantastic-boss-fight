@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 	
 	#region Jump logic
 	if Input.is_action_just_pressed("jump") and dashing and was_on_floor:
-		dash_multiplier = 1.5
+		dash_multiplier = 1.1
 		dash_jumped = true
 	elif Input.is_action_just_pressed("jump") and on_floor and sliding:
 		$JumpSFX.play()
@@ -88,6 +88,8 @@ func _physics_process(delta: float) -> void:
 	
 	#region Dash logic
 	if Input.is_action_just_pressed("dash") and not dashing:
+		
+		$DashSFX.play()
 		
 		was_on_floor = is_on_floor()
 		

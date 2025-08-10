@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://xuyjhqi1kyid"]
 
-[ext_resource type="Script" uid="uid://7ilf0425idih" path="res://Player/WeaponProjectiles/HitscanTrail.gd" id="1_r7504"]
-[ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_d22l6"]
+[ext_resource type="Script" uid="uid://7ilf0425idih" path="res://Player/WeaponProjectiles/HitscanTrail.gd" id="1_mn650"]
+[ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_bf8nx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d22l6"]
 transparency = 1
@@ -47,7 +47,7 @@ tracks/0/path = NodePath(".:material_override:albedo_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
 "values": [Color(1, 1, 0.576471, 1), Color(1, 1, 0.576471, 0)]
@@ -59,10 +59,10 @@ tracks/1/path = NodePath("Sprite3D:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.233333),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Color(1, 1, 0, 1), Color(1, 1, 0.745098, 0)]
+"values": [Color(1, 1, 0.392157, 0.588235), Color(1, 1, 0.745098, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_01dsd"]
@@ -73,19 +73,18 @@ _data = {
 
 [node name="PistolTrail" type="MeshInstance3D"]
 material_override = SubResource("StandardMaterial3D_d22l6")
-script = ExtResource("1_r7504")
+script = ExtResource("1_mn650")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_01dsd")
 }
-speed_scale = 0.2
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 visible = false
 modulate = Color(1, 1, 0.745098, 1)
 pixel_size = 0.001
-texture = ExtResource("2_d22l6")
+texture = ExtResource("2_bf8nx")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
