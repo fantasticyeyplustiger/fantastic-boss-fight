@@ -230,7 +230,7 @@ func reset_dash() -> void:
 	if not dash_jumped:
 		velocity = Vector3.ZERO
 
-## Set global variables for boss to use
+## Set global variables for general use
 func set_global_variables() -> void:
 	
 	Global.player_in_air = not is_on_floor()
@@ -264,8 +264,6 @@ func get_movement_direction() -> Vector3:
 # Should be called when shooting the pistol or railgun in Weapons.gd.
 func hitscan(damage : float) -> void:
 	if aim.is_colliding():
-		if aim.get_collider() == self:
-			return
 		if not aim.get_collider().is_in_group("background"):
 			# If it can be hit by AimRay and isn't the background,
 			# it's an enemy's hitbox.
