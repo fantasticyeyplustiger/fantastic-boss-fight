@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-const JUMP_VELOCITY : float = 18.0
+const JUMP_VELOCITY : float = 16.0
 const GRAVITY : float = 19.6
 const WALK_SPEED : float = 15.0
 const DASH_SPEED : float = 80.0
@@ -21,7 +21,7 @@ var slide_velocity : Vector3 = Vector3.ZERO
 var CAMERA_SENSITIVITY : float = 0.003
 
 var speed : float = 15.0
-var jump : float = 18.0
+var jump : float = 16.0
 var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
 var slam_time : float = 0.0
