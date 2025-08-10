@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=17 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://ca75ar5gidsur" path="res://Player/RightHand.tscn" id="2_s1rgi"]
 [ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/LandingHeavy.wav" id="3_tok1r"]
 [ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/PunchSwoosh.ogg" id="4_ddoul"]
 [ext_resource type="AudioStream" uid="uid://d2nmg74r4j40l" path="res://SFX/Parry.wav" id="5_8g4oa"]
@@ -103,9 +104,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 fov = 70.0
 
+[node name="RightHand" parent="Head/Camera3D" instance=ExtResource("2_s1rgi")]
+transform = Transform3D(0.0868241, 0.00759613, -0.996195, -0.0871557, 0.996195, 0, 0.992404, 0.0868241, 0.0871558, 0.06, -0.07, -0.15)
+
 [node name="LeftArm" type="MeshInstance3D" parent="Head/Camera3D"]
 transform = Transform3D(0.491481, 0.25, 0.834234, -0.0669873, 0.965926, -0.25, -0.868308, 0.0669871, 0.491481, -0.3, -0.4, -0.4)
 mesh = SubResource("BoxMesh_3qydi")
+
+[node name="AimRay" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -200)
+collision_mask = 5
+collide_with_areas = true
 
 [node name="Hurtbox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -138,10 +147,6 @@ libraries = {
 
 [node name="PlayerGUI" parent="." instance=ExtResource("2_q3lat")]
 mouse_filter = 2
-
-[node name="Crosshair" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-target_position = Vector3(0, 0, -1)
 
 [node name="LandingSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_tok1r")

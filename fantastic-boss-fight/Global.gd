@@ -3,6 +3,9 @@ extends Node
 const BOUND_ONE : Vector3 = Vector3(-22.0, 0.0, 23.0)
 const BOUND_TWO : Vector3 = Vector3(22.0, 0.0, -23.0)
 
+@warning_ignore_start("unused_signal")
+signal hitscan
+
 var player_position : Vector3
 
 # Useful for seeing where the player is looking at.
@@ -13,6 +16,7 @@ var boss_to_player : Vector3
 
 var player_rotation : Vector3
 var player_velocity : Vector3
+var player_target_position : Vector3
 var player_in_air : bool
 
 var boss_position : Vector3

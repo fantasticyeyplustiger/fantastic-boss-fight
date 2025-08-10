@@ -26,43 +26,43 @@ albedo_color = Color(0.197937, 0.197937, 0.197937, 1)
 
 [node name="Level" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["background"]]
 environment = SubResource("Environment_r3cbp")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, -0.179595, 0)
 use_collision = true
 size = Vector3(150, 1, 150)
 material = SubResource("StandardMaterial3D_a526m")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+[node name="CSGBox3D6" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, 88.8204, 0)
 use_collision = true
 size = Vector3(150, 1, 150)
 material = SubResource("StandardMaterial3D_a526m")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+[node name="CSGBox3D2" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0.5, 44.4595, -75)
 transparency = 0.75
 use_collision = true
 size = Vector3(150, 270, 1)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+[node name="CSGBox3D3" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, 44.4595, 75)
 transparency = 0.75
 use_collision = true
 size = Vector3(150, 270, 1)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+[node name="CSGBox3D4" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 75, 44.4595, 0)
 transparency = 0.75
 use_collision = true
 size = Vector3(1, 270, 150)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+[node name="CSGBox3D5" type="CSGBox3D" parent="." groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, -75, 44.4595, 0)
 transparency = 0.75
 use_collision = true

@@ -2807,7 +2807,7 @@ bones/16/position = Vector3(-5.82077e-11, 0.0170136, -1.98088e-09)
 bones/16/rotation = Quaternion(-0.0262883, 0.0340826, 0.768895, 0.637924)
 bones/16/scale = Vector3(1, 1, 1)
 
-[node name="Body TomoReference" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = SubResource("ArrayMesh_tvl1k")
 skin = SubResource("Skin_hab3w")
 "blend_shapes/Cartoony Crying" = 0.0
@@ -2938,7 +2938,12 @@ skin = SubResource("Skin_hab3w")
 "blend_shapes/KK Mouth_eating_2_op" = 0.0
 surface_material_override/0 = SubResource("StandardMaterial3D_nonic")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+transform = Transform3D(0.011431, -0.999922, 0.00508107, 0.0918969, 0.00611044, 0.99575, -0.995703, -0.0109155, 0.0919596, -0.0806676, 0.0317812, -0.00299203)
+bone_name = "Index3.R"
+bone_idx = 7
+
+[node name="Animations" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_24vl1")
 }

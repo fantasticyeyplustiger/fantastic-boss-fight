@@ -7,6 +7,8 @@ var shockwave_cooldown : bool = false
 
 var target_direction : Vector3
 
+# Deprecated. This was for the old bossfight.
+
 func _physics_process(_delta: float) -> void:
 	if toward_player:
 		velocity = (Global.player_position - global_position).normalized() * 50.0

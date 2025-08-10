@@ -43,17 +43,19 @@ var crushing : bool = false
 
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
+@onready var aim : RayCast3D = $Head/Camera3D/AimRay
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
+	Global.connect("hitscan", hitscan)
 
 ## Handles camera rotation from player.
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * CAMERA_SENSITIVITY)
 		camera.rotate_x(-event.relative.y * CAMERA_SENSITIVITY)
-		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+		camera.rotation.x = clampf(camera.rotation.x, deg_to_rad(-90), deg_to_rad(85))
 		
 		$FrontOfBodyPivot.rotation.y = head.rotation.y
 		$FrontOfBodyPivot/SecondPivot.rotation.x = camera.rotation.x
@@ -66,12 +68,12 @@ func _physics_process(delta: float) -> void:
 	
 	#region Jump logic
 	if Input.is_action_just_pressed("jump") and dashing and was_on_floor:
-		dash_multiplier = 2.0
+		dash_multiplier = 1.5
 		dash_jumped = true
 	elif Input.is_action_just_pressed("jump") and on_floor and sliding:
 		$JumpSFX.play()
 		$ResetSlideJump.stop()
-		slide_velocity.y = jump / 1.5
+		slide_velocity.y = jump / 2.0
 		slide_jumped = true
 	elif Input.is_action_pressed("jump") and on_floor and slam_jump:
 		$JumpSFX.play()
@@ -110,7 +112,7 @@ func _physics_process(delta: float) -> void:
 	if on_floor and Input.is_action_just_pressed("crush"):
 		begin_slide()
 		sliding = true
-	elif not Input.is_action_pressed("crush"):
+	elif not Input.is_action_pressed("crush") or not on_floor:
 		sliding = false
 		$SlideSFX.stop()
 		$Head/Camera3D.position = PLAYER_HEAD_POSITION
@@ -153,8 +155,8 @@ func _physics_process(delta: float) -> void:
 		
 		# Allow player to slightly tilt direction without losing speed boost
 		if slide_jumped:
-			velocity.x = lerpf(velocity.x, direction.x * velocity.length(), 0.02)
-			velocity.z = lerpf(velocity.z, direction.z * velocity.length(), 0.02)
+			velocity.x = lerpf(velocity.x, direction.x * velocity.length(), 0.03)
+			velocity.z = lerpf(velocity.z, direction.z * velocity.length(), 0.03)
 		
 		elif on_floor and can_move:
 			dash_jumped = false
@@ -198,12 +200,14 @@ func begin_slide() -> void:
 		var angle : float = velocity.normalized().angle_to(direction)
 		
 		if velocity.length() < SLIDE_JUMP_SPEED_LIMIT:
-			velocity *= 1.5 + slam_time
+			velocity = direction * speed
+			velocity *= 2.5 + slam_time
 		velocity = velocity.rotated(Vector3(0.0, 1.0, 0.0), angle)
 	else:
 		velocity = direction * speed * (1.5 + slam_time)
 	
 	velocity.y = 0.0
+	
 	$SlideSFX.play()
 	$Head/Camera3D.position = SLIDING_HEAD_POSITION
 	switch_hurtboxes(false) # Because player is on the floor when sliding
@@ -227,12 +231,18 @@ func reset_dash() -> void:
 ## Set global variables for boss to use
 func set_global_variables() -> void:
 	
-	Global.player_in_air = not is_on_floor
+	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/FrontOfBody.global_position
 	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
 	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position - Vector3(0.0, 0.3, 0.0)
 	Global.player_velocity = velocity
+	
+	if aim.is_colliding():
+		Global.player_target_position = aim.get_collision_point()
+	else:
+		Global.player_target_position = aim.target_position
+	
 
 func parry() -> void:
 	$Animations.play("parry")
@@ -247,6 +257,18 @@ func get_movement_direction() -> Vector3:
 	var input_direction : Vector2 = Input.get_vector("left", "right", "up", "down")
 	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	return direction
+
+## Hits the enemy with a hitscan.
+# Should be called when shooting the pistol or railgun in Weapons.gd.
+func hitscan(damage : float) -> void:
+	if aim.is_colliding():
+		if aim.get_collider() == self:
+			return
+		if not aim.get_collider().is_in_group("background"):
+			# If it can be hit by AimRay and isn't the background,
+			# it's an enemy's hitbox.
+			aim.get_collider().get_hit(damage)
+
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:
@@ -287,7 +309,6 @@ func switch_hurtboxes(standing : bool) -> void:
 ## Sets slide jump to false. Not actually needed, just more convenient with Timer node
 func reset_slide_jump() -> void:
 	slide_jumped = false
-
 
 func reset_slam_time() -> void:
 	slam_time = 0.0
