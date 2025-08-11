@@ -19,6 +19,7 @@ var player_velocity : Vector3
 var player_target_position : Vector3
 var player_in_air : bool
 
+# Allows projectiles to home into boss.
 var boss_position : Vector3
 
 ## Predicts where player will be at x seconds according to current velocity.
@@ -32,7 +33,7 @@ func predict_player_position_at_seconds(seconds : float) -> Vector3:
 	return prediction
 
 ## Predicts where player will be at x seconds according to current velocity FOR BOSS POSITIONING.
-# This is for where the boss should spawn to attack the predicted position.
+## This is for where the boss should spawn to attack the predicted position.
 func predict_player_position_at_seconds_for_boss(seconds : float) -> Vector3:
 	var prediction : Vector3 = boss_to_player + (player_velocity * seconds)
 	

@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 const JUMP_VELOCITY : float = 16.0
-const GRAVITY : float = 19.6
+const GRAVITY : float = 23.5
 const WALK_SPEED : float = 15.0
 const DASH_SPEED : float = 80.0
 
@@ -157,6 +157,10 @@ func _physics_process(delta: float) -> void:
 		
 		# Allow player to slightly tilt direction without losing speed boost
 		if slide_jumped:
+			# Must go forward and keep momentum
+			if direction == Vector3.ZERO:
+				direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
+			
 			velocity.x = lerpf(velocity.x, direction.x * velocity.length(), 0.03)
 			velocity.z = lerpf(velocity.z, direction.z * velocity.length(), 0.03)
 		
@@ -172,6 +176,9 @@ func _physics_process(delta: float) -> void:
 		
 		# Being in mid-air means you have inertia
 		elif dash_jumped or sliding:
+			# Must go forward and keep momentum
+			if direction == Vector3.ZERO:
+				direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
 			velocity.x = lerpf(velocity.x, direction.x * speed, delta)
 			velocity.z = lerpf(velocity.z, direction.z * speed, delta)
 		
