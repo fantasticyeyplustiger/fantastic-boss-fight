@@ -150,7 +150,7 @@ func switch_weapon() -> void:
 		weapons.RAILGUN: swap_anim += "Railgun"
 		weapons.ORB:     swap_anim += "Orb"
 	
-	attack_cooldown = LMB_COOLDOWNS[current_weapon] / 4.0
+	attack_cooldown = LMB_COOLDOWNS[current_weapon] / 5.0
 	
 	$SwapWeapon.play("swap")
 	$Animations.play(swap_anim)
