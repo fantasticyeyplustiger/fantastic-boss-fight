@@ -70,6 +70,7 @@ func _input(event: InputEvent) -> void:
 		
 		switch_weapon()
 	
+	
 	if event.is_action_pressed("pistol"):    switch_weapon_to(weapons.PISTOL)
 	elif event.is_action_pressed("shotgun"): switch_weapon_to(weapons.SHOTGUN)
 	elif event.is_action_pressed("saw"):     switch_weapon_to(weapons.SAW)
