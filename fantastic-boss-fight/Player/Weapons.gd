@@ -23,7 +23,7 @@ const LMB_COOLDOWNS : Dictionary[weapons, float] = {
 	weapons.PISTOL : 0.65,
 	weapons.SHOTGUN : 1.75,
 	weapons.SAW : 0.25,
-	weapons.RAILGUN : 0.5, # Railgun has a separate cooldown
+	weapons.RAILGUN : 1.0, # Railgun has a separate cooldown
 	weapons.ORB : 1.0
 }
 
@@ -37,7 +37,7 @@ const RMB_COOLDOWNS : Dictionary[weapons, float] = {
 }
 
 # In seconds.
-const RAILGUN_MAX_COOLDOWN : float = 0.5
+const RAILGUN_MAX_COOLDOWN : float = 2.0
 
 @onready var finger_tip : Node3D = $Armature/Skeleton3D/IndexFingerEnd/FingerTip
 @onready var railgun_pos : Node3D = $RailgunPosition
@@ -62,7 +62,7 @@ func _input(event: InputEvent) -> void:
 		current_weapon = (current_weapon + 1) % weapon_size
 		switch_weapon()
 	
-	if event.is_action_pressed("scroll_down"):
+	elif event.is_action_pressed("scroll_down"):
 		current_weapon = current_weapon - 1
 		
 		if current_weapon < 0:
@@ -70,11 +70,11 @@ func _input(event: InputEvent) -> void:
 		
 		switch_weapon()
 	
-	if event.is_action_pressed("pistol"):  switch_weapon_to(weapons.PISTOL)
-	if event.is_action_pressed("shotgun"): switch_weapon_to(weapons.SHOTGUN)
-	if event.is_action_pressed("saw"):     switch_weapon_to(weapons.SAW)
-	if event.is_action_pressed("railgun"): switch_weapon_to(weapons.RAILGUN)
-	if event.is_action_pressed("orb"):     switch_weapon_to(weapons.ORB)
+	if event.is_action_pressed("pistol"):    switch_weapon_to(weapons.PISTOL)
+	elif event.is_action_pressed("shotgun"): switch_weapon_to(weapons.SHOTGUN)
+	elif event.is_action_pressed("saw"):     switch_weapon_to(weapons.SAW)
+	elif event.is_action_pressed("railgun"): switch_weapon_to(weapons.RAILGUN)
+	elif event.is_action_pressed("orb"):     switch_weapon_to(weapons.ORB)
 	
 	
 	@warning_ignore_restore("int_as_enum_without_cast")
