@@ -1950,7 +1950,7 @@ skin = SubResource("Skin_hab3w")
 surface_material_override/0 = SubResource("StandardMaterial3D_nonic")
 
 [node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.714668, -0.61652, 0.330384, -0.155437, 0.320546, 0.934393, -0.681975, -0.719134, 0.133253, -0.0243771, 0.0232217, 0.00612018)
+transform = Transform3D(0.714668, -0.61652, 0.330383, -0.155436, 0.320545, 0.934393, -0.681975, -0.719134, 0.133254, -0.0243768, 0.0232214, 0.00612033)
 bone_name = "Index3.R"
 bone_idx = 7
 

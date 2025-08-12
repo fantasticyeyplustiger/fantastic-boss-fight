@@ -167,8 +167,6 @@ func switch_weapon_to(new_weapon : weapons) -> void:
 func spawn_hitscan_trail(trail_type, position_on_hand : Vector3) -> void:
 	var trail = trail_type.instantiate()
 	trail.initialize(position_on_hand, Global.player_target_position)
-	print(position_on_hand)
-	print(Global.player_target_position)
 	SpawnObject.add_child(trail)
 
 ## Sets the attack cooldown according to the weapon fired.

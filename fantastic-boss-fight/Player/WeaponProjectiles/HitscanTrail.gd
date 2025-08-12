@@ -30,15 +30,13 @@ func initialize(position_one : Vector3, target_position : Vector3) -> void:
 func draw_mesh(position_one : Vector3, target_position : Vector3, trail_size) -> ImmediateMesh:
 	var new_mesh = ImmediateMesh.new()
 	
-	new_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES, material_override)
+	new_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, material_override)
 	
 	# Essentially draws a 2D plane with 2 triangles
 	new_mesh.surface_add_vertex(position_one - trail_size)
 	new_mesh.surface_add_vertex(target_position - trail_size)
-	new_mesh.surface_add_vertex(position_one + trail_size)
-	
-	new_mesh.surface_add_vertex(position_one + trail_size)
 	new_mesh.surface_add_vertex(target_position + trail_size)
+	new_mesh.surface_add_vertex(position_one + trail_size)
 	new_mesh.surface_add_vertex(position_one - trail_size)
 	
 	new_mesh.surface_end()
