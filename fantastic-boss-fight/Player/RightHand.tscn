@@ -1703,7 +1703,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(0.0182611, -0.999833, 3.20589e-08, 0.999833, 0.0182611, 1.89365e-06, -1.89392e-06, -2.52652e-09, 1, 0.22268, 0.00153778, -0.00298578)
 bones/0/enabled = true
 bones/0/position = Vector3(0.22268, -0.0227166, -0.00298578)
-bones/0/rotation = Quaternion(-0.459535, 0.537427, 0.449644, 0.545729)
+bones/0/rotation = Quaternion(-0.459535, 0.537427, 0.449644, 0.545728)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Wrist.R"
 bones/1/parent = 0
@@ -1738,21 +1738,21 @@ bones/5/parent = 1
 bones/5/rest = Transform3D(0.998222, -0.0596067, 0.000717306, 0.059448, 0.99453, -0.0858822, 0.00440577, 0.0857721, 0.996305, -0.00325129, 0.0815046, 0.0125105)
 bones/5/enabled = true
 bones/5/position = Vector3(-0.00325129, 0.0815046, 0.0125105)
-bones/5/rotation = Quaternion(-0.000466332, -0.0489214, -0.00869615, 0.998765)
+bones/5/rotation = Quaternion(0.0349844, -0.111076, 0.804981, 0.581759)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Index2.R"
 bones/6/parent = 5
 bones/6/rest = Transform3D(0.999949, -0.00935305, 0.00366497, 0.00907407, 0.997513, 0.0698984, -0.00430961, -0.0698617, 0.997547, 3.49246e-10, 0.0199028, 2.71712e-11)
 bones/6/enabled = true
 bones/6/position = Vector3(3.49246e-10, 0.0199028, 2.71712e-11)
-bones/6/rotation = Quaternion(-0.0349014, 0.00286421, 0.0294773, 0.998952)
+bones/6/rotation = Quaternion(-0.0197732, 0.028902, 0.794147, 0.606715)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Index3.R"
 bones/7/parent = 6
 bones/7/rest = Transform3D(0.995566, 0.0940652, 0.000409369, -0.0940636, 0.995498, 0.0116613, 0.000689397, -0.0116481, 0.999932, 3.71074e-10, 0.017035, 3.22018e-11)
 bones/7/enabled = true
 bones/7/position = Vector3(3.71074e-10, 0.017035, 3.22018e-11)
-bones/7/rotation = Quaternion(-0.00583385, 7.52007e-05, -0.0222141, 0.999736)
+bones/7/rotation = Quaternion(-0.00361851, 0.00457661, 0.762177, 0.647342)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "Middle1.R"
 bones/8/parent = 1
@@ -1950,7 +1950,7 @@ skin = SubResource("Skin_hab3w")
 surface_material_override/0 = SubResource("StandardMaterial3D_nonic")
 
 [node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.0114305, -0.999922, 0.00508128, 0.0918956, 0.00611053, 0.99575, -0.995703, -0.010915, 0.0919583, -0.080668, 0.0317812, -0.00299197)
+transform = Transform3D(0.714668, -0.61652, 0.330384, -0.155437, 0.320546, 0.934393, -0.681975, -0.719134, 0.133253, -0.0243771, 0.0232217, 0.00612018)
 bone_name = "Index3.R"
 bone_idx = 7
 
@@ -1968,4 +1968,4 @@ libraries = {
 }
 
 [node name="RailgunPosition" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0591399, 0.014, 0.00545433)
+transform = Transform3D(1, 0, -1.11759e-08, 2.98023e-07, 1, 0, -3.65078e-07, -1.41561e-07, 1, -0.163, -0.037, -0.091)

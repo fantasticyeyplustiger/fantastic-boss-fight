@@ -23,7 +23,7 @@ const LMB_COOLDOWNS : Dictionary[weapons, float] = {
 	weapons.PISTOL : 0.65,
 	weapons.SHOTGUN : 1.75,
 	weapons.SAW : 0.25,
-	weapons.RAILGUN : 1.0, # Railgun has a separate cooldown
+	weapons.RAILGUN : 0.5, # Railgun has a separate cooldown
 	weapons.ORB : 1.0
 }
 
@@ -37,9 +37,10 @@ const RMB_COOLDOWNS : Dictionary[weapons, float] = {
 }
 
 # In seconds.
-const RAILGUN_MAX_COOLDOWN : float = 2.0
+const RAILGUN_MAX_COOLDOWN : float = 0.5
 
 @onready var finger_tip : Node3D = $Armature/Skeleton3D/IndexFingerEnd/FingerTip
+@onready var railgun_pos : Node3D = $RailgunPosition
 
 var pistol_trail_LMB = load("res://Player/WeaponProjectiles/PistolTrailLMB.tscn")
 var pistol_trail_RMB = load("res://Player/WeaponProjectiles/PistolTrailRMB.tscn")
@@ -132,7 +133,7 @@ func LMB_railgun() -> void:
 	else:
 		railgun_cooldown = RAILGUN_MAX_COOLDOWN
 	
-	spawn_hitscan_trail(railgun_trail, $RailgunPosition.global_position)
+	spawn_hitscan_trail(railgun_trail, railgun_pos.global_position)
 	$Animations.speed_scale = 2.0
 	$Animations.play("LMBRailgunShoot")
 	Global.emit_signal("hitscan", LMB_DAMAGES[weapons.RAILGUN])
@@ -166,6 +167,8 @@ func switch_weapon_to(new_weapon : weapons) -> void:
 func spawn_hitscan_trail(trail_type, position_on_hand : Vector3) -> void:
 	var trail = trail_type.instantiate()
 	trail.initialize(position_on_hand, Global.player_target_position)
+	print(position_on_hand)
+	print(Global.player_target_position)
 	SpawnObject.add_child(trail)
 
 ## Sets the attack cooldown according to the weapon fired.
