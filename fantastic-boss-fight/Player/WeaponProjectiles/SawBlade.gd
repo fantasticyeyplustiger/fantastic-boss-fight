@@ -27,11 +27,12 @@ var environment_durability : float = BASE_ENVIRON_DURABILITY
 var attack_durability : float = BASE_ATK_DURABILITY
 
 var can_orbit : bool = true
-
+var current_orbit_angle : float
 
 
 func _ready() -> void:
 	rotation = Global.player_rotation
+	
 	var target_position : Vector3 = $Pivot/VelocityDirection.global_position
 	
 	velocity = BASE_SPEED * (target_position - $Pivot.global_position)
@@ -46,12 +47,32 @@ func _physics_process(delta: float) -> void:
 	
 	can_orbit = orbit_time < max_orbit_time
 	
-	if can_orbit:
+	if can_orbit and Global.sawblades_orbiting:
 		orbit_time += delta
+		orbit()
 
 func initialize(spawn_position : Vector3, new_damage : float) -> void:
 	position = spawn_position
 	damage = new_damage
+
+func orbit() -> void:
+	
+	if not Global.sawblades_orbiting:
+		return
+	
+	var speed_multiplier : float = BASE_SPEED * current_buff_stack * 2.0
+	var radius : Vector3 = Global.player_position - global_position
+	radius.y += 1.5 # So it's not on the floor
+	
+	if radius.length() < 2.5:
+		return # It shouldn't orbit that close to the player.
+	
+	var orbit_speed : Vector3 = radius.normalized()
+	orbit_speed = orbit_speed.rotated(Vector3.UP, deg_to_rad(60 - orbit_time))
+	
+	point_ray_towards_velocity(global_position + orbit_speed)
+	
+	velocity = speed_multiplier * orbit_speed
 
 ## Ricochets the sawblade when it hits a surface from the environment.
 ## i.e. a wall or a floor.
@@ -61,9 +82,7 @@ func ricochet() -> void:
 	
 	var new_saw_direction : Vector3 = saw_direction.bounce(surface_normal)
 	
-	look_at(global_position + new_saw_direction)
-	
-	$EnvironmentRay.force_raycast_update()
+	point_ray_towards_velocity(global_position + new_saw_direction)
 	
 	environment_durability -= 1.0
 	velocity = (BASE_SPEED * current_buff_stack) * new_saw_direction.normalized()
@@ -83,3 +102,10 @@ func add_buff(buff : buffs) -> void:
 		current_buff_stack += 1.0
 	elif buff == buffs.RAILGUN:
 		current_buff_stack += 2.0
+
+## Points $EnvironmentRay in the same direction as velocity.
+func point_ray_towards_velocity(look_direction : Vector3) -> void:
+	# Make EnvironmentRay pointed towards velocity direction
+	look_at(look_direction)
+	rotation.z = 0.0 # Prevents "unwanted rotation around local Z axis"
+	$EnvironmentRay.force_raycast_update()

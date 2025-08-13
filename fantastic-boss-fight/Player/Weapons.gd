@@ -52,6 +52,7 @@ var weapon_size : int = weapons.size()
 var current_weapon : weapons = weapons.PISTOL
 var attack_cooldown : float = 0.0
 var railgun_cooldown : float = 0.0
+var saw_orbit_time : float = 0.0
 
 func _ready() -> void:
 	attack_cooldown = LMB_COOLDOWNS[weapons.PISTOL]
@@ -83,14 +84,19 @@ func _input(event: InputEvent) -> void:
 	@warning_ignore_restore("int_as_enum_without_cast")
 
 func _physics_process(delta: float) -> void:
+	
 	if Input.is_action_pressed("RMB"): # RMB attacks should take priority over LMB
 		if attack_cooldown < 0.0:
 			$Animations.speed_scale = 1.0 # Reset in case it was changed while shooting
 			
+			if not current_weapon == weapons.SAW:
+				saw_orbit_time = 0.0
+				Global.sawblades_orbiting = false
+			
 			match current_weapon:
 				weapons.PISTOL: RMB_pistol()
 				weapons.SHOTGUN: pass
-				weapons.SAW: pass
+				weapons.SAW: RMB_saw(delta)
 				weapons.RAILGUN: pass
 				weapons.ORB: pass
 			
@@ -100,15 +106,22 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed("LMB"):
 		if attack_cooldown < 0.0:
 			$Animations.speed_scale = 1.0 # Reset in case it was changed while shooting
-		
+			
+			saw_orbit_time = 0.0
+			Global.sawblades_orbiting = false
+			
 			match current_weapon:
-				weapons.PISTOL: LMB_pistol()
+				weapons.PISTOL:  LMB_pistol()
 				weapons.SHOTGUN: pass
-				weapons.SAW: LMB_saw()
+				weapons.SAW:     LMB_saw()
 				weapons.RAILGUN: LMB_railgun()
 				weapons.ORB: pass
 			
 			set_attack_cooldown(true)
+	
+	else:
+		saw_orbit_time = 0.0
+		Global.sawblades_orbiting = false
 	
 	if attack_cooldown >= 0.0:
 		attack_cooldown -= delta
@@ -136,7 +149,16 @@ func LMB_saw() -> void:
 		LMB_DAMAGES[weapons.SAW]
 	)
 	SpawnObject.add_child(new_sawblade)
+	
+	$Animations.play("LMBSawShoot")
 
+func RMB_saw(delta : float) -> void:
+	Global.sawblades_orbiting = true
+	
+	if saw_orbit_time == 0.0:
+		$Animations.play("LMBtoRMBSaw")
+	
+	saw_orbit_time += delta
 
 func LMB_railgun() -> void:
 	

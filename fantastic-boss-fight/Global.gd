@@ -23,6 +23,9 @@ var player_target_position : Vector3
 # is_on_floor()
 var player_in_air : bool
 
+# Makes sawblades orbit around player if true
+var sawblades_orbiting : bool = false
+
 # Allows projectiles to home into boss.
 var boss_position : Vector3
 

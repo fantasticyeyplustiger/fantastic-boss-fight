@@ -243,7 +243,7 @@ func set_global_variables() -> void:
 	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/FrontOfBody.global_position
-	Global.player_rotation = Vector3($FrontOfBodyPivot.global_rotation.x, $FrontOfBodyPivot/SecondPivot.global_rotation.y, 0.0)
+	Global.player_rotation = camera.global_rotation
 	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position - Vector3(0.0, 0.3, 0.0)
 	Global.player_velocity = velocity
 	
