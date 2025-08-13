@@ -14,9 +14,13 @@ var front_of_player : Vector3
 # Location where boss should appear in front of the player.
 var boss_to_player : Vector3
 
+# In radians.
 var player_rotation : Vector3
+
 var player_velocity : Vector3
 var player_target_position : Vector3
+
+# is_on_floor()
 var player_in_air : bool
 
 # Allows projectiles to home into boss.

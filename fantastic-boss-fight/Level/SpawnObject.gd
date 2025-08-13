@@ -1,5 +1,16 @@
 extends Node3D
 
+'''
+
+This script essentially spawns an object at a given position (and maybe angle) whenever needed.
+Mainly used for spawning shockwaves and globally placed attacks.
+
+Methods don't have "spawn" in their names, as the script name itself makes it self-explanatory.
+
+'''
+
+
+
 # Preload all of the meshes since they're going to be loaded in at some point anyway.
 @onready var ground_shockwave_mesh = preload("res://Level/SpawnedObjects/GroundShockwave.tscn")
 @onready var air_shockwave_mesh = preload("res://Level/SpawnedObjects/AirShockwave.tscn")
@@ -16,11 +27,6 @@ extends Node3D
 #@onready var mortar_attack = preload("res://Level/SpawnedObjects/Bombardment.tscn")
 #@onready var sword_attack = preload("res://Level/SpawnedObjects/GroundSwordSlash.tscn")
 #endregion
-
-## This script essentially spawns an object at a given position (and maybe angle) whenever needed.
-## Mainly used for spawning shockwaves and globally placed attacks.
-#
-## Methods don't have "spawn" in their names, as the script name itself makes it self-explanatory.
 
 #region shockwaves
 func ground_shockwave(target_position : Vector3) -> void:

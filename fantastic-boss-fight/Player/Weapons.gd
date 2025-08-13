@@ -46,6 +46,8 @@ var pistol_trail_LMB = load("res://Player/WeaponProjectiles/PistolTrailLMB.tscn"
 var pistol_trail_RMB = load("res://Player/WeaponProjectiles/PistolTrailRMB.tscn")
 var railgun_trail = load("res://Player/WeaponProjectiles/RailgunTrail.tscn")
 
+var sawblade = load("res://Player/WeaponProjectiles/SawBlade.tscn")
+
 var weapon_size : int = weapons.size()
 var current_weapon : weapons = weapons.PISTOL
 var attack_cooldown : float = 0.0
@@ -102,7 +104,7 @@ func _physics_process(delta: float) -> void:
 			match current_weapon:
 				weapons.PISTOL: LMB_pistol()
 				weapons.SHOTGUN: pass
-				weapons.SAW: pass
+				weapons.SAW: LMB_saw()
 				weapons.RAILGUN: LMB_railgun()
 				weapons.ORB: pass
 			
@@ -125,6 +127,15 @@ func RMB_pistol() -> void:
 	Global.emit_signal("hitscan", RMB_DAMAGES[weapons.PISTOL])
 	
 	SpawnObject.pistol_explosion()
+
+
+func LMB_saw() -> void:
+	var new_sawblade = sawblade.instantiate()
+	new_sawblade.initialize(
+		Global.front_of_player + Vector3(0.0, 0.5, 0.0),
+		LMB_DAMAGES[weapons.SAW]
+	)
+	SpawnObject.add_child(new_sawblade)
 
 
 func LMB_railgun() -> void:

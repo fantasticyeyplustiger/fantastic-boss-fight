@@ -31,33 +31,6 @@ func _ready() -> void:
 	
 	set_atk_cooldown_in_seconds(2.0)
 
-func _physics_process(delta: float) -> void:
-	
-	# Prevent constant attack calls
-	if not attacking:
-		attacking = true
-		choose_attack()
-	# Shouldn't walk towards player while attacking
-	elif can_walk:
-		walk_towards_player()
-	
-	# Difference between look_at_player() is that this includes X and Z rotation
-	if should_look_at_player:
-		look_at(Global.player_position + PLAYER_HEAD_POSITION)
-	
-	if dashing:
-		
-		if should_fall:
-			velocity.y -= GRAVITY * delta
-		
-		move_and_slide()
-		
-	elif not can_walk and should_fall:
-		velocity = Vector3.ZERO
-		velocity.y -= GRAVITY * delta
-	
-	Global.boss_position = global_position
-
 func choose_attack() -> void:
 	
 	var attack_cooldown : float
@@ -295,17 +268,3 @@ func air_chop() -> void:
 	await get_tree().create_timer(0.1).timeout # ATTACK COOLDOWN
 
 #endregion
-
-## Switches 'visible' of trail to be the opposite state.
-# Also edits the length to make trail emitting less noticeable when visible is true again.
-func toggle_trail(trail : GPUTrail3D) -> void:
-	trail.visible = not trail.visible
-	
-	if not trail.length <= 1:
-		trail.length = 1
-	else:
-		trail.length = 60 # Frames.
-
-## Switches 'disabled' of collision to be the opposite state.
-func toggle_hitbox(collision : CollisionShape3D) -> void:
-	collision.set_deferred("disabled", not collision.disabled)
