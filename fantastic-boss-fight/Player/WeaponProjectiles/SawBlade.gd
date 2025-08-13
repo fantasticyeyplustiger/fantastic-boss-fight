@@ -68,7 +68,9 @@ func orbit() -> void:
 		return # It shouldn't orbit that close to the player.
 	
 	var orbit_speed : Vector3 = radius.normalized()
-	orbit_speed = orbit_speed.rotated(Vector3.UP, deg_to_rad(60 - orbit_time))
+	
+	# The closer the angle is to 45 degrees, the faster it'll go
+	orbit_speed = orbit_speed.rotated(Vector3.UP, deg_to_rad(75 - orbit_time))
 	
 	point_ray_towards_velocity(global_position + orbit_speed)
 	
@@ -105,7 +107,6 @@ func add_buff(buff : buffs) -> void:
 
 ## Points $EnvironmentRay in the same direction as velocity.
 func point_ray_towards_velocity(look_direction : Vector3) -> void:
-	# Make EnvironmentRay pointed towards velocity direction
 	look_at(look_direction)
 	rotation.z = 0.0 # Prevents "unwanted rotation around local Z axis"
 	$EnvironmentRay.force_raycast_update()

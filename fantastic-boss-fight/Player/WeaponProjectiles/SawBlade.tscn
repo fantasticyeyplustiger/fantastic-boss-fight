@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhwj1y1v7bnpk"]
+[gd_scene load_steps=15 format=3 uid="uid://bhwj1y1v7bnpk"]
 
 [ext_resource type="Script" uid="uid://dj53draupmjwa" path="res://Player/WeaponProjectiles/SawBlade.gd" id="1_6juo4"]
+[ext_resource type="Shader" uid="uid://dpqvjo58nkoj2" path="res://GPUTrail-main/shaders/trail.gdshader" id="2_rxu3b"]
+[ext_resource type="Shader" uid="uid://blhjp1p0iqbje" path="res://GPUTrail-main/shaders/trail_draw_pass.gdshader" id="3_t66yn"]
+[ext_resource type="Script" uid="uid://cr8knack2mui6" path="res://GPUTrail-main/GPUTrail3D.gd" id="4_jqm6i"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_fkjgd"]
 height = 0.1
@@ -13,6 +16,36 @@ radius = 0.2
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wpmvy"]
 height = 0.15
 radius = 0.55
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wwvep"]
+shader = ExtResource("2_rxu3b")
+
+[sub_resource type="Gradient" id="Gradient_ryeg0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lsp78"]
+gradient = SubResource("Gradient_ryeg0")
+
+[sub_resource type="Curve" id="Curve_cfwtm"]
+bake_resolution = 16
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wqsav"]
+curve = SubResource("Curve_cfwtm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3lhch"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_t66yn")
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/color_ramp = SubResource("GradientTexture1D_lsp78")
+shader_parameter/curve = SubResource("CurveTexture_wqsav")
+shader_parameter/emmission_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/flags = 40
+
+[sub_resource type="QuadMesh" id="QuadMesh_b838h"]
+material = SubResource("ShaderMaterial_3lhch")
 
 [node name="SawBlade" type="CharacterBody3D"]
 collision_layer = 0
@@ -39,5 +72,21 @@ target_position = Vector3(0, 0, -2.5)
 
 [node name="VelocityDirection" type="Node3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="GPUTrail3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(-8.74228e-09, 0.2, -8.74228e-09, 0, -8.74228e-09, -0.2, -0.2, -8.74228e-09, 3.82137e-16, 0, 0, 0)
+amount = 15
+lifetime = 15.0
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ShaderMaterial_wwvep")
+draw_pass_1 = SubResource("QuadMesh_b838h")
+script = ExtResource("4_jqm6i")
+length = 15
+length_seconds = 0.25
+color_ramp = SubResource("GradientTexture1D_lsp78")
+curve = SubResource("CurveTexture_wqsav")
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cr8knack2mui6"
 
 [connection signal="body_entered" from="HitEnemyArea" to="." method="damage_enemy"]

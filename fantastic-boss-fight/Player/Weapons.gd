@@ -54,6 +54,8 @@ var attack_cooldown : float = 0.0
 var railgun_cooldown : float = 0.0
 var saw_orbit_time : float = 0.0
 
+var was_orbiting : bool = false
+
 func _ready() -> void:
 	attack_cooldown = LMB_COOLDOWNS[weapons.PISTOL]
 
@@ -84,6 +86,11 @@ func _input(event: InputEvent) -> void:
 	@warning_ignore_restore("int_as_enum_without_cast")
 
 func _physics_process(delta: float) -> void:
+	
+	if was_orbiting and saw_orbit_time == 0.0:
+		$Animations.speed_scale = 1.0
+		$Animations.play("RMBSawShoot")
+		was_orbiting = false
 	
 	if Input.is_action_pressed("RMB"): # RMB attacks should take priority over LMB
 		if attack_cooldown < 0.0:
@@ -157,6 +164,7 @@ func RMB_saw(delta : float) -> void:
 	
 	if saw_orbit_time == 0.0:
 		$Animations.play("LMBtoRMBSaw")
+		was_orbiting = true
 	
 	saw_orbit_time += delta
 
