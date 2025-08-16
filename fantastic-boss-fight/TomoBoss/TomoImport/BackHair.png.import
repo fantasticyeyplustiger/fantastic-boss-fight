@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1v48i0g36g3e"
-path.s3tc="res://.godot/imported/KK EyeR (hitomi) TomoReference light.png-db8c0bb7ec6548a56d6d3295b9d43274.s3tc.ctex"
+uid="uid://c2bmrmb00niag"
+path.s3tc="res://.godot/imported/BackHair.png-61830fa3be17dfe74780fe32f2116f0c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK EyeR (hitomi) TomoReference light.png"
-dest_files=["res://.godot/imported/KK EyeR (hitomi) TomoReference light.png-db8c0bb7ec6548a56d6d3295b9d43274.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/BackHair.png"
+dest_files=["res://.godot/imported/BackHair.png-61830fa3be17dfe74780fe32f2116f0c.s3tc.ctex"]
 
 [params]
 

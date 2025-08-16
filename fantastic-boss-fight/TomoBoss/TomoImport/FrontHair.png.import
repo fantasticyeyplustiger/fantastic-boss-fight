@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ltfqukofm8w2"
-path.s3tc="res://.godot/imported/KK cf_m_shoes_bascket 9090 TomoReference light.png-a7e4dd139d4adfe54d6d2b98eb163b95.s3tc.ctex"
+uid="uid://bo2cipfw5de0x"
+path.s3tc="res://.godot/imported/FrontHair.png-a94f64682eab7a948a7cef4b0b2bae93.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK cf_m_shoes_bascket 9090 TomoReference light.png"
-dest_files=["res://.godot/imported/KK cf_m_shoes_bascket 9090 TomoReference light.png-a7e4dd139d4adfe54d6d2b98eb163b95.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/FrontHair.png"
+dest_files=["res://.godot/imported/FrontHair.png-a94f64682eab7a948a7cef4b0b2bae93.s3tc.ctex"]
 
 [params]
 

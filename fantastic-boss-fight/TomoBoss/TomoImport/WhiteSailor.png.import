@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbcphg53q2s7p"
-path.s3tc="res://.godot/imported/KK Tongue TomoReference light.png-42e668d1d436460c2fe6eb157f3f1a56.s3tc.ctex"
+uid="uid://ol2p6v7cl8bp"
+path.s3tc="res://.godot/imported/WhiteSailor.png-c624ef0a109cec1d74cfb23ef6a4073c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK Tongue TomoReference light.png"
-dest_files=["res://.godot/imported/KK Tongue TomoReference light.png-42e668d1d436460c2fe6eb157f3f1a56.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/WhiteSailor.png"
+dest_files=["res://.godot/imported/WhiteSailor.png-c624ef0a109cec1d74cfb23ef6a4073c.s3tc.ctex"]
 
 [params]
 

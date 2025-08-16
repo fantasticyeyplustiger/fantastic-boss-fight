@@ -5,7 +5,7 @@ enum weapons {PISTOL, SHOTGUN, SAW, RAILGUN, ORB}
 const LMB_DAMAGES : Dictionary[weapons, float] = {
 	weapons.PISTOL : 1.5,
 	weapons.SHOTGUN : 0.5, # Per pellet, Total DMG = 5.0 (10 pellets)
-	weapons.SAW : 1.0,
+	weapons.SAW : 0.75,
 	weapons.RAILGUN : 10.0
 	# Orb has its own damage logic
 }

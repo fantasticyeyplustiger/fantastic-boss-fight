@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clji6x8va6myw"
-path.s3tc="res://.godot/imported/KK cf_m_ahoge03 3330 TomoReference light.png-dc0832dca111fd79217c27ec1b021225.s3tc.ctex"
+uid="uid://dncx10eogt3nh"
+path.s3tc="res://.godot/imported/Teeth.png-918dfec730c0baa68f711ddabda399d5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK cf_m_ahoge03 3330 TomoReference light.png"
-dest_files=["res://.godot/imported/KK cf_m_ahoge03 3330 TomoReference light.png-dc0832dca111fd79217c27ec1b021225.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/Teeth.png"
+dest_files=["res://.godot/imported/Teeth.png-918dfec730c0baa68f711ddabda399d5.s3tc.ctex"]
 
 [params]
 

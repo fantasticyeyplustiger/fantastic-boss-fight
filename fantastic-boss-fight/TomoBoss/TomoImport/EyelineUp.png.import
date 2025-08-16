@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c201xaw1ea742"
-path.s3tc="res://.godot/imported/KK cf_m_bot_pants02 8760 TomoReference light.png-8fa8f68ae1bc758f2966db9f5aacaea7.s3tc.ctex"
+uid="uid://dgotrox2y8tt"
+path.s3tc="res://.godot/imported/EyelineUp.png-fc4b5e5e5df7f3caf3324fa22c1ed5b5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK cf_m_bot_pants02 8760 TomoReference light.png"
-dest_files=["res://.godot/imported/KK cf_m_bot_pants02 8760 TomoReference light.png-8fa8f68ae1bc758f2966db9f5aacaea7.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/EyelineUp.png"
+dest_files=["res://.godot/imported/EyelineUp.png-fc4b5e5e5df7f3caf3324fa22c1ed5b5.s3tc.ctex"]
 
 [params]
 

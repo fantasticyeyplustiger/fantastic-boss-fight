@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chdjt3bra5j06"
-path.s3tc="res://.godot/imported/KK Eyewhites (sirome) TomoReference light.png-419f94a483dddf234bd5aa4aaf689380.s3tc.ctex"
+uid="uid://b6fcmlqi471vy"
+path.s3tc="res://.godot/imported/Face.png-b57c0b9a52795fe73f5687f9d3bb15d6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK Eyewhites (sirome) TomoReference light.png"
-dest_files=["res://.godot/imported/KK Eyewhites (sirome) TomoReference light.png-419f94a483dddf234bd5aa4aaf689380.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/Face.png"
+dest_files=["res://.godot/imported/Face.png-b57c0b9a52795fe73f5687f9d3bb15d6.s3tc.ctex"]
 
 [params]
 

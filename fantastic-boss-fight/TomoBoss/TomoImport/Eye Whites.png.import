@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di5b5t37olgtw"
-path.s3tc="res://.godot/imported/KK cf_m_socks_knee01 8970 TomoReference light.png-970fa282a1079617dbdced4acb66fdca.s3tc.ctex"
+uid="uid://chdjt3bra5j06"
+path.s3tc="res://.godot/imported/Eye Whites.png-be75ac93c8388c21d78e4aabe5676328.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK cf_m_socks_knee01 8970 TomoReference light.png"
-dest_files=["res://.godot/imported/KK cf_m_socks_knee01 8970 TomoReference light.png-970fa282a1079617dbdced4acb66fdca.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/Eye Whites.png"
+dest_files=["res://.godot/imported/Eye Whites.png-be75ac93c8388c21d78e4aabe5676328.s3tc.ctex"]
 
 [params]
 

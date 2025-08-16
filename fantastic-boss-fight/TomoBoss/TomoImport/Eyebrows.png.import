@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgotrox2y8tt"
-path.s3tc="res://.godot/imported/KK Eyeline up TomoReference light.png-f18c9bcd6926fb57efce236b0b80d3ea.s3tc.ctex"
+uid="uid://ccbowmb5sbb2h"
+path.s3tc="res://.godot/imported/Eyebrows.png-43cc2cf99c1edb7988a1974f958f32fa.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK Eyeline up TomoReference light.png"
-dest_files=["res://.godot/imported/KK Eyeline up TomoReference light.png-f18c9bcd6926fb57efce236b0b80d3ea.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/Eyebrows.png"
+dest_files=["res://.godot/imported/Eyebrows.png-43cc2cf99c1edb7988a1974f958f32fa.s3tc.ctex"]
 
 [params]
 

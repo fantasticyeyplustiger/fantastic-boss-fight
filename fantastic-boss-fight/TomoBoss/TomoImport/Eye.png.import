@@ -2,27 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://copg2xem46us"
-path.s3tc="res://.godot/imported/KK Body TomoReference light.png-56790a78e7b50c72666bccd61a37aa1b.s3tc.ctex"
+uid="uid://bjnupxfk2gh8v"
+path="res://.godot/imported/Eye.png-e52289c0adbb091e1b5b96471ab12061.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://TomoBoss/TomoImport/KK Body TomoReference light.png"
-dest_files=["res://.godot/imported/KK Body TomoReference light.png-56790a78e7b50c72666bccd61a37aa1b.s3tc.ctex"]
+source_file="res://TomoBoss/TomoImport/Eye.png"
+dest_files=["res://.godot/imported/Eye.png-e52289c0adbb091e1b5b96471ab12061.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -32,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
