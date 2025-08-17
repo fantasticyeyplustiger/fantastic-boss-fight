@@ -162,7 +162,7 @@ point_count = 2
 curve = SubResource("Curve_i6vrr")
 
 [sub_resource type="Gradient" id="Gradient_p0rjq"]
-colors = PackedColorArray(1, 1, 1, 1, 0.235294, 1, 1, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_56y8k"]
 gradient = SubResource("Gradient_p0rjq")

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dt1f5chjkkgnv"
+path="res://.godot/imported/War - NoIntro.mp3-d47d671d5456a324063f025e6c0f5871.mp3str"
+
+[deps]
+
+source_file="res://Music/War - NoIntro.mp3"
+dest_files=["res://.godot/imported/War - NoIntro.mp3-d47d671d5456a324063f025e6c0f5871.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

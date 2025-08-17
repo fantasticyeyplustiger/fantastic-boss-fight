@@ -11,8 +11,8 @@ const LOW_DAMAGE : float = 15.0
 const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
-const WALK_SPEED : float = 5.0
-const SPRINT_SPEED : float = 40.0
+const WALK_SPEED : float = 10.0
+const SPRINT_SPEED : float = 30.0
 
 const GRAVITY : float = 19.6
 
@@ -175,6 +175,8 @@ func toggle_hitbox(collision : CollisionShape3D) -> void:
 ## wait 2.0 seconds
 ## collision.disabled = true again
 func toggle_hitbox_on_for_seconds(collision : CollisionShape3D, seconds_to_wait : float) -> void:
+	toggle_hitbox(collision)
+	await seconds(seconds_to_wait)
 	toggle_hitbox(collision)
 
 ## Waits n seconds.
