@@ -23,10 +23,10 @@
 [ext_resource type="Script" uid="uid://cr8knack2mui6" path="res://GPUTrail-main/GPUTrail3D.gd" id="18_3q8av"]
 [ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="18_p0rjq"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="19_p0rjq"]
-[ext_resource type="AudioStream" uid="uid://btlrjbvyks27a" path="res://SFX/Dodge.ogg" id="24_3q8av"]
-[ext_resource type="AudioStream" uid="uid://c7dmjg1kw6uw1" path="res://SFX/Minos Prime Explosion.ogg" id="25_48a3m"]
-[ext_resource type="AudioStream" uid="uid://d0bjfxaiq52j2" path="res://SFX/BossJump.mp3" id="25_nospa"]
-[ext_resource type="AudioStream" uid="uid://b6jewky0bu284" path="res://SFX/Explosion.ogg" id="27_bu51h"]
+[ext_resource type="AudioStream" uid="uid://btlrjbvyks27a" path="res://SFX/BaseSFX/Dodge.ogg" id="24_3q8av"]
+[ext_resource type="AudioStream" uid="uid://c7dmjg1kw6uw1" path="res://SFX/BaseSFX/Minos Prime Explosion.ogg" id="25_48a3m"]
+[ext_resource type="AudioStream" uid="uid://d0bjfxaiq52j2" path="res://SFX/BaseSFX/BossJump.mp3" id="25_nospa"]
+[ext_resource type="AudioStream" uid="uid://b6jewky0bu284" path="res://SFX/BaseSFX/Explosion.ogg" id="27_bu51h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exinx"]
 albedo_texture = ExtResource("3_b0eo8")

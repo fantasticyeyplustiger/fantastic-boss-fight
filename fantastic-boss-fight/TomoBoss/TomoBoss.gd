@@ -6,6 +6,7 @@ var previous_attack : attacks
 var current_attack : attacks
 
 func _ready() -> void:
+	$Aura.visible = true # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
 	set_atk_cooldown_in_seconds(2.0)
 
@@ -23,7 +24,7 @@ func attack_combo() -> void:
 	$AnimationPlayer.play("KarateComboStart")
 	look_at_player()
 	#Voiceline: You can't escape!
-	await seconds(1.7)
+	await seconds(1.0)
 	
 	await karate_punch()
 	await knee()
@@ -132,9 +133,9 @@ func grab(_from_combo : bool) -> void:
 	look_at_player()
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
-	toggle_hitbox_on_for_seconds($Grab/CollisionShape3D, 0.2)
+	toggle_hitbox_on_for_seconds($Grab/CollisionShape3D, 0.15)
 	
-	await seconds(0.2)
+	await seconds(0.15)
 	
 	dashing = false
 
