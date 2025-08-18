@@ -1,6 +1,6 @@
 extends Boss
 
-enum attacks {CHOP}
+enum attacks {CHOP, COMBO, FACE_KICK, CLAP, DESTROY}
 
 var previous_attack : attacks
 var current_attack : attacks
@@ -15,12 +15,27 @@ func _physics_process(_delta: float) -> void:
 
 func choose_attack() -> void:
 	$Aura.amount = 32
-	await attack_combo()
+	previous_attack = current_attack
 	
-	set_atk_cooldown_in_seconds(2.0)
+	var _distance_to_player = get_distance_to_player()
+	
+	await attack_combo()
+	await seconds(0.5)
+	await clap()
+	await seconds(0.5)
+	await destroy()
+	await seconds(0.5)
+	await face_kick()
+	
+	set_atk_cooldown_in_seconds(1.0)
 
+func stop_walk_animation() -> void:
+	$AnimationPlayer.stop(true)
+
+#region attack combo
 func attack_combo() -> void:
 	can_walk = false
+	current_attack = attacks.COMBO
 	$AnimationPlayer.play("KarateComboStart")
 	look_at_player()
 	$Voicelines.play_sfx("YouCantEscape1")
@@ -126,6 +141,7 @@ func ground_stomp() -> void:
 	SpawnObject.colliding_shockwave(global_position, Vector3.ZERO)
 	toggle_hitbox($GroundStomp/CollisionShape3D)
 	dashing = false
+#endregion
 
 func grab(from_combo : bool) -> void:
 	
@@ -151,6 +167,130 @@ func grab(from_combo : bool) -> void:
 	await seconds(0.15)
 	
 	dashing = false
+
+func face_kick() -> void:
+	#voiceline
+	damage = 50.0
+	can_walk = false
+	should_fall = true
+	current_attack = attacks.FACE_KICK
+	$AnimationPlayer.play("FaceKick")
+	
+	look_at_player()
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	global_position = Global.boss_to_player
+	$AttackSFX.play_sfx("BossDash")
+	look_at_player()
+	
+	dashing = true
+	dash_towards(Global.player_position)
+	
+	await seconds(0.1)
+	dashing = false
+	
+	await seconds(0.3)
+	
+	look_at_player()
+	$Explosion.play()
+	SpawnObject.explosion_detailed(global_position + Vector3(0.0, 1.0, 0.0), "#FF0000", 0.8)
+	toggle_hitbox_on_for_seconds($FaceKick/CollisionShape3D, 0.1)
+
+func clap() -> void:
+	current_attack = attacks.CLAP
+	damage = 40.0
+	can_walk = false
+	
+	$Voicelines.play_sfx("Begone1")
+	$AnimationPlayer.play("Clap")
+	$AttackSFX.play_sfx("BossDash")
+	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	global_position = Global.boss_to_player
+	should_look_at_player = true
+	
+	await seconds(0.6)
+	
+	should_look_at_player = false
+	dashing = true
+	dash_towards(Global.player_position)
+	
+	await seconds(0.15)
+	
+	$AttackSFX.play_sfx("BloodyDash")
+	dashing = false
+	toggle_hitbox_on_for_seconds($Clap/CollisionShape3D, 0.15)
+	
+	var spawn_position := global_position
+	spawn_position.y += 3
+	
+	var spawn_rotation := global_rotation + RIGHT_X_ANGLE + RIGHT_Y_ANGLE
+	
+	SpawnObject.colliding_shockwave(spawn_position, spawn_rotation)
+	
+	await seconds(0.15)
+
+func destroy() -> void:
+	$Voicelines.play_sfx("Destroy1")
+	current_attack = attacks.DESTROY
+	
+	await uppercut()
+	await mini_explosion()
+
+func uppercut() -> void:
+	damage = 30.0
+	can_walk = false
+	
+	$AnimationPlayer.play("Uppercut")
+	$AttackSFX.play_sfx("BossDash")
+	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	
+	global_position = Global.boss_to_player
+	global_position.y = 0.0
+	should_look_at_player = true
+	
+	await seconds(0.4)
+	
+	should_look_at_player = false
+	$AttackSFX.play_sfx("BloodyDash")
+	dashing = true
+	var predicted_position := Global.predict_player_position_at_seconds_for_boss(0.3)
+	dash_towards_on_ground(predicted_position)
+	toggle_hitbox_on_for_seconds($Uppercut/CollisionShape3D, 0.4)
+	
+	await seconds(0.4)
+	
+	dashing = false
+	
+	await seconds(0.1)
+
+func mini_explosion() -> void:
+	damage = 20.0
+	can_walk = false
+	$AnimationPlayer.play("MiniExplosion")
+	should_look_at_player = true
+	
+	await seconds(0.4)
+	
+	$AttackSFX.play_sfx("BossDash")
+	should_look_at_player = false
+	dashing = true
+	dash_towards_on_ground(Global.player_position)
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	toggle_hitbox_on_for_seconds($Dash/CollisionShape3D, 0.4)
+	
+	await seconds(0.75)
+	
+	dashing = false
+	
+	await seconds(0.12)
+	
+	damage = 60.0
+	SpawnObject.explosion(global_position)
+	toggle_hitbox_on_for_seconds($MiniExplosion/CollisionShape3D, 0.2)
+	
+	await seconds(0.6)
+
+func taunt() -> void:
+	$AnimationPlayer.play("Taunt")
 
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)

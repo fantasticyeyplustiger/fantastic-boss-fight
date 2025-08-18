@@ -41,13 +41,17 @@ var parrying : bool = false
 ## Movement logic.
 func _physics_process(delta: float) -> void:
 	
+	var distance_to_player := get_distance_to_player()
+	
 	# Prevent constant attack calls
 	if not attacking:
 		attacking = true
 		choose_attack()
 	# Shouldn't walk towards player while attacking
-	elif can_walk:
+	elif can_walk and distance_to_player > 5:
 		walk_towards_player()
+	elif can_walk and distance_to_player <= 5:
+		stop_walk_animation()
 	
 	# Difference between look_at_player() is that this includes X and Z rotation
 	if should_look_at_player:
@@ -69,6 +73,7 @@ func _physics_process(delta: float) -> void:
 
 func choose_attack() -> void:
 	assert(false, "Please override choose_attack()!")
+	pass
 
 
 ## Predicts where the player will be at x seconds and makes boss go in front of that position.
@@ -97,6 +102,9 @@ func dash_towards_on_ground(target_position : Vector3) -> void:
 	var ground_target = Vector3(target_position.x, 0.0, target_position.z)
 	
 	dash_towards(ground_target)
+
+func stop_walk_animation() -> void:
+	pass
 
 ## Makes the boss walk towards the player.
 ## Doesn't play the walk animation automatically.

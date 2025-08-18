@@ -3,7 +3,7 @@ extends CharacterBody3D
 const JUMP_VELOCITY : float = 16.0
 const GRAVITY : float = 23.5
 const WALK_SPEED : float = 15.0
-const DASH_SPEED : float = 80.0
+const DASH_SPEED : float = 70.0
 
 const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
@@ -210,10 +210,10 @@ func begin_slide() -> void:
 		
 		if velocity.length() < SLIDE_JUMP_SPEED_LIMIT:
 			velocity = direction * speed
-			velocity *= 2.5 + slam_time
+			velocity *= 2.8 + slam_time
 		velocity = velocity.rotated(Vector3(0.0, 1.0, 0.0), angle)
 	else:
-		velocity = direction * speed * (1.5 + slam_time)
+		velocity = direction * speed * (2.0 + slam_time)
 	
 	velocity.y = 0.0
 	

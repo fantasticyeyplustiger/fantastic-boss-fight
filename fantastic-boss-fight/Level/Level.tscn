@@ -12,7 +12,8 @@ ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 sky_material = SubResource("ProceduralSkyMaterial_2gduj")
 
 [sub_resource type="Environment" id="Environment_r3cbp"]
-background_mode = 2
+background_mode = 1
+background_color = Color(0.196078, 0, 0, 1)
 sky = SubResource("Sky_a526m")
 ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
@@ -23,7 +24,8 @@ albedo_color = Color(0.517184, 0.517184, 0.517184, 1)
 albedo_texture = ExtResource("1_cyxyq")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3cbp"]
-albedo_color = Color(0.197937, 0.197937, 0.197937, 1)
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
 
 [node name="Level" type="Node3D"]
 
@@ -75,6 +77,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+light_color = Color(1, 0.745098, 0.745098, 1)
+omni_range = 150.0
+omni_attenuation = 0.2
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 7, 0)
+light_color = Color(1, 0.745098, 0.745098, 1)
+omni_range = 150.0
+omni_attenuation = 0.2
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 7, 0)
+light_color = Color(1, 0.745098, 0.745098, 1)
+omni_range = 150.0
+omni_attenuation = 0.2
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 60)
+light_color = Color(1, 0.745098, 0.745098, 1)
+omni_range = 150.0
+omni_attenuation = 0.2
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -60)
+light_color = Color(1, 0.745098, 0.745098, 1)
 omni_range = 150.0
 omni_attenuation = 0.2
 
@@ -85,4 +112,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 23)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -23)
 
 [node name="TomoBoss" parent="." instance=ExtResource("3_cyxyq")]
-transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, -5)
+transform = Transform3D(3.7, 0, 0, 0, 3.7, 0, 0, 0, 3.7, 0, 0, -5)

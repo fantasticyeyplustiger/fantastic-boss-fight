@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://brnjukhtuye6r"]
+[gd_scene load_steps=12 format=3 uid="uid://brnjukhtuye6r"]
 
 [ext_resource type="Script" uid="uid://b4p63bw2dobng" path="res://Level/SpawnedObjects/CollidingShockwave.gd" id="1_ep61r"]
 [ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="2_ep61r"]
+[ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/BaseSFX/LandingHeavy.wav" id="3_dy32e"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_73hl3"]
 inner_radius = 0.8
@@ -164,5 +165,11 @@ libraries = {
 &"": SubResource("AnimationLibrary_7ng2u")
 }
 speed_scale = 1.25
+
+[node name="ShockwaveSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_dy32e")
+volume_db = -3.0
+unit_size = 150.0
+max_db = 0.0
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]
