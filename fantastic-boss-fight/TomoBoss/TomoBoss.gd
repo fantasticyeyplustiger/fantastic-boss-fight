@@ -6,7 +6,7 @@ var previous_attack : attacks
 var current_attack : attacks
 
 func _ready() -> void:
-	$Aura.visible = true # Particles annoying in editor
+	$Aura.visible = false # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
 	set_atk_cooldown_in_seconds(2.0)
 
@@ -19,11 +19,11 @@ func choose_attack() -> void:
 	
 	var _distance_to_player = get_distance_to_player()
 	
+	
+	
 	await attack_combo()
 	await seconds(0.5)
 	await clap()
-	await seconds(0.5)
-	await destroy()
 	await seconds(0.5)
 	await face_kick()
 	
@@ -86,11 +86,14 @@ func knee() -> void:
 	dashing = true
 	look_at_player()
 	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2))
+	
 	toggle_hitbox($RightKnee/CollisionShape3D)
+	toggle_all_trails_in($KneeTrails)
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	await seconds(0.4)
 	
+	toggle_all_trails_in($KneeTrails)
 	toggle_hitbox($RightKnee/CollisionShape3D)
 	dashing = false
 
@@ -202,13 +205,15 @@ func clap() -> void:
 	
 	$Voicelines.play_sfx("Begone1")
 	$AnimationPlayer.play("Clap")
+	$AnimationPlayer.speed_scale = 1.5
 	$AttackSFX.play_sfx("BossDash")
 	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
-	global_position = Global.boss_to_player
+	global_position = Global.predict_player_position_at_seconds_for_boss(0.1)
 	should_look_at_player = true
 	
-	await seconds(0.6)
+	await seconds(0.45)
 	
+	$AnimationPlayer.speed_scale = 1.0
 	should_look_at_player = false
 	dashing = true
 	dash_towards(Global.player_position)
@@ -241,7 +246,7 @@ func uppercut() -> void:
 	
 	$AnimationPlayer.play("Uppercut")
 	$AttackSFX.play_sfx("BossDash")
-	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
@@ -249,6 +254,7 @@ func uppercut() -> void:
 	
 	await seconds(0.4)
 	
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	should_look_at_player = false
 	$AttackSFX.play_sfx("BloodyDash")
 	dashing = true
@@ -296,3 +302,16 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
 	$AnimationPlayer.play("Walking")
 	$Aura.amount = 16
+
+## Toggles all of the trails in the parent node.
+## Ignores any children nodes that aren't trails.
+func toggle_all_trails_in(parent_node : Node3D) -> void:
+	
+	var children := parent_node.get_children()
+	
+	for child in children:
+		if not child is GPUTrail3D:
+			continue
+		
+		toggle_trail(child)
+	

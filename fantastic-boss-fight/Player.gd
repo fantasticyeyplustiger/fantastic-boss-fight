@@ -8,7 +8,7 @@ const DASH_SPEED : float = 70.0
 const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
 ## In seconds.
-const DASH_TIME : float = 0.15
+const DASH_TIME : float = 0.1
 const SLIDE_JUMP_TIME_WINDOW : float = 0.3
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
