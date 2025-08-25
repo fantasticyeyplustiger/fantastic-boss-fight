@@ -283,7 +283,7 @@ func hitscan(damage : float) -> void:
 func get_hit(area: Area3D) -> void:
 	if not dashing:
 		
-		health -= area.get_parent().get_parent().damage
+		health -= area.get_parent().damage
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		
 		get_knockbacked(area.global_position, area.launch_power, area.knockback_power)
@@ -297,6 +297,7 @@ func get_hit(area: Area3D) -> void:
 ## Knocks the player back / up depending on parameters given.
 # Position of knockback should always the other hitbox's global position.
 func get_knockbacked(position_of_kb : Vector3, launch_power : float, knockback_power : float) -> void:
+	print(launch_power)
 	velocity -= (position_of_kb - global_position).normalized() * knockback_power
 	velocity.y = launch_power
 	move_and_slide()

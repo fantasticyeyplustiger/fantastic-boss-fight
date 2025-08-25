@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://brnjukhtuye6r"]
 
 [ext_resource type="Script" uid="uid://b4p63bw2dobng" path="res://Level/SpawnedObjects/CollidingShockwave.gd" id="1_ep61r"]
-[ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="2_ep61r"]
+[ext_resource type="Script" uid="uid://cxbg6de8056b2" path="res://AreaKnockback.gd" id="2_dy32e"]
 [ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/BaseSFX/LandingHeavy.wav" id="3_dy32e"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_73hl3"]
@@ -124,9 +124,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dy32e")
 [node name="TorusHitbox" type="Area3D" parent="."]
 collision_layer = 2
 monitorable = false
-script = ExtResource("2_ep61r")
-knockback_power = 50.0
-launch_power = 15.0
+script = ExtResource("2_dy32e")
+knockback_power = 0.0
+launch_power = 25.0
 
 [node name="West" type="CollisionShape3D" parent="TorusHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.85)

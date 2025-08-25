@@ -163,21 +163,40 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 
 ## Switches 'visible' of trail to be the opposite state.
 ## Also edits the length to make trail emitting less noticeable when visible is true again.
-func toggle_trail(trail : GPUTrail3D) -> void:
+func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 	trail.visible = not trail.visible
 	
 	if not trail.length <= 1:
 		trail.length = 1
 	else:
-		trail.length = 60 # Frames.
+		trail.length = new_length # Frames.
 
 ## Switches 'disabled' of collision to be the opposite state.
+## If collision has Knockback.gd as its script and an Area3D as a parent that
+## also has AreaKnockback.gd, set_kb_stats will be called with those two as parameters.
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
+	
+	if collision.disabled:
+		return
+	
+	var parent := collision.get_parent()
+	
+	if not parent is Area3D:
+		return
+	
+	if parent.get_script() == null:
+		return
+	
+	var script_path : String = parent.get_script().get_path()
+	var script_name : String = script_path.get_file().get_basename()
+	
+	if script_name == "AreaKnockback":
+		set_kb_stats(parent, collision)
 
 ## Switches 'disabled' of collision to be the opposite state for 'seconds_to_wait'.
 ## After that period of time, collision will switch back.
-## i.e. toggle_hitbox_on_for_seconds(collision, 2.0)
+## i.e. toggle_hitbox_on_for_seconds(collision, 2.0):
 ## collision.disabled = true at the start
 ## collision.disabled = false
 ## wait 2.0 seconds
@@ -187,15 +206,23 @@ func toggle_hitbox_on_for_seconds(collision : CollisionShape3D, seconds_to_wait 
 	await seconds(seconds_to_wait)
 	toggle_hitbox(collision)
 
+## Sets the given area's knockback power and launch power to be that of the
+## given knockback_collision.
+## NOTE: Assumes that both area and knockback_collision have
+##       AreaKnockback.gd and Knockback.gd respectively!
+func set_kb_stats(area : Area3D, knockback_collision : CollisionShape3D) -> void:
+	area.knockback_power = knockback_collision.knockback_power
+	area.launch_power = knockback_collision.launch_power
+
 ## Waits n seconds.
-## IMPORTANT: MUST USE 'await' KEYWORD FOR PROPER USAGE
+## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await seconds(1).
 func seconds(n : float) -> void:
 	await get_tree().create_timer(n).timeout
 
 ## Waits n milliseconds.
-## IMPORTANT: MUST USE 'await' KEYWORD FOR PROPER USAGE
+## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await milliseconds(1).
-## seconds() is more efficient, but the difference is so small it doesn't matter.
+## seconds() is technically more efficient, but the difference is so small it doesn't matter.
 func milliseconds(n : float) -> void:
 	await seconds(n / 1000)

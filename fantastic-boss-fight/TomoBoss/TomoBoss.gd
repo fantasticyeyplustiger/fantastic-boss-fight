@@ -70,11 +70,9 @@ func karate_punch() -> void:
 	await seconds(0.1)
 	
 	dashing = false
-	toggle_hitbox($LeftStraight/CollisionShape3D)
+	toggle_hitbox_on_for_seconds($Hitbox/LeftStraight, 0.1)
 	
 	await seconds(0.1)
-	
-	toggle_hitbox($LeftStraight/CollisionShape3D)
 
 func knee() -> void:
 	damage = 25.0
@@ -87,14 +85,13 @@ func knee() -> void:
 	look_at_player()
 	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2))
 	
-	toggle_hitbox($RightKnee/CollisionShape3D)
+	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	await seconds(0.4)
 	
 	toggle_all_trails_in($KneeTrails)
-	toggle_hitbox($RightKnee/CollisionShape3D)
 	dashing = false
 
 func combo_kick() -> void:
@@ -111,11 +108,12 @@ func combo_kick() -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	dashing = true
 	dash_towards(Global.player_position)
-	toggle_hitbox($LeftRoundhouse/CollisionShape3D)
+	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
+	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
 	
-	await seconds(0.25)
+	await seconds(0.32)
 	
-	toggle_hitbox($LeftRoundhouse/CollisionShape3D)
+	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	dashing = false
 
 func ground_stomp() -> void:
@@ -130,19 +128,20 @@ func ground_stomp() -> void:
 	global_position.y = 0.0
 	should_look_at_player = true
 	
-	await seconds(0.6)
+	await seconds(0.66)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	should_look_at_player = false
 	$AnimationPlayer.speed_scale = 1.0
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
-	toggle_hitbox($GroundStomp/CollisionShape3D)
+	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
+	toggle_hitbox_on_for_seconds($Hitbox/GroundStomp, 0.2)
 	
 	await seconds(0.2)
 	
+	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
 	SpawnObject.colliding_shockwave(global_position, Vector3.ZERO)
-	toggle_hitbox($GroundStomp/CollisionShape3D)
 	dashing = false
 #endregion
 
@@ -165,7 +164,7 @@ func grab(from_combo : bool) -> void:
 	look_at_player()
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
-	toggle_hitbox_on_for_seconds($Grab/CollisionShape3D, 0.15)
+	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.15)
 	
 	await seconds(0.15)
 	
@@ -196,7 +195,7 @@ func face_kick() -> void:
 	look_at_player()
 	$Explosion.play()
 	SpawnObject.explosion_detailed(global_position + Vector3(0.0, 1.0, 0.0), "#FF0000", 0.8)
-	toggle_hitbox_on_for_seconds($FaceKick/CollisionShape3D, 0.1)
+	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
 
 func clap() -> void:
 	current_attack = attacks.CLAP
@@ -211,7 +210,12 @@ func clap() -> void:
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.1)
 	should_look_at_player = true
 	
-	await seconds(0.45)
+	await seconds(0.1)
+	
+	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
+	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
+	
+	await seconds(0.35)
 	
 	$AnimationPlayer.speed_scale = 1.0
 	should_look_at_player = false
@@ -222,7 +226,7 @@ func clap() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	dashing = false
-	toggle_hitbox_on_for_seconds($Clap/CollisionShape3D, 0.15)
+	toggle_hitbox_on_for_seconds($Hitbox/Clap, 0.15)
 	
 	var spawn_position := global_position
 	spawn_position.y += 3
@@ -232,6 +236,9 @@ func clap() -> void:
 	SpawnObject.colliding_shockwave(spawn_position, spawn_rotation)
 	
 	await seconds(0.15)
+	
+	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
+	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
 
 func destroy() -> void:
 	$Voicelines.play_sfx("Destroy1")
@@ -260,7 +267,7 @@ func uppercut() -> void:
 	dashing = true
 	var predicted_position := Global.predict_player_position_at_seconds_for_boss(0.3)
 	dash_towards_on_ground(predicted_position)
-	toggle_hitbox_on_for_seconds($Uppercut/CollisionShape3D, 0.4)
+	toggle_hitbox_on_for_seconds($Hitbox/Uppercut, 0.4)
 	
 	await seconds(0.4)
 	
@@ -281,7 +288,7 @@ func mini_explosion() -> void:
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	toggle_hitbox_on_for_seconds($Dash/CollisionShape3D, 0.4)
+	toggle_hitbox_on_for_seconds($Hitbox/MiniExplosion, 0.4)
 	
 	await seconds(0.75)
 	
@@ -291,7 +298,7 @@ func mini_explosion() -> void:
 	
 	damage = 60.0
 	SpawnObject.explosion(global_position)
-	toggle_hitbox_on_for_seconds($MiniExplosion/CollisionShape3D, 0.2)
+	toggle_hitbox_on_for_seconds($Hitbox/MiniExplosion, 0.2)
 	
 	await seconds(0.6)
 
