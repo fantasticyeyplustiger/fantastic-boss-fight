@@ -253,10 +253,12 @@ func set_global_variables() -> void:
 		Global.player_target_position = aim.target_position
 	
 
+##TODO: REWORK PARRYING
 func parry() -> void:
 	$Animations.play("parry")
 	await get_tree().create_timer(0.25).timeout
 	parrying = false
+	
 	$Animations.play("RESET")
 	await get_tree().create_timer(0.25).timeout
 	parry_cooldown = false
@@ -279,20 +281,15 @@ func hitscan(damage : float) -> void:
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:
-	if (not parrying or not area.parryable) and not dashing:
+	if not dashing:
 		
-		health -= area.get_parent().damage
+		health -= area.get_parent().get_parent().damage
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		
 		get_knockbacked(area.global_position, area.launch_power, area.knockback_power)
 	else:
-		if parrying:
-			$ParrySFX.play()
-			$PlayerGUI.parry.text = "PARRIED!!!"
-			reset_parry_text()
-		else:
-			$PlayerGUI.parry.text = "I-FRAMED!"
-			reset_parry_text()
+		$PlayerGUI.parry.text = "I-FRAMED!"
+		reset_parry_text()
 	
 	if health <= 0.0:
 		can_move = false
