@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://de7s3ueac0yyk"]
+
+[ext_resource type="Script" uid="uid://87ffwylcmuwn" path="res://Level/SpawnedObjects/ParticleShockwave.gd" id="1_o8g84"]
+[ext_resource type="Texture2D" uid="uid://u2crtdumyygd" path="res://ParticleTextures/BombShockwave.png" id="1_x7cs8"]
+
+[sub_resource type="Animation" id="Animation_0f6x6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.05, 0.05, 0.05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_o8g84"]
+resource_name = "shockwave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector3(0.05, 0.05, 0.05), Vector3(25, 25, 25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [0.3, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oa688"]
+_data = {
+&"RESET": SubResource("Animation_0f6x6"),
+&"shockwave": SubResource("Animation_o8g84")
+}
+
+[node name="ParticleShockwave" type="Node3D"]
+script = ExtResource("1_o8g84")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oa688")
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, 0, 0, 0)
+pixel_size = 0.002
+texture = ExtResource("1_x7cs8")
+
+[connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

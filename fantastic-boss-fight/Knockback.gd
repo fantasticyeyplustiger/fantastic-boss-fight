@@ -4,7 +4,7 @@ class_name Knockback
 
 ## NOTE:
 ## If you use this script, it is assumed that you are using it on a
-## collision shape with an Area3D parent and some kind of Body3D parent.
+## CollisionShape3D with an Area3D parent and some kind of Body3D parent.
 ## 
 ## It is also assumed that this is for an "enemy" attack.
 ##
@@ -18,7 +18,7 @@ class_name Knockback
 ##    |_ CollisionShape3D ( has Knockback.gd script )
 ##
 ## As a side note, the Area3D should have "ENEMY_ATTACKS" collision
-## layer on only with no collision masks.
+## layer on only with no collision masks, and should also have AreaKnockback.gd.
 ##
 ## KNOCKBACK FORMULA:
 ## velocity -= (position_of_kb - global_position).normalized() * knockback_power

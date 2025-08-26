@@ -166,7 +166,7 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 	trail.visible = not trail.visible
 	
-	if not trail.length <= 1:
+	if trail.length > 1:
 		trail.length = 1
 	else:
 		trail.length = new_length # Frames.
@@ -177,7 +177,8 @@ func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
 	
-	if collision.disabled:
+	# Collision disabled gets changed at the END of the frame, so it hasn't changed yet
+	if not collision.disabled:
 		return
 	
 	var parent := collision.get_parent()

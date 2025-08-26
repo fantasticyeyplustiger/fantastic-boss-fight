@@ -10,12 +10,12 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 '''
 
 
-
 # Preload all of the meshes since they're going to be loaded in at some point anyway.
 @onready var ground_shockwave_mesh = preload("res://Level/SpawnedObjects/GroundShockwave.tscn")
 @onready var air_shockwave_mesh = preload("res://Level/SpawnedObjects/AirShockwave.tscn")
 @onready var colliding_shockwave_mesh = preload("res://Level/SpawnedObjects/CollidingShockwave.tscn")
 @onready var bomb_shockwave_mesh = preload("res://Level/SpawnedObjects/BombShockwave.tscn")
+@onready var particle_shockwave_mesh = preload("res://Level/SpawnedObjects/ParticleShockwave.tscn")
 
 @onready var pistol_explosion_mesh = preload("res://Player/WeaponExplosions/PistolExplosion.tscn")
 @onready var explosion_mesh = preload("res://Level/SpawnedObjects/Explosion.tscn")
@@ -40,16 +40,28 @@ func bomb_shockwave(target_position : Vector3) -> void:
 	new_shockwave.position = Vector3(target_position.x, 0.0, target_position.z)
 	add_child(new_shockwave)
 
-func air_shockwave(target_position : Vector3, angle : Vector3) -> void:
+func air_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO) -> void:
 	var new_shockwave : MeshInstance3D = air_shockwave_mesh.instantiate()
 	new_shockwave.position = target_position
 	new_shockwave.rotation = angle
 	add_child(new_shockwave)
 
-func colliding_shockwave(target_position : Vector3, angle : Vector3) -> void:
+func colliding_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO) -> void:
 	var new_shockwave : Node3D = colliding_shockwave_mesh.instantiate()
 	new_shockwave.position = target_position
 	new_shockwave.rotation = angle
+	add_child(new_shockwave)
+
+func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
+						hex_color : String = "#FFFFFF", new_scale : float = 1.0) -> void:
+	
+	var new_shockwave : Node3D = particle_shockwave_mesh.instantiate()
+	
+	new_shockwave.position = target_position
+	new_shockwave.rotation = angle
+	new_shockwave.set_sprite_color(hex_color)
+	new_shockwave.scale = Vector3(new_scale, new_scale, new_scale)
+	
 	add_child(new_shockwave)
 #endregion
 

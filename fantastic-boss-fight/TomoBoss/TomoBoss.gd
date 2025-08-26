@@ -26,6 +26,8 @@ func choose_attack() -> void:
 	await clap()
 	await seconds(0.5)
 	await face_kick()
+	await seconds(0.5)
+	await stomp()
 	
 	set_atk_cooldown_in_seconds(1.0)
 
@@ -33,6 +35,8 @@ func stop_walk_animation() -> void:
 	$AnimationPlayer.stop(true)
 
 #region attack combo
+## Does karate_punch(), knee(), combo_kick(), and ground_stomp() in a row.
+## Additionally does grab() if hardest difficulty is on.
 func attack_combo() -> void:
 	can_walk = false
 	current_attack = attacks.COMBO
@@ -87,6 +91,7 @@ func knee() -> void:
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
+	SpawnObject.particle_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	await seconds(0.4)
@@ -122,13 +127,13 @@ func ground_stomp() -> void:
 	await seconds(0.1)
 	
 	$AttackSFX.play_sfx("BossDash")
-	$AnimationPlayer.speed_scale = 0.5
+	$AnimationPlayer.speed_scale = 0.75
 	$AnimationPlayer.play("GroundStomp")
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
 	should_look_at_player = true
 	
-	await seconds(0.66)
+	await seconds(0.49)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	should_look_at_player = false
@@ -149,6 +154,7 @@ func grab(from_combo : bool) -> void:
 	
 	if from_combo:
 		await seconds(0.3)
+	# else: play voiceline
 	
 	damage = 50.0
 	global_position = Global.boss_to_player
@@ -164,11 +170,16 @@ func grab(from_combo : bool) -> void:
 	look_at_player()
 	dashing = true
 	dash_towards_on_ground(Global.player_position)
-	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.15)
+	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
+	toggle_all_trails_in($Armature/Skeleton3D/Grab)
 	
-	await seconds(0.15)
+	await seconds(0.2)
 	
 	dashing = false
+	
+	await seconds(0.1)
+	
+	toggle_all_trails_in($Armature/Skeleton3D/Grab)
 
 func face_kick() -> void:
 	#voiceline
@@ -194,7 +205,11 @@ func face_kick() -> void:
 	
 	look_at_player()
 	$Explosion.play()
-	SpawnObject.explosion_detailed(global_position + Vector3(0.0, 1.0, 0.0), "#FF0000", 0.8)
+	SpawnObject.particle_shockwave(
+		$FaceKickShockwavePosition.global_position,
+		$FaceKickShockwavePosition.global_rotation + RIGHT_X_ANGLE
+	)
+	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FF0000", 0.8)
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
 
 func clap() -> void:
@@ -305,6 +320,56 @@ func mini_explosion() -> void:
 func taunt() -> void:
 	$AnimationPlayer.play("Taunt")
 
+func stomp() -> void:
+	damage = 50
+	can_walk = false
+	
+	$AttackSFX.play_sfx("BossDash")
+	$AnimationPlayer.play("Stomp")
+	
+	# TODO: Test with other trails
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 600)
+	
+	print($Armature/Skeleton3D/AirTrails/Trail1.global_position)
+	
+	SpawnObject.air_shockwave(global_position)
+	SpawnObject.particle_shockwave(global_position)
+	
+	global_position = Global.predict_player_position_at_seconds(0.5)
+	global_position.y += 10.0
+	
+	print($Armature/Skeleton3D/AirTrails/Trail1.global_position)
+	
+	await seconds(10.0)
+	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
+	
+	var height : float = global_position.y
+	
+	SpawnObject.air_shockwave(global_position)
+	SpawnObject.particle_shockwave(global_position)
+	
+	global_position.y = 0.0
+	$Hitbox/AirStomp.shape.height = height * 2 # Multiply by 2 because "center" of shape is on floor
+	toggle_hitbox_on_for_seconds($Hitbox/AirStomp, 0.1)
+	
+	SpawnObject.ground_shockwave(global_position)
+	SpawnObject.air_shockwave(global_position)
+	SpawnObject.particle_shockwave(global_position)
+	SpawnObject.colliding_shockwave(global_position)
+	
+	$Explosion.play()
+	
+	await seconds(0.5)
+	
+	$AnimationPlayer.speed_scale = 0.5
+	$AnimationPlayer.play("StompEnd")
+	
+	await seconds(0.5)
+	
+	$AnimationPlayer.speed_scale = 1.0
+
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
 	$AnimationPlayer.play("Walking")
@@ -312,7 +377,9 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 
 ## Toggles all of the trails in the parent node.
 ## Ignores any children nodes that aren't trails.
-func toggle_all_trails_in(parent_node : Node3D) -> void:
+## 'new_length' is the amount of frames the end of the trail will last.
+## Only use 'new_length' if intending to toggle the trails ON.
+func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
 	
 	var children := parent_node.get_children()
 	
@@ -320,5 +387,5 @@ func toggle_all_trails_in(parent_node : Node3D) -> void:
 		if not child is GPUTrail3D:
 			continue
 		
-		toggle_trail(child)
+		toggle_trail(child, new_length)
 	
