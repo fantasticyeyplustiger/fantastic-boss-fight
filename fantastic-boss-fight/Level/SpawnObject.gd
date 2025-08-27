@@ -46,10 +46,12 @@ func air_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO) ->
 	new_shockwave.rotation = angle
 	add_child(new_shockwave)
 
-func colliding_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO) -> void:
+func colliding_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
+						new_scale : float = 1.0) -> void:
 	var new_shockwave : Node3D = colliding_shockwave_mesh.instantiate()
 	new_shockwave.position = target_position
 	new_shockwave.rotation = angle
+	new_shockwave.scale = Vector3(new_scale, new_scale, new_scale)
 	add_child(new_shockwave)
 
 func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,

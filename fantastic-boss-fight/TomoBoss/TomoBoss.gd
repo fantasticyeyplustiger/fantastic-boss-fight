@@ -28,8 +28,10 @@ func choose_attack() -> void:
 	await face_kick()
 	await seconds(0.5)
 	await stomp()
+	await seconds(0.5)
+	await chop()
 	
-	set_atk_cooldown_in_seconds(1.0)
+	set_atk_cooldown_in_seconds(0.1)
 
 func stop_walk_animation() -> void:
 	$AnimationPlayer.stop(true)
@@ -57,6 +59,11 @@ func attack_combo() -> void:
 func karate_punch() -> void:
 	damage = 30.0
 	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	
+	await seconds(0.05) # Because it needs time to toggle apparently idk why
+	
 	$AttackSFX.play_sfx("BossDash")
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	go_to_predicted_position_at_seconds(0.35)
@@ -64,6 +71,8 @@ func karate_punch() -> void:
 	global_position.y = 0.0 # Stay on ground
 	
 	await seconds(0.2)
+	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	$AnimationPlayer.play("LeftStraight")
@@ -76,7 +85,28 @@ func karate_punch() -> void:
 	dashing = false
 	toggle_hitbox_on_for_seconds($Hitbox/LeftStraight, 0.1)
 	
-	await seconds(0.1)
+	await seconds(0.065)
+	
+	SpawnObject.particle_shockwave(
+		$LeftStraightShockwavePosition.global_position,
+	 	global_rotation + RIGHT_X_ANGLE,
+		"#FFFFFF",
+		1.2
+	)
+	SpawnObject.particle_shockwave(
+		$LeftStraightShockwavePosition.global_position,
+	 	global_rotation + RIGHT_X_ANGLE,
+		"#FFFFFF",
+		0.4
+	)
+	SpawnObject.particle_shockwave(
+		$LeftStraightShockwavePosition.global_position,
+	 	global_rotation + RIGHT_X_ANGLE,
+		"#FFFFFF",
+		0.2
+	)
+	
+	await seconds(0.035)
 
 func knee() -> void:
 	damage = 25.0
@@ -87,7 +117,7 @@ func knee() -> void:
 	$AnimationPlayer.play("RightKnee")
 	dashing = true
 	look_at_player()
-	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2))
+	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 40.0)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
@@ -102,6 +132,9 @@ func knee() -> void:
 func combo_kick() -> void:
 	damage = 30.0
 	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	
 	await seconds(0.15)
 	
 	$AttackSFX.play_sfx("BossDash")
@@ -109,6 +142,8 @@ func combo_kick() -> void:
 	global_position = Global.boss_to_player
 	$AnimationPlayer.play("LeftRoundhouse") # Technically not but whatever
 	await seconds(0.15)
+	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	dashing = true
@@ -124,6 +159,9 @@ func combo_kick() -> void:
 func ground_stomp() -> void:
 	damage = 35.0
 	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	
 	await seconds(0.1)
 	
 	$AttackSFX.play_sfx("BossDash")
@@ -135,11 +173,12 @@ func ground_stomp() -> void:
 	
 	await seconds(0.49)
 	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
 	should_look_at_player = false
 	$AnimationPlayer.speed_scale = 1.0
 	dashing = true
-	dash_towards_on_ground(Global.player_position)
+	dash_towards_on_ground(Global.player_position, 20.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
 	toggle_hitbox_on_for_seconds($Hitbox/GroundStomp, 0.2)
 	
@@ -153,8 +192,12 @@ func ground_stomp() -> void:
 func grab(from_combo : bool) -> void:
 	
 	if from_combo:
-		await seconds(0.3)
+		await seconds(0.2)
 	# else: play voiceline
+	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	await seconds(0.1)
 	
 	damage = 50.0
 	global_position = Global.boss_to_player
@@ -166,6 +209,7 @@ func grab(from_combo : bool) -> void:
 	
 	await seconds(0.6)
 	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
 	look_at_player()
 	dashing = true
@@ -187,6 +231,11 @@ func face_kick() -> void:
 	can_walk = false
 	should_fall = true
 	current_attack = attacks.FACE_KICK
+	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 5)
+	await seconds(0.05)
+	
 	$AnimationPlayer.play("FaceKick")
 	
 	look_at_player()
@@ -199,9 +248,11 @@ func face_kick() -> void:
 	dash_towards(Global.player_position)
 	
 	await seconds(0.1)
+	
 	dashing = false
 	
 	await seconds(0.3)
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	look_at_player()
 	$Explosion.play()
@@ -216,6 +267,11 @@ func clap() -> void:
 	current_attack = attacks.CLAP
 	damage = 40.0
 	can_walk = false
+	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 15)
+	
+	await seconds(0.1) # Because it needs time to toggle apparently idk why
 	
 	$Voicelines.play_sfx("Begone1")
 	$AnimationPlayer.play("Clap")
@@ -232,14 +288,18 @@ func clap() -> void:
 	
 	await seconds(0.35)
 	
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AnimationPlayer.speed_scale = 1.0
 	should_look_at_player = false
 	dashing = true
 	dash_towards(Global.player_position)
 	
-	await seconds(0.15)
+	await seconds(0.05)
 	
 	$AttackSFX.play_sfx("BloodyDash")
+	
+	await seconds(0.1)
+	
 	dashing = false
 	toggle_hitbox_on_for_seconds($Hitbox/Clap, 0.15)
 	
@@ -324,24 +384,21 @@ func stomp() -> void:
 	damage = 50
 	can_walk = false
 	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 30)
+	
+	await seconds(0.1) # Because it needs time to toggle apparently idk why
+	
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Stomp")
-	
-	# TODO: Test with other trails
-	# Trail should toggle BEFORE switching positions so player knows where boss went
-	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 600)
-	
-	print($Armature/Skeleton3D/AirTrails/Trail1.global_position)
 	
 	SpawnObject.air_shockwave(global_position)
 	SpawnObject.particle_shockwave(global_position)
 	
 	global_position = Global.predict_player_position_at_seconds(0.5)
-	global_position.y += 10.0
+	global_position.y += 15.0
 	
-	print($Armature/Skeleton3D/AirTrails/Trail1.global_position)
-	
-	await seconds(10.0)
+	await seconds(0.7)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
@@ -369,6 +426,48 @@ func stomp() -> void:
 	await seconds(0.5)
 	
 	$AnimationPlayer.speed_scale = 1.0
+
+func chop() -> void:
+	
+	can_walk = false
+	damage = 35
+	
+	# Trail should toggle BEFORE switching positions so player knows where boss went
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	
+	await seconds(0.1) # Because it needs time to toggle apparently idk why
+	
+	look_at_player()
+	
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	SpawnObject.particle_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	
+	$AttackSFX.play_sfx("BossDash")
+	$AnimationPlayer.play("Chop")
+	global_position = Global.predict_player_position_at_seconds_for_boss(0.2)
+	
+	should_look_at_player = true
+	
+	await seconds(0.4)
+	
+	$AttackSFX.play_sfx("BloodyDash")
+	
+	should_look_at_player = false
+	
+	dash_towards(Global.player_position, 50.0)
+	set_dash_acceleration(0.9)
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
+	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.2)
+	
+	toggle_trail($Armature/Skeleton3D/Chop/Trail)
+	
+	await seconds(0.2)
+	
+	stop_dashing()
+	
+	await seconds(0.1)
+	
+	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)

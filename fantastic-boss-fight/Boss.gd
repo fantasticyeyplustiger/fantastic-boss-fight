@@ -34,6 +34,10 @@ var can_walk : bool = true
 ## If turned true, have 'dash_towards()' used right after.
 var dashing : bool = false
 
+## Multiplies the speed of the dash with this every frame boss is dashing.
+## Mainly for making the dash not "static" (not in the programmer sense)
+var dash_acceleration : float = 1.0
+
 var should_fall : bool = false
 var should_look_at_player : bool = false
 var parrying : bool = false
@@ -64,6 +68,8 @@ func _physics_process(delta: float) -> void:
 		
 		move_and_slide()
 		
+		velocity *= dash_acceleration
+		
 	elif not can_walk and should_fall:
 		velocity = Vector3.ZERO
 		velocity.y -= GRAVITY * delta
@@ -82,8 +88,12 @@ func go_to_predicted_position_at_seconds(seconds_to_wait : float) -> void:
 	position = predicted_position
 
 ## Makes the boss dash towards the position at a high speed.
-# Also makes the boss look at that direction.
-func dash_towards(target_position : Vector3) -> void:
+## Also makes the boss look at that direction.
+## 'dashing' is automatically set to true when this function is called.
+## 'dash_acceleration' is automatically set to 1.0 to prevent any issues with other attacks
+## when this function is called.
+func dash_towards(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
+	dashing = true
 	var direction = global_position.direction_to(target_position)
 	
 	# add to global_position so that direction is actually relative to boss
@@ -91,17 +101,33 @@ func dash_towards(target_position : Vector3) -> void:
 	rotation.x = 0
 	rotation.z = 0
 	
-	velocity = (direction * SPRINT_SPEED) * 1.5
+	velocity = (direction * speed) * 1.5
+	dash_acceleration = 1.0
 
 ## Makes the boss go to the ground and dash towards another position on the ground.
 ## Also makes the boss look at that direction.
+## 'dashing' is automatically set to true when this function is called.
 ## 'target_position' does not need its y-value set to 0.
-func dash_towards_on_ground(target_position : Vector3) -> void:
+func dash_towards_on_ground(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
 	global_position.y = 0.0
 	
 	var ground_target = Vector3(target_position.x, 0.0, target_position.z)
 	
-	dash_towards(ground_target)
+	dash_towards(ground_target, speed)
+
+## Sets 'dashing' to be false.
+func stop_dashing() -> void:
+	dashing = false
+
+## Sets 'dashing' to be false in 'n' seconds.
+func stop_dashing_in_seconds(n : float) -> void:
+	await seconds(n)
+	dashing = false
+
+## Sets the dash acceleration.
+## Dash speed will be multiplied with 'n' every frame where 'dashing' is true.
+func set_dash_acceleration(n : float) -> void:
+	dash_acceleration = n
 
 func stop_walk_animation() -> void:
 	pass
