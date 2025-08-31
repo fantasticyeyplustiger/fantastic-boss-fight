@@ -8,7 +8,7 @@ var current_attack : attacks
 func _ready() -> void:
 	$Aura.visible = false # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
-	set_atk_cooldown_in_seconds(2.0)
+	set_atk_cooldown_in_seconds(1.0)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
@@ -22,14 +22,18 @@ func choose_attack() -> void:
 	
 	
 	await attack_combo()
-	await seconds(0.5)
+	await seconds(0.1)
 	await clap()
-	await seconds(0.5)
+	await seconds(0.1)
 	await face_kick()
-	await seconds(0.5)
+	await seconds(0.1)
+	await grab()
+	await seconds(0.1)
 	await stomp()
-	await seconds(0.5)
+	await seconds(0.1)
 	await chop()
+	await seconds(0.1)
+	await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
@@ -53,8 +57,6 @@ func attack_combo() -> void:
 	await combo_kick()
 	await ground_stomp()
 	await grab(true)
-	
-	can_walk_again_in_seconds(0.5)
 
 func karate_punch() -> void:
 	damage = 30.0
@@ -147,7 +149,7 @@ func combo_kick() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	dashing = true
-	dash_towards(Global.player_position)
+	dash_towards(Global.player_position, 35.0)
 	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
 	
@@ -178,7 +180,7 @@ func ground_stomp() -> void:
 	should_look_at_player = false
 	$AnimationPlayer.speed_scale = 1.0
 	dashing = true
-	dash_towards_on_ground(Global.player_position, 20.0)
+	dash_towards_on_ground(Global.player_position, 25.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
 	toggle_hitbox_on_for_seconds($Hitbox/GroundStomp, 0.2)
 	
@@ -189,7 +191,7 @@ func ground_stomp() -> void:
 	dashing = false
 #endregion
 
-func grab(from_combo : bool) -> void:
+func grab(from_combo : bool = false) -> void:
 	
 	if from_combo:
 		await seconds(0.2)
@@ -204,6 +206,7 @@ func grab(from_combo : bool) -> void:
 	global_position.y = 0.0
 	look_at_player()
 	
+	$UnparriableSFX.play()
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Grab")
 	
@@ -213,7 +216,8 @@ func grab(from_combo : bool) -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	look_at_player()
 	dashing = true
-	dash_towards_on_ground(Global.player_position)
+	dash_towards_on_ground(Global.player_position, 75)
+	set_dash_acceleration(0.9)
 	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
 	toggle_all_trails_in($Armature/Skeleton3D/Grab)
 	
@@ -260,8 +264,14 @@ func face_kick() -> void:
 		$FaceKickShockwavePosition.global_position,
 		$FaceKickShockwavePosition.global_rotation + RIGHT_X_ANGLE
 	)
-	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FF0000", 0.8)
+	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FF0000", 0.5, true)
+	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFC5", 0.45, true)
+	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.11, true)
+	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.1)
+	
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
+	
+	await seconds(0.1)
 
 func clap() -> void:
 	current_attack = attacks.CLAP
@@ -389,6 +399,7 @@ func stomp() -> void:
 	
 	await seconds(0.1) # Because it needs time to toggle apparently idk why
 	
+	$UnparriableSFX.play()
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Stomp")
 	
@@ -433,20 +444,19 @@ func chop() -> void:
 	damage = 35
 	
 	# Trail should toggle BEFORE switching positions so player knows where boss went
-	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
+	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 45)
 	
 	await seconds(0.1) # Because it needs time to toggle apparently idk why
 	
-	look_at_player()
+	should_look_at_player = true
 	
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	SpawnObject.particle_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
+	$UnparriableSFX.play()
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Chop")
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.2)
-	
-	should_look_at_player = true
 	
 	await seconds(0.4)
 	
@@ -454,20 +464,48 @@ func chop() -> void:
 	
 	should_look_at_player = false
 	
-	dash_towards(Global.player_position, 50.0)
-	set_dash_acceleration(0.9)
+	dash_towards(Global.player_position)
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.2)
+	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.1)
 	
 	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 	
 	await seconds(0.2)
 	
 	stop_dashing()
+	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 	
 	await seconds(0.1)
 	
-	toggle_trail($Armature/Skeleton3D/Chop/Trail)
+func large_explosion() -> void:
+	damage = 60.0
+	can_walk = false
+	
+	$Voicelines.play_sfx("ThisWillHurt1")
+	$AttackSFX.play_sfx("BossDash")
+	$AnimationPlayer.play("LargeExplosion")
+	global_position = Global.boss_to_player
+	look_at_player()
+	
+	$ExplosionPrepare.emitting = true
+	
+	await seconds(2.0)
+	
+	$ExplosionPrepare.emitting = false
+	
+	toggle_hitbox_on_for_seconds($Hitbox/LargeExplosion, 0.1)
+	SpawnObject.explosion_detailed(global_position, "#FF0000", 2.0, true)
+	SpawnObject.explosion_detailed(global_position, "#FFFFC5", 1.7, true)
+	SpawnObject.explosion_detailed(global_position, "#FFFFFF", 0.55, true)
+	SpawnObject.explosion_detailed(global_position, "#FFFFFF", 0.5)
+	$Explosion.play()
+	
+	await seconds(0.85)
+	
+	should_fall = true
+	
+	await seconds(0.6)
+	
 
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
@@ -477,7 +515,7 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 ## Toggles all of the trails in the parent node.
 ## Ignores any children nodes that aren't trails.
 ## 'new_length' is the amount of frames the end of the trail will last.
-## Only use 'new_length' if intending to toggle the trails ON.
+## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
 func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
 	
 	var children := parent_node.get_children()

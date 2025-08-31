@@ -31,14 +31,26 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
+tracks/1/path = NodePath(".:mesh:radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(1, 1, 1)]
+"values": [2.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:mesh:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
 }
 
 [sub_resource type="Animation" id="Animation_omec1"]
@@ -51,7 +63,7 @@ tracks/0/path = NodePath(".:transparency")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -59,14 +71,26 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
+tracks/1/path = NodePath(".:mesh:radius")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector3(0.1, 0.1, 0.1), Vector3(20, 20, 20)]
+"values": [0.2, 40.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:mesh:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.4, 80.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0aq50"]
@@ -76,6 +100,7 @@ _data = {
 }
 
 [node name="Explosion" type="MeshInstance3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 transparency = 1.0
 mesh = SubResource("SphereMesh_2iqtc")
 script = ExtResource("1_wj3qy")
@@ -88,8 +113,8 @@ libraries = {
 [node name="LargeExplosion" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("2_xxe22")
-volume_db = -5.0
-unit_size = 50.0
-max_db = 0.0
+volume_db = -10.0
+unit_size = 250.0
+max_db = -0.2
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="destroy_self"]

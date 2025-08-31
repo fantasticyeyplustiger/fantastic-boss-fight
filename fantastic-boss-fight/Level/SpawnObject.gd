@@ -121,18 +121,21 @@ func pistol_explosion() -> void:
 	new_explosion.position = Global.player_target_position
 	add_child(new_explosion)
 
-func explosion(target_position : Vector3) -> void:
+func explosion(target_position : Vector3, disable_sound : bool = false) -> void:
 	var new_explosion = explosion_mesh.instantiate()
 	new_explosion.position = target_position
+	new_explosion.disable_sound(disable_sound)
 	add_child(new_explosion)
 
 func explosion_detailed(target_position : Vector3, new_color : String = "#FFFFFF",
-						new_scale : float = 1.0) -> void:
+						new_scale : float = 1.0, disable_sound : bool = false) -> void:
 	
 	var new_explosion = explosion_mesh.instantiate()
 	
-	new_explosion.mesh.material.albedo_color = Color(new_color)
+	new_explosion.material_override = new_explosion.mesh.material.duplicate()
+	new_explosion.material_override.albedo_color = Color(new_color)
 	new_explosion.set_scale(Vector3(new_scale, new_scale, new_scale))
 	new_explosion.position = target_position
+	new_explosion.disable_sound(disable_sound)
 	
 	add_child(new_explosion)

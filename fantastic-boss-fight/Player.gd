@@ -3,7 +3,7 @@ extends CharacterBody3D
 const JUMP_VELOCITY : float = 16.0
 const GRAVITY : float = 23.5
 const WALK_SPEED : float = 15.0
-const DASH_SPEED : float = 35.0
+const DASH_SPEED : float = 50.0
 
 const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
