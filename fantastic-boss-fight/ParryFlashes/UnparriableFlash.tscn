@@ -18,8 +18,8 @@ curve = SubResource("Curve_f8s5d")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2s06r"]
 gravity = Vector3(0, 0, 0)
-scale_min = 3.0
-scale_max = 3.0
+scale_min = 2.5
+scale_max = 2.5
 scale_curve = SubResource("CurveTexture_wvuid")
 alpha_curve = SubResource("CurveTexture_ssdwm")
 

@@ -98,19 +98,22 @@ func karate_punch() -> void:
 		$LeftStraightShockwavePosition.global_position,
 	 	global_rotation + RIGHT_X_ANGLE,
 		"#FFFFFF",
-		1.2
+		1.2,
+		true
 	)
 	SpawnObject.particle_shockwave(
 		$LeftStraightShockwavePosition.global_position,
 	 	global_rotation + RIGHT_X_ANGLE,
 		"#FFFFFF",
-		0.4
+		0.4,
+		true
 	)
 	SpawnObject.particle_shockwave(
 		$LeftStraightShockwavePosition.global_position,
 	 	global_rotation + RIGHT_X_ANGLE,
 		"#FFFFFF",
-		0.2
+		0.2,
+		true
 	)
 	
 	await seconds(0.035)
@@ -128,7 +131,7 @@ func knee() -> void:
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
-	SpawnObject.particle_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	await seconds(0.4)
@@ -145,8 +148,11 @@ func combo_kick() -> void:
 	await seconds(0.15)
 	
 	$AttackSFX.play_sfx("BossDash")
+	
+	look_at_player()
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	global_position = Global.boss_to_player
+	
 	$AnimationPlayer.play("LeftRoundhouse") # Technically not but whatever
 	await seconds(0.15)
 	
@@ -187,9 +193,12 @@ func ground_stomp() -> void:
 	dashing = true
 	dash_towards_on_ground(Global.player_position, 25.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
-	toggle_hitbox_on_for_seconds($Hitbox/GroundStomp, 0.2)
 	
-	await seconds(0.2)
+	await seconds(0.1)
+	
+	toggle_hitbox_on_for_seconds($Hitbox/GroundStomp, 0.1)
+	
+	await seconds(0.1)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
 	SpawnObject.colliding_shockwave(global_position, Vector3.ZERO)
@@ -212,6 +221,7 @@ func grab(from_combo : bool = false) -> void:
 	look_at_player()
 	
 	$UnparriableSFX.play()
+	$ParrySparkles/Grab.emitting = true
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Grab")
 	
@@ -409,7 +419,7 @@ func stomp() -> void:
 	$AnimationPlayer.play("Stomp")
 	
 	SpawnObject.air_shockwave(global_position)
-	SpawnObject.particle_shockwave(global_position)
+	SpawnObject.particle_shockwave(global_position, Vector3.ZERO, "#FFFFFF", 1.0, true)
 	
 	global_position = Global.predict_player_position_at_seconds(0.5)
 	global_position.y += 15.0
@@ -421,6 +431,7 @@ func stomp() -> void:
 	var height : float = global_position.y
 	
 	SpawnObject.air_shockwave(global_position)
+	SpawnObject.particle_shockwave(global_position, Vector3.ZERO, "#FFFFFF", 1.0, true)
 	SpawnObject.particle_shockwave(global_position)
 	
 	global_position.y = 0.0
@@ -455,10 +466,10 @@ func chop() -> void:
 	
 	should_look_at_player = true
 	
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	SpawnObject.particle_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	SpawnObject.particle_shockwave(global_position)
 	
 	$UnparriableSFX.play()
+	$ParrySparkles/Chop.emitting = true
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Chop")
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.41)
@@ -471,13 +482,13 @@ func chop() -> void:
 	
 	dash_towards(Global.player_position)
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.1)
 	
 	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 	
 	await seconds(0.2)
 	
 	stop_dashing()
+	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.1)
 	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 	
 	await seconds(0.1)

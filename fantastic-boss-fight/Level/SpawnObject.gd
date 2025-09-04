@@ -30,41 +30,61 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 #endregion
 
 #region shockwaves
-func ground_shockwave(target_position : Vector3) -> void:
-	var new_shockwave : MeshInstance3D = ground_shockwave_mesh.instantiate()
-	new_shockwave.position = Vector3(target_position.x, 0.0, target_position.z)
-	add_child(new_shockwave)
+## Instantiates and sets the transform of the given node.
+func new_object(node : PackedScene, target_position : Vector3,
+				angle : Vector3 = Vector3.ZERO, new_scale : float = 1.0) -> Node3D:
+	
+	var new_node = node.instantiate()
+	new_node.position = target_position
+	new_node.rotation = angle
+	new_node.scale = Vector3(new_scale, new_scale, new_scale)
+	
+	return new_node
 
-func bomb_shockwave(target_position : Vector3) -> void:
-	var new_shockwave : Node3D = bomb_shockwave_mesh.instantiate()
-	new_shockwave.position = Vector3(target_position.x, 0.0, target_position.z)
-	add_child(new_shockwave)
+func ground_shockwave(target_position : Vector3, new_scale : float = 1.0) -> void:
+	
+	var mesh = new_object(
+		ground_shockwave_mesh, target_position,
+		Vector3.ZERO, new_scale
+	)
+	
+	mesh.position.y = 0.0 # or just floor
+	add_child(mesh)
 
-func air_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO) -> void:
-	var new_shockwave : MeshInstance3D = air_shockwave_mesh.instantiate()
-	new_shockwave.position = target_position
-	new_shockwave.rotation = angle
-	add_child(new_shockwave)
+func bomb_shockwave(target_position : Vector3, new_scale : float = 1.0) -> void:
+	
+	var mesh = new_object(
+		bomb_shockwave_mesh, target_position,
+		Vector3.ZERO, new_scale
+	)
+	
+	mesh.position.y = 0.0 # or just floor
+	add_child(mesh)
+
+func air_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
+					new_scale : float = 1.0) -> void:
+	
+	var mesh = new_object(air_shockwave_mesh, target_position, angle, new_scale)
+	add_child(mesh)
 
 func colliding_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
 						new_scale : float = 1.0) -> void:
-	var new_shockwave : Node3D = colliding_shockwave_mesh.instantiate()
-	new_shockwave.position = target_position
-	new_shockwave.rotation = angle
-	new_shockwave.scale = Vector3(new_scale, new_scale, new_scale)
-	add_child(new_shockwave)
+	
+	var node = new_object(colliding_shockwave_mesh, target_position, angle, new_scale)
+	add_child(node)
 
 func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
-						hex_color : String = "#FFFFFF", new_scale : float = 1.0) -> void:
+						hex_color : String = "#FFFFFF", new_scale : float = 1.0,
+						disable_billboard : bool = false) -> void:
 	
-	var new_shockwave : Node3D = particle_shockwave_mesh.instantiate()
+	var node = new_object(particle_shockwave_mesh, target_position, angle, new_scale)
+	node.set_sprite_color(hex_color)
 	
-	new_shockwave.position = target_position
-	new_shockwave.rotation = angle
-	new_shockwave.set_sprite_color(hex_color)
-	new_shockwave.scale = Vector3(new_scale, new_scale, new_scale)
+	if disable_billboard:
+		node.disable_billboard()
 	
-	add_child(new_shockwave)
+	add_child(node)
+	
 #endregion
 
 #region old boss

@@ -74,6 +74,7 @@ libraries = {
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, 0, 0, 0)
 pixel_size = 0.002
+billboard = 1
 texture = ExtResource("1_x7cs8")
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

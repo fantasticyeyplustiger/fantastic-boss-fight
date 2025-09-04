@@ -8,3 +8,6 @@ func destroy_self(_anim_name : StringName) -> void:
 
 func set_sprite_color(hex_color : String) -> void:
 	$Sprite3D.modulate = Color(hex_color)
+
+func disable_billboard() -> void:
+	$Sprite3D.billboard = BaseMaterial3D.BILLBOARD_DISABLED
