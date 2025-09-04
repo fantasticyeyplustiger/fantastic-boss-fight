@@ -170,6 +170,6 @@ speed_scale = 1.25
 stream = ExtResource("3_dy32e")
 volume_db = -10.0
 unit_size = 200.0
-max_db = -0.2
+max_db = -0.5
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

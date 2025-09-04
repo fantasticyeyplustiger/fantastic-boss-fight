@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvbmpy41j0ax7"]
+
+[ext_resource type="Texture2D" uid="uid://2yrd80eujilh" path="res://ParticleTextures/Star.png" id="1_j2l3f"]
+
+[sub_resource type="Curve" id="Curve_j2l3f"]
+_data = [Vector2(0.245714, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.63764, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ssdwm"]
+curve = SubResource("Curve_j2l3f")
+
+[sub_resource type="Curve" id="Curve_f8s5d"]
+_data = [Vector2(0, 0), 0.0, 6.22659, 0, 0, Vector2(0.502857, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wvuid"]
+curve = SubResource("Curve_f8s5d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2s06r"]
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_wvuid")
+alpha_curve = SubResource("CurveTexture_ssdwm")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssdwm"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 1, 1, 1)
+albedo_texture = ExtResource("1_j2l3f")
+emission_enabled = true
+emission = Color(0, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_f8s5d"]
+material = SubResource("StandardMaterial3D_ssdwm")
+
+[node name="Unparriable" type="GPUParticles3D"]
+emitting = false
+amount = 1
+one_shot = true
+speed_scale = 3.0
+process_material = SubResource("ParticleProcessMaterial_2s06r")
+draw_pass_1 = SubResource("QuadMesh_f8s5d")

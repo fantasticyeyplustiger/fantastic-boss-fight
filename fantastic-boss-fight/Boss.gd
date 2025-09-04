@@ -189,6 +189,8 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 
 ## Switches 'visible' of trail to be the opposite state.
 ## Also edits the length to make trail emitting less noticeable when visible is true again.
+## 'new_length' is the amount of frames the end of the trail will last.
+## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
 func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 	trail.visible = not trail.visible
 	
@@ -196,6 +198,20 @@ func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 		trail.length = 1
 	else:
 		trail.length = new_length # Frames.
+
+## Toggles all of the trails in the parent node.
+## Ignores any children nodes that aren't trails.
+## 'new_length' is the amount of frames the end of the trail will last.
+## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
+func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
+	
+	var children := parent_node.get_children()
+	
+	for child in children:
+		if not child is GPUTrail3D:
+			continue
+		
+		toggle_trail(child, new_length)
 
 ## Switches 'disabled' of collision to be the opposite state.
 ## If collision has Knockback.gd as its script and an Area3D as a parent that

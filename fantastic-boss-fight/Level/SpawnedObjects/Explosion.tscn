@@ -115,6 +115,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("2_xxe22")
 volume_db = -10.0
 unit_size = 250.0
-max_db = -0.2
+max_db = -0.5
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="destroy_self"]

@@ -67,21 +67,28 @@ func _physics_process(delta: float) -> void:
 	var on_floor = is_on_floor()
 	
 	#region Jump logic
+	## Can't hold jump in Ultrakill so you can't in here
+	## This is for a higher skill ceiling
+	
+	# Dash Jump - Jump while dashing for heavy increased speed. Uses a stamina bar, however.
 	if Input.is_action_just_pressed("jump") and dashing and was_on_floor:
 		dash_multiplier = 1.1
 		dash_jumped = true
+		$JumpSFX.play()
+		velocity.y = jump
+	# Slide Jump - Jump right after starting a slide to keep the increased momentum the slide gives.
 	elif Input.is_action_just_pressed("jump") and on_floor and sliding:
 		$JumpSFX.play()
 		$ResetSlideJump.stop()
-		slide_velocity.y = jump / 2.0
+		velocity.y = jump / 1.2
 		slide_jumped = true
-	elif Input.is_action_pressed("jump") and on_floor and slam_jump:
+	# Slam Jump - Jump right after slamming the ground for extra height.
+	elif Input.is_action_just_pressed("jump") and on_floor and slam_jump:
 		$JumpSFX.play()
 		velocity.y = jump * (1.5 + slam_time)
 		slam_jump = false
-	
-	## CANNOT BE is_action_just_pressed otherwise dash and slide jump don't work as intended.
-	elif Input.is_action_pressed("jump") and on_floor:
+	# Regular Jump
+	elif Input.is_action_just_pressed("jump") and on_floor:
 		$JumpSFX.play()
 		velocity.y = jump
 	#endregion
@@ -176,15 +183,26 @@ func _physics_process(delta: float) -> void:
 		
 		# Being in mid-air means you have inertia
 		elif dash_jumped or sliding:
-			# Must go forward and keep momentum
-			if direction == Vector3.ZERO:
-				direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
-			velocity.x = lerpf(velocity.x, direction.x * speed, delta)
-			velocity.z = lerpf(velocity.z, direction.z * speed, delta)
+			# Must conserve momentum
+			if not direction == Vector3.ZERO:
+				velocity.x = lerpf(velocity.x, direction.x * speed, delta)
+				velocity.z = lerpf(velocity.z, direction.z * speed, delta)
+			# Air resistance (less compared to elif can_move because dash jump)
+			else:
+				velocity.x = lerpf(velocity.x, velocity.x * 0.95, delta * 5.0)
+				velocity.z = lerpf(velocity.z, velocity.z * 0.95, delta * 5.0)
+				
 		
 		elif can_move:
-			velocity.x = lerpf(velocity.x, direction.x * speed, delta * 5.0)
-			velocity.z = lerpf(velocity.z, direction.z * speed, delta * 5.0)
+			# Conserve momentum with air resistance
+			if direction == Vector3.ZERO:
+				velocity.x = lerpf(velocity.x, velocity.x * 0.9, delta * 5.0)
+				velocity.z = lerpf(velocity.z, velocity.z * 0.9, delta * 5.0)
+				
+			# Player has inertia in the air
+			else:
+				velocity.x = lerpf(velocity.x, direction.x * speed, delta * 3.0)
+				velocity.z = lerpf(velocity.z, direction.z * speed, delta * 3.0)
 	
 	
 	set_global_variables()

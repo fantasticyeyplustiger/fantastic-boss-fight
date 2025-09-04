@@ -55,6 +55,11 @@ func attack_combo() -> void:
 	await karate_punch()
 	await knee()
 	await combo_kick()
+	
+	if Global.player_position.y > 15.0:
+		await chop()
+		await seconds(0.1)
+	
 	await ground_stomp()
 	await grab(true)
 
@@ -456,7 +461,7 @@ func chop() -> void:
 	$UnparriableSFX.play()
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Chop")
-	global_position = Global.predict_player_position_at_seconds_for_boss(0.2)
+	global_position = Global.predict_player_position_at_seconds_for_boss(0.41)
 	
 	await seconds(0.4)
 	
@@ -489,15 +494,19 @@ func large_explosion() -> void:
 	
 	$ExplosionPrepare.emitting = true
 	
-	await seconds(2.0)
+	await seconds(1.5)
 	
 	$ExplosionPrepare.emitting = false
 	
+	await seconds(0.5)
+	
+	var explosion_position := global_position + Vector3(0.0, 1.0, 0.0)
+	
 	toggle_hitbox_on_for_seconds($Hitbox/LargeExplosion, 0.1)
-	SpawnObject.explosion_detailed(global_position, "#FF0000", 2.0, true)
-	SpawnObject.explosion_detailed(global_position, "#FFFFC5", 1.7, true)
-	SpawnObject.explosion_detailed(global_position, "#FFFFFF", 0.55, true)
-	SpawnObject.explosion_detailed(global_position, "#FFFFFF", 0.5)
+	SpawnObject.explosion_detailed(explosion_position, "#FF0000", 2.0, true)
+	SpawnObject.explosion_detailed(explosion_position, "#FFFFC5", 1.7, true)
+	SpawnObject.explosion_detailed(explosion_position, "#FFFFFF", 0.55, true)
+	SpawnObject.explosion_detailed(explosion_position, "#FFFFFF", 0.5)
 	$Explosion.play()
 	
 	await seconds(0.85)
@@ -511,18 +520,4 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
 	$AnimationPlayer.play("Walking")
 	$Aura.amount = 16
-
-## Toggles all of the trails in the parent node.
-## Ignores any children nodes that aren't trails.
-## 'new_length' is the amount of frames the end of the trail will last.
-## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
-func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
-	
-	var children := parent_node.get_children()
-	
-	for child in children:
-		if not child is GPUTrail3D:
-			continue
-		
-		toggle_trail(child, new_length)
 	
