@@ -44,10 +44,13 @@ var crushing : bool = false
 @onready var head : Node3D = $Head
 @onready var camera : Camera3D = $Head/Camera3D
 @onready var aim : RayCast3D = $Head/Camera3D/AimRay
+@onready var punch_ray : RayCast3D = $Head/Camera3D/PunchRay
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
+	
+	## Whenever any hitscan weapon is shot with, hitscan() gets called.
 	Global.connect("hitscan", hitscan)
 
 ## Handles camera rotation from player.
@@ -296,6 +299,9 @@ func hitscan(damage : float) -> void:
 			# it's an enemy's hitbox.
 			aim.get_collider().get_hit(damage)
 
+func punch() -> void:
+	if punch_ray.is_colliding():
+		pass
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:

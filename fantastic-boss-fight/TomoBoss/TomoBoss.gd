@@ -19,20 +19,12 @@ func choose_attack() -> void:
 	
 	var _distance_to_player = get_distance_to_player()
 	
-	
-	
 	await attack_combo()
-	await seconds(0.1)
 	await clap()
-	await seconds(0.1)
 	await face_kick()
-	await seconds(0.1)
 	await grab()
-	await seconds(0.1)
 	await stomp()
-	await seconds(0.1)
 	await chop()
-	await seconds(0.1)
 	await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
@@ -215,6 +207,7 @@ func grab(from_combo : bool = false) -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails, 25)
 	await seconds(0.1)
 	
+	can_walk = false
 	damage = 50.0
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
@@ -423,6 +416,11 @@ func stomp() -> void:
 	
 	global_position = Global.predict_player_position_at_seconds(0.5)
 	global_position.y += 15.0
+	
+	var target_position := global_position
+	target_position.y = 0.5
+	
+	SpawnObject.blue_flash(target_position, RIGHT_X_ANGLE, 6.0)
 	
 	await seconds(0.7)
 	

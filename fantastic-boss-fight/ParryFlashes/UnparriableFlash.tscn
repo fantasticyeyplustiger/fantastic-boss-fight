@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvbmpy41j0ax7"]
+[gd_scene load_steps=10 format=3 uid="uid://dvbmpy41j0ax7"]
 
 [ext_resource type="Texture2D" uid="uid://2yrd80eujilh" path="res://ParticleTextures/Star.png" id="1_j2l3f"]
+[ext_resource type="Script" uid="uid://cjp6flsbkk6wy" path="res://ParryFlashes/ChangeParticleScale.gd" id="2_ssdwm"]
 
 [sub_resource type="Curve" id="Curve_j2l3f"]
 _data = [Vector2(0.245714, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.63764, 0.0, 0, 0]
@@ -42,3 +43,4 @@ one_shot = true
 speed_scale = 3.0
 process_material = SubResource("ParticleProcessMaterial_2s06r")
 draw_pass_1 = SubResource("QuadMesh_f8s5d")
+script = ExtResource("2_ssdwm")

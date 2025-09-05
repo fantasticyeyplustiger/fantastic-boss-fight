@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://clgqnfx0ro43d"]
+
+[ext_resource type="Script" uid="uid://y33w333eria" path="res://Punch.gd" id="1_b1ie1"]
+
+[node name="LeftHand" type="Node3D"]
+script = ExtResource("1_b1ie1")
