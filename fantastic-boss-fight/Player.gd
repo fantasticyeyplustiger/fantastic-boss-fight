@@ -111,6 +111,8 @@ func _physics_process(delta: float) -> void:
 		
 		dashing = true
 		can_move = false
+		
+		# Because player will collide with the floor otherwise and slow down dramatically
 		velocity.y = 0.2
 		
 		# Resets after DASH_TIME seconds.
@@ -120,7 +122,7 @@ func _physics_process(delta: float) -> void:
 		dash()
 	#endregion
 	
-	#region Slide and Crush logic
+	#region Slide and Crush/Slam logic
 	if on_floor and Input.is_action_just_pressed("crush"):
 		begin_slide()
 		sliding = true
