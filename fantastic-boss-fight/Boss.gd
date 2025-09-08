@@ -40,7 +40,17 @@ var dash_acceleration : float = 1.0
 
 var should_fall : bool = false
 var should_look_at_player : bool = false
-var parrying : bool = false
+
+## If boss can be parried, set this to true.
+## If boss is "punched" with the parry arm while this is true, parried should be set to true.
+## Otherwise, nothing happens.
+## Easy way to use this is by setting this true at the start of the parry timing window and then
+## checking if parried is true at the end of the timing window and code logic accordingly.
+var can_be_parried : bool = false
+
+## Check if this is true for parryable attacks.
+## See 'can_be_parried' for proper usage.
+var parried : bool = false
 
 ## Movement logic.
 func _physics_process(delta: float) -> void:

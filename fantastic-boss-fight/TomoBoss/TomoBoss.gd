@@ -6,6 +6,13 @@ var previous_attack : attacks
 var current_attack : attacks
 
 func _ready() -> void:
+	
+	health = 200.0
+	
+	connect_areas_to_hurt_func()
+	Global.hitscan_the_enemy.connect(get_hitscanned)
+	Global.punch_the_enemy.connect(get_punched)
+	
 	$Aura.visible = false # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
 	set_atk_cooldown_in_seconds(1.0)
@@ -29,8 +36,7 @@ func choose_attack() -> void:
 	
 	set_atk_cooldown_in_seconds(0.1)
 
-func stop_walk_animation() -> void:
-	$AnimationPlayer.stop(true)
+#region all attacks
 
 #region attack combo
 ## Does karate_punch(), knee(), combo_kick(), and ground_stomp() in a row.
@@ -524,9 +530,47 @@ func large_explosion() -> void:
 	
 	await seconds(0.6)
 	
+#endregion
 
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
 	$AnimationPlayer.play("Walking")
 	$Aura.amount = 16
 	
+func stop_walk_animation() -> void:
+	$AnimationPlayer.stop(true)
+
+func get_punched() -> void:
+	
+	var punch_damage = Global.FIST_DAMAGE[Global.current_fist]
+	
+	if Global.current_fist == Global.fists.PARRY_FIST and can_be_parried:
+		parried = true
+		punch_damage *= 5.0
+	
+	health -= punch_damage
+	
+	print(health)
+
+func get_hitscanned(hitscan_damage : float) -> void:
+	health -= hitscan_damage
+	print(health)
+
+func get_hurt(area : Area3D) -> void:
+	health -= area.damage
+	print(health)
+	
+
+func connect_areas_to_hurt_func() -> void:
+	var hitboxes : Node3D = $BossHitbox
+	var script = load("res://DamageEnemy.gd")
+	
+	for bone in hitboxes.get_children():
+		
+		var area := bone.get_child(0)
+		
+		if not area is Area3D:
+			continue
+		
+		area.script = script
+		area.area_entered.connect(get_hurt)

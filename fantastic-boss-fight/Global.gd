@@ -1,10 +1,24 @@
 extends Node
 
+enum fists {PARRY_FIST, HEAVY_FIST}
+
+const FIST_DAMAGE : Dictionary[fists, float] = {
+	fists.PARRY_FIST : 1,
+	fists.HEAVY_FIST : 2.5
+}
+
 const BOUND_ONE : Vector3 = Vector3(-22.0, 0.0, 23.0)
 const BOUND_TWO : Vector3 = Vector3(22.0, 0.0, -23.0)
 
+const HITSCAN_THE_ENEMY_METHOD : String = "get_hitscanned"
+const PUNCH_THE_ENEMY_METHOD : String = "get_punched"
+
 @warning_ignore_start("unused_signal")
 signal hitscan
+signal hitscan_the_enemy
+signal punch_the_enemy
+
+var current_fist : fists = fists.PARRY_FIST
 
 var player_position : Vector3
 

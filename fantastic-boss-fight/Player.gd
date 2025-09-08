@@ -299,11 +299,24 @@ func hitscan(damage : float) -> void:
 		if not aim.get_collider().is_in_group("background"):
 			# If it can be hit by AimRay and isn't the background,
 			# it's an enemy's hitbox.
-			aim.get_collider().get_hit(damage)
+			var area := aim.get_collider()
+			
+			print(area)
+			
+			if area.has_method(Global.HITSCAN_THE_ENEMY_METHOD):
+				area.call(Global.HITSCAN_THE_ENEMY_METHOD, damage)
 
 func punch() -> void:
 	if punch_ray.is_colliding():
-		pass
+		if not aim.get_collider().is_in_group("background"):
+			# If it can be hit by PunchRay and isn't the background,
+			# it's an enemy's hitbox.
+			var area := aim.get_collider()
+			
+			print(area)
+			
+			if area.has_method(Global.PUNCH_THE_ENEMY_METHOD):
+				area.call(Global.PUNCH_THE_ENEMY_METHOD)
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:

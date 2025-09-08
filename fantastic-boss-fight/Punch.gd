@@ -1,23 +1,21 @@
 extends Node3D
 
-enum fists {PARRY_FIST, HEAVY_FIST}
-
-const exhaustion_consumption : Dictionary[fists, float] = {
-	fists.PARRY_FIST : 1.0, fists.HEAVY_FIST : 1.5
+const exhaustion_consumption : Dictionary[Global.fists, float] = {
+	Global.fists.PARRY_FIST : 1.0, Global.fists.HEAVY_FIST : 1.5
 }
 
 const HEAVY_FIST_EXPLOSION_TIME : float = 1.9
 
-var current_fist : fists = fists.PARRY_FIST
+var current_fist : Global.fists = Global.fists.PARRY_FIST
 
 var arm_exhaustion : float = 2.0
 var heavy_fist_hold_time : float = 0.0
 
 func _input(event: InputEvent) -> void:
 	
-	if event.is_action_pressed("parry") and current_fist == fists.PARRY_FIST:
+	if event.is_action_pressed("parry") and current_fist == Global.fists.PARRY_FIST:
 		parry_punch()
-	elif event.is_action_pressed("parry") and current_fist == fists.HEAVY_FIST:
+	elif event.is_action_pressed("parry") and current_fist == Global.fists.HEAVY_FIST:
 		heavy_punch()
 
 func _physics_process(delta: float) -> void:
@@ -25,7 +23,7 @@ func _physics_process(delta: float) -> void:
 	if arm_exhaustion < 2.0:
 		arm_exhaustion += delta * 1.5
 	
-	if Input.is_action_pressed("parry") and current_fist == fists.HEAVY_FIST:
+	if Input.is_action_pressed("parry") and current_fist == Global.fists.HEAVY_FIST:
 		heavy_fist_hold_time += delta
 	
 	if heavy_fist_hold_time > HEAVY_FIST_EXPLOSION_TIME:
@@ -37,7 +35,7 @@ func _physics_process(delta: float) -> void:
 ## Otherwise, it'll just do a regular punch.
 func parry_punch() -> void:
 	
-	if arm_exhaustion < exhaustion_consumption[fists.PARRY_FIST]:
+	if arm_exhaustion < exhaustion_consumption[Global.fists.PARRY_FIST]:
 		# Play fail sfx
 		return
 	
@@ -46,7 +44,7 @@ func parry_punch() -> void:
 ## If player is looking at something in punch range, it will be punched.
 func heavy_punch() -> void:
 	
-	if arm_exhaustion < exhaustion_consumption[fists.HEAVY_FIST]:
+	if arm_exhaustion < exhaustion_consumption[Global.fists.HEAVY_FIST]:
 		# Play fail sfx
 		return
 	
