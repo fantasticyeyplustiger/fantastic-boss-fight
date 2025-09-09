@@ -142,7 +142,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Can't be on floor, otherwise LandingSFX can be spammed
 	if not on_floor and Input.is_action_just_pressed("crush"):
-		velocity.y -= 70.0
+		velocity.y = -70.0
 		slam_time += delta
 		crushing = true
 		dashing = false # Cancels dash
@@ -233,10 +233,10 @@ func begin_slide() -> void:
 		
 		if velocity.length() < SLIDE_JUMP_SPEED_LIMIT:
 			velocity = direction * speed
-			velocity *= 2.8 + slam_time
+			velocity *= 2.2 + slam_time
 		velocity = velocity.rotated(Vector3(0.0, 1.0, 0.0), angle)
 	else:
-		velocity = direction * speed * (2.0 + slam_time)
+		velocity = direction * speed * (1.4 + slam_time)
 	
 	velocity.y = 0.0
 	
@@ -301,8 +301,6 @@ func hitscan(damage : float) -> void:
 			# it's an enemy's hitbox.
 			var area := aim.get_collider()
 			
-			print(area)
-			
 			if area.has_method(Global.HITSCAN_THE_ENEMY_METHOD):
 				area.call(Global.HITSCAN_THE_ENEMY_METHOD, damage)
 
@@ -312,8 +310,6 @@ func punch() -> void:
 			# If it can be hit by PunchRay and isn't the background,
 			# it's an enemy's hitbox.
 			var area := aim.get_collider()
-			
-			print(area)
 			
 			if area.has_method(Global.PUNCH_THE_ENEMY_METHOD):
 				area.call(Global.PUNCH_THE_ENEMY_METHOD)

@@ -1,10 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://s6fljpqswrgc"]
+[gd_scene load_steps=12 format=3 uid="uid://s6fljpqswrgc"]
 
 [ext_resource type="Script" uid="uid://d1k8dqtvhim42" path="res://Player/WeaponExplosions/PistolExplosion.gd" id="1_0qmj6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iwnxb"]
-transparency = 1
-albedo_color = Color(1, 0, 0, 0.705882)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_sikia"]
 material = SubResource("StandardMaterial3D_iwnxb")
@@ -19,14 +19,14 @@ albedo_color = Color(1, 0.313726, 0, 0.784314)
 
 [sub_resource type="SphereMesh" id="SphereMesh_qb6gk"]
 material = SubResource("StandardMaterial3D_1cx07")
-radius = 1.8
-height = 3.6
+radius = 2.0
+height = 4.0
 radial_segments = 16
 rings = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgdkh"]
 transparency = 1
-albedo_color = Color(1, 0.588235, 0, 0.588235)
+albedo_color = Color(1, 0.705882, 0, 0.588235)
 
 [sub_resource type="SphereMesh" id="SphereMesh_mweg2"]
 material = SubResource("StandardMaterial3D_sgdkh")
@@ -34,6 +34,9 @@ radius = 2.4
 height = 4.8
 radial_segments = 16
 rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0qmj6"]
+radius = 4.0
 
 [sub_resource type="Animation" id="Animation_0qmj6"]
 length = 0.001
@@ -159,6 +162,13 @@ skeleton = NodePath("../..")
 [node name="OuterSphere" type="MeshInstance3D" parent="ExplosionMesh"]
 mesh = SubResource("SphereMesh_mweg2")
 skeleton = NodePath("../InnerSphere")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("SphereShape3D_0qmj6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -70,7 +70,7 @@ func orbit() -> void:
 	var orbit_speed : Vector3 = radius.normalized()
 	
 	# The closer the angle is to 45 degrees, the faster it'll go
-	orbit_speed = orbit_speed.rotated(Vector3.UP, deg_to_rad(75 - orbit_time))
+	orbit_speed = orbit_speed.rotated(Vector3.UP, deg_to_rad(60 - orbit_time))
 	
 	point_ray_towards_velocity(global_position + orbit_speed)
 	
@@ -93,6 +93,7 @@ func ricochet() -> void:
 func damage_enemy(_body: Node3D) -> void:
 	
 	# damage the enemy here
+	print("being damaged")
 	
 	attack_durability -= 1.0
 

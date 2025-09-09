@@ -153,4 +153,4 @@ orb={
 3d_physics/layer_3="ENEMY_HITBOX"
 3d_physics/layer_4="PLAYER_ATTACKS"
 3d_physics/layer_5="PLAYER_HITBOX"
-3d_physics/layer_6="PARRY_HITBOX"
+3d_physics/layer_6="PLAYER_EXPLOSIONS"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://ca75ar5gidsur"]
+[gd_scene load_steps=29 format=4 uid="uid://ca75ar5gidsur"]
 
 [ext_resource type="Script" uid="uid://3fm0ca44mybj" path="res://Player/Weapons.gd" id="1_uvcyd"]
 [ext_resource type="Texture2D" uid="uid://bygjv3ox3gcr" path="res://Player/Imports/Hand.png" id="2_x4g0p"]
@@ -9,6 +9,7 @@
 [ext_resource type="Animation" uid="uid://c51cbuyumjer7" path="res://Player/UpdatedAnimations/LMBRailgunShoot.res" id="5_taf3w"]
 [ext_resource type="Animation" uid="uid://dgsd42b16qdja" path="res://Player/UpdatedAnimations/LMBSawShoot.res" id="7_8uhl1"]
 [ext_resource type="Animation" uid="uid://cpxchk7gp63p4" path="res://Player/UpdatedAnimations/LMBtoRMBSaw.res" id="8_s6chb"]
+[ext_resource type="AudioStream" uid="uid://4dsawxtyk1wb" path="res://SFX/BaseSFX/LMBPistol.mp3" id="10_su28h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ijcu"]
 resource_name = "Hand"
@@ -1951,7 +1952,7 @@ skin = SubResource("Skin_hab3w")
 surface_material_override/0 = SubResource("StandardMaterial3D_nonic")
 
 [node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
-transform = Transform3D(0.011431, -0.999922, 0.00508116, 0.0918968, 0.00611044, 0.99575, -0.995703, -0.0109155, 0.0919595, -0.0806676, 0.0317812, -0.00299206)
+transform = Transform3D(0.011431, -0.999922, 0.00508109, 0.0918969, 0.00611045, 0.99575, -0.995703, -0.0109155, 0.0919596, -0.0806676, 0.0317812, -0.00299203)
 bone_name = "Index3.R"
 bone_idx = 7
 
@@ -1970,3 +1971,8 @@ libraries = {
 
 [node name="RailgunPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, -1.11759e-08, 2.98023e-07, 1, 0, -3.65078e-07, -1.41561e-07, 1, -0.163, -0.037, -0.091)
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="LMBPistol" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("10_su28h")

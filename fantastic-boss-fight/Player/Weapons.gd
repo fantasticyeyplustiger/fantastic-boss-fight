@@ -11,7 +11,7 @@ const LMB_DAMAGES : Dictionary[weapons, float] = {
 }
 
 const RMB_DAMAGES : Dictionary[weapons, float] = {
-	weapons.PISTOL : 2.5, # Base damage
+	weapons.PISTOL : 2.5, # Base damage, explosion does additional damage.
 	weapons.SHOTGUN : 3.0, # Base damage
 	# Saw's RMB does something else
 	weapons.RAILGUN : 10.0
@@ -139,6 +139,7 @@ func _physics_process(delta: float) -> void:
 func LMB_pistol() -> void:
 	spawn_hitscan_trail(pistol_trail_LMB, finger_tip.global_position)
 	$Animations.play("LMBGunShoot")
+	$SFX/LMBPistol.play()
 	Global.emit_signal("hitscan", LMB_DAMAGES[weapons.PISTOL])
 
 func RMB_pistol() -> void:

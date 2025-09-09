@@ -12,7 +12,7 @@ const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
 const WALK_SPEED : float = 10.0
-const SPRINT_SPEED : float = 30.0
+const SPRINT_SPEED : float = 20.0
 
 const GRAVITY : float = 19.6
 

@@ -10,8 +10,6 @@ func _ready() -> void:
 	health = 200.0
 	
 	connect_areas_to_hurt_func()
-	Global.hitscan_the_enemy.connect(get_hitscanned)
-	Global.punch_the_enemy.connect(get_punched)
 	
 	$Aura.visible = false # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
@@ -83,7 +81,6 @@ func karate_punch() -> void:
 	$AnimationPlayer.play("LeftStraight")
 	look_at_player()
 	dash_towards_on_ground(Global.player_position)
-	dashing = true
 	
 	await seconds(0.1)
 	
@@ -123,9 +120,9 @@ func knee() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	$AnimationPlayer.play("RightKnee")
-	dashing = true
+	
 	look_at_player()
-	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 40.0)
+	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 35.0)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
@@ -157,8 +154,8 @@ func combo_kick() -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	$AttackSFX.play_sfx("BloodyDash")
-	dashing = true
-	dash_towards(Global.player_position, 35.0)
+	
+	dash_towards(Global.player_position, 32.0)
 	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
 	
@@ -188,7 +185,7 @@ func ground_stomp() -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	should_look_at_player = false
 	$AnimationPlayer.speed_scale = 1.0
-	dashing = true
+	
 	dash_towards_on_ground(Global.player_position, 25.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
 	
@@ -229,7 +226,7 @@ func grab(from_combo : bool = false) -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
 	look_at_player()
-	dashing = true
+	
 	dash_towards_on_ground(Global.player_position, 75)
 	set_dash_acceleration(0.9)
 	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
@@ -262,7 +259,6 @@ func face_kick() -> void:
 	$AttackSFX.play_sfx("BossDash")
 	look_at_player()
 	
-	dashing = true
 	dash_towards(Global.player_position)
 	
 	await seconds(0.1)
@@ -315,7 +311,6 @@ func clap() -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AnimationPlayer.speed_scale = 1.0
 	should_look_at_player = false
-	dashing = true
 	dash_towards(Global.player_position)
 	
 	await seconds(0.05)
@@ -557,7 +552,7 @@ func get_hitscanned(hitscan_damage : float) -> void:
 	print(health)
 
 func get_hurt(area : Area3D) -> void:
-	health -= area.damage
+	health -= area.get_parent().damage
 	print(health)
 	
 
@@ -574,3 +569,4 @@ func connect_areas_to_hurt_func() -> void:
 		
 		area.script = script
 		area.area_entered.connect(get_hurt)
+		area.top_node = self
