@@ -7,10 +7,8 @@ class_name HitscanTrail
 func _ready() -> void:
 	var duplicated_mat = material_override.duplicate()
 	material_override = duplicated_mat
-	
-	# When this trail becomes invisible just queue free
-	# Also so it just automatically connects signal
-	$AnimationPlayer.connect("animation_finished", destroy_self)
+	Global.hitscan_environment_particles.connect(emit_environment)
+	Global.hitscan_enemy_particles.connect(emit_enemy)
 
 ## Draws a plane between two points and fades it.
 ## Thanks to LegionGames on Youtube for idea of concept
@@ -43,5 +41,18 @@ func draw_mesh(position_one : Vector3, target_position : Vector3, trail_size) ->
 	
 	return new_mesh
 
-func destroy_self(_anim_name: StringName) -> void:
+func emit_environment() -> void:
+	$Environment.global_position = Global.player_target_position
+	$Environment.emitting = true
+	
+	await get_tree().create_timer(1.0).timeout
+	
+	queue_free()
+
+func emit_enemy() -> void:
+	$Enemy.global_position = Global.player_target_position
+	$Enemy.emitting = true
+	
+	await get_tree().create_timer(1.0).timeout
+	
 	queue_free()

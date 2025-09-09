@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhwj1y1v7bnpk"]
+[gd_scene load_steps=16 format=3 uid="uid://bhwj1y1v7bnpk"]
 
 [ext_resource type="Script" uid="uid://dj53draupmjwa" path="res://Player/WeaponProjectiles/SawBlade.gd" id="1_6juo4"]
 [ext_resource type="Shader" uid="uid://dpqvjo58nkoj2" path="res://GPUTrail-main/shaders/trail.gdshader" id="2_rxu3b"]
+[ext_resource type="AudioStream" uid="uid://1b782nc7vysl" path="res://SFX/BaseSFX/SawBreak.ogg" id="2_t66yn"]
 [ext_resource type="Shader" uid="uid://blhjp1p0iqbje" path="res://GPUTrail-main/shaders/trail_draw_pass.gdshader" id="3_t66yn"]
 [ext_resource type="Script" uid="uid://cr8knack2mui6" path="res://GPUTrail-main/GPUTrail3D.gd" id="4_jqm6i"]
 
@@ -72,6 +73,12 @@ target_position = Vector3(0, 0, -2.5)
 
 [node name="VelocityDirection" type="Node3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="SawBreak" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_t66yn")
+volume_db = -5.0
+max_db = 1.0
+max_distance = 150.0
 
 [node name="GPUTrail3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(-8.74228e-09, 0.2, -8.74228e-09, 0, -8.74228e-09, -0.2, -0.2, -8.74228e-09, 3.82137e-16, 0, 0, 0)

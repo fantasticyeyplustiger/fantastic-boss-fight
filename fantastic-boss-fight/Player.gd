@@ -303,6 +303,11 @@ func hitscan(damage : float) -> void:
 			
 			if area.has_method(Global.HITSCAN_THE_ENEMY_METHOD):
 				area.call(Global.HITSCAN_THE_ENEMY_METHOD, damage)
+			
+			Global.emit_signal("hitscan_enemy_particles")
+			
+		else:
+			Global.emit_signal("hitscan_environment_particles")
 
 func punch() -> void:
 	if punch_ray.is_colliding():

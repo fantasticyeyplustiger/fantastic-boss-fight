@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://otctnfu5rfb3"]
+[gd_scene load_steps=14 format=3 uid="uid://otctnfu5rfb3"]
 
 [ext_resource type="Script" uid="uid://7ilf0425idih" path="res://Player/WeaponProjectiles/HitscanTrail.gd" id="1_15y54"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="1_v5evj"]
@@ -70,6 +70,49 @@ _data = {
 &"fade": SubResource("Animation_txfq0")
 }
 
+[sub_resource type="Curve" id="Curve_15y54"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.13483, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_txfq0"]
+curve = SubResource("Curve_15y54")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7g6bn"]
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_txfq0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bf8nx"]
+transparency = 1
+cull_mode = 2
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_oflsw"]
+material = SubResource("StandardMaterial3D_bf8nx")
+size = Vector2(0.2, 0.7)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_78ngd"]
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_txfq0")
+
+[sub_resource type="QuadMesh" id="QuadMesh_f4itv"]
+material = SubResource("StandardMaterial3D_bf8nx")
+size = Vector2(0.2, 0.7)
+
 [node name="PistolTrailRMB" type="MeshInstance3D"]
 material_override = SubResource("StandardMaterial3D_15y54")
 script = ExtResource("1_15y54")
@@ -84,3 +127,23 @@ libraries = {
 transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
 modulate = Color(0, 0.862745, 1, 1)
 texture = ExtResource("1_v5evj")
+
+[node name="Environment" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 24
+lifetime = 2.0
+one_shot = true
+speed_scale = 8.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_7g6bn")
+draw_pass_1 = SubResource("QuadMesh_oflsw")
+
+[node name="Enemy" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 24
+lifetime = 2.0
+one_shot = true
+speed_scale = 8.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_78ngd")
+draw_pass_1 = SubResource("QuadMesh_f4itv")

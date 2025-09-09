@@ -122,7 +122,7 @@ func knee() -> void:
 	$AnimationPlayer.play("RightKnee")
 	
 	look_at_player()
-	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 35.0)
+	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 40.0)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
@@ -544,12 +544,9 @@ func get_punched() -> void:
 		punch_damage *= 5.0
 	
 	health -= punch_damage
-	
-	print(health)
 
 func get_hitscanned(hitscan_damage : float) -> void:
 	health -= hitscan_damage
-	print(health)
 
 func get_hurt(area : Area3D) -> void:
 	health -= area.get_parent().damage

@@ -54,6 +54,8 @@ var attack_cooldown : float = 0.0
 var railgun_cooldown : float = 0.0
 var saw_orbit_time : float = 0.0
 
+var saw_ammo : float = 10.0
+
 var was_orbiting : bool = false
 
 func _ready() -> void:
@@ -112,6 +114,9 @@ func _physics_process(delta: float) -> void:
 	
 	elif Input.is_action_pressed("LMB"):
 		if attack_cooldown < 0.0:
+			
+			var LMB_fired : bool = true
+			
 			$Animations.speed_scale = 1.0 # Reset in case it was changed while shooting
 			
 			saw_orbit_time = 0.0
@@ -120,11 +125,17 @@ func _physics_process(delta: float) -> void:
 			match current_weapon:
 				weapons.PISTOL:  LMB_pistol()
 				weapons.SHOTGUN: pass
-				weapons.SAW:     LMB_saw()
+				
+				weapons.SAW:
+					if saw_ammo < 1.0:
+						LMB_fired = false
+					else:
+						LMB_saw()
+					
 				weapons.RAILGUN: LMB_railgun()
 				weapons.ORB: pass
 			
-			set_attack_cooldown(true)
+			set_attack_cooldown(LMB_fired)
 	
 	else:
 		saw_orbit_time = 0.0
@@ -135,6 +146,9 @@ func _physics_process(delta: float) -> void:
 	
 	if railgun_cooldown >= 0.0:
 		railgun_cooldown -= delta
+	
+	if saw_ammo < 10:
+		saw_ammo += delta / 2.0
 
 func LMB_pistol() -> void:
 	spawn_hitscan_trail(pistol_trail_LMB, finger_tip.global_position)
@@ -145,6 +159,7 @@ func LMB_pistol() -> void:
 func RMB_pistol() -> void:
 	spawn_hitscan_trail(pistol_trail_RMB, finger_tip.global_position)
 	$Animations.play("RMBGunShoot")
+	$SFX/RMBPistol.play()
 	Global.emit_signal("hitscan", RMB_DAMAGES[weapons.PISTOL])
 	
 	SpawnObject.pistol_explosion()
@@ -153,7 +168,7 @@ func RMB_pistol() -> void:
 func LMB_saw() -> void:
 	var new_sawblade = sawblade.instantiate()
 	new_sawblade.initialize(
-		Global.front_of_player + Vector3(0.0, 0.5, 0.0),
+		Global.front_of_player + Vector3(0.0, 0.55, 0.0),
 		LMB_DAMAGES[weapons.SAW]
 	)
 	SpawnObject.add_child(new_sawblade)

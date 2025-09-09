@@ -15,8 +15,10 @@ const PUNCH_THE_ENEMY_METHOD : String = "get_punched"
 
 @warning_ignore_start("unused_signal")
 signal hitscan
-signal hitscan_the_enemy
-signal punch_the_enemy
+signal hitscan_environment_particles
+signal hitscan_enemy_particles
+#signal hitscan_the_enemy
+#signal punch_the_enemy
 
 var current_fist : fists = fists.PARRY_FIST
 

@@ -50,6 +50,18 @@ func _physics_process(delta: float) -> void:
 	if can_orbit and Global.sawblades_orbiting:
 		orbit_time += delta
 		orbit()
+	
+	if environment_durability < 0 or attack_durability < 0:
+		$SawBreak.play()
+		velocity = Vector3.ZERO
+		$HitEnemyArea/CollisionShape3D.set_deferred("disabled", true)
+		$MeshInstance3D.visible = false
+		$GPUTrail3D.visible = false
+		set_physics_process(false)
+		
+		await get_tree().create_timer(2.0).timeout
+		
+		queue_free()
 
 func initialize(spawn_position : Vector3, new_damage : float) -> void:
 	position = spawn_position
