@@ -154,3 +154,5 @@ orb={
 3d_physics/layer_4="PLAYER_ATTACKS"
 3d_physics/layer_5="PLAYER_HITBOX"
 3d_physics/layer_6="PLAYER_EXPLOSIONS"
+3d_physics/layer_7="PLAYER_SAWBLADES"
+3d_physics/layer_8="ENEMY_SAWBLADE_HITBOX"

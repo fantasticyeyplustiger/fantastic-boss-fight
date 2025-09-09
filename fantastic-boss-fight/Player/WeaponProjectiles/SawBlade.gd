@@ -14,7 +14,7 @@ const BASE_ATK_DURABILITY : float = 3.0
 ## Environment durability, i.e. how many times it can hit the wall or floor without breaking.
 const BASE_ENVIRON_DURABILITY : float = 20.0
 ## In seconds.
-const BASE_MAX_ORBIT_TIME : float = 7.5
+const BASE_MAX_ORBIT_TIME : float = 70.5
 const BASE_SPEED : float = 35.0
 
 var current_velocity : Vector3
@@ -27,6 +27,7 @@ var environment_durability : float = BASE_ENVIRON_DURABILITY
 var attack_durability : float = BASE_ATK_DURABILITY
 
 var can_orbit : bool = true
+var can_be_damaged : bool = true
 var current_orbit_angle : float
 
 
@@ -51,10 +52,10 @@ func _physics_process(delta: float) -> void:
 		orbit_time += delta
 		orbit()
 	
-	if environment_durability < 0 or attack_durability < 0:
+	if environment_durability <= 0.0 or attack_durability <= 0.0:
 		$SawBreak.play()
 		velocity = Vector3.ZERO
-		$HitEnemyArea/CollisionShape3D.set_deferred("disabled", true)
+		$EnemyDamage/CollisionShape3D.set_deferred("disabled", true)
 		$MeshInstance3D.visible = false
 		$GPUTrail3D.visible = false
 		set_physics_process(false)
@@ -102,12 +103,24 @@ func ricochet() -> void:
 	velocity = (BASE_SPEED * current_buff_stack) * new_saw_direction.normalized()
 
 ## Implement this later.
-func damage_enemy(_body: Node3D) -> void:
+func get_enemy_damaged(area : Area3D) -> void:
 	
-	# damage the enemy here
-	print("being damaged")
+	if not can_be_damaged:
+		return
 	
+	print("damaged")
+	can_be_damaged = false
 	attack_durability -= 1.0
+	$EnemyDamage/CollisionShape3D.set_deferred("disabled", true)
+	
+	if area.has_method(Global.HITSCAN_THE_ENEMY_METHOD):
+		area.call(Global.HITSCAN_THE_ENEMY_METHOD, damage)
+	
+	if attack_durability > 0.0:
+		await get_tree().create_timer(0.1).timeout
+		can_be_damaged = true
+		$EnemyDamage/CollisionShape3D.set_deferred("disabled", false)
+	
 
 func add_buff(buff : buffs) -> void:
 	damage += ADD_BUFF_DMG[buff]

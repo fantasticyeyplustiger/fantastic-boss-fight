@@ -547,6 +547,9 @@ func get_punched() -> void:
 
 func get_hitscanned(hitscan_damage : float) -> void:
 	health -= hitscan_damage
+	print(health)
+
+
 
 func get_hurt(area : Area3D) -> void:
 	health -= area.get_parent().damage

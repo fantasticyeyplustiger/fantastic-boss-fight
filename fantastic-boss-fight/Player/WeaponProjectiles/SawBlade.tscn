@@ -59,14 +59,15 @@ mesh = SubResource("CylinderMesh_fkjgd")
 [node name="EnvironmentCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_6juo4")
 
-[node name="HitEnemyArea" type="Area3D" parent="."]
-collision_layer = 8
+[node name="EnemyDamage" type="Area3D" parent="."]
+collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HitEnemyArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyDamage"]
 shape = SubResource("CylinderShape3D_wpmvy")
 
 [node name="EnvironmentRay" type="RayCast3D" parent="."]
+visible = false
 target_position = Vector3(0, 0, -2.5)
 
 [node name="Pivot" type="Node3D" parent="."]
@@ -96,4 +97,4 @@ curve = SubResource("CurveTexture_wqsav")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[connection signal="body_entered" from="HitEnemyArea" to="." method="damage_enemy"]
+[connection signal="area_entered" from="EnemyDamage" to="." method="get_enemy_damaged"]
