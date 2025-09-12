@@ -108,7 +108,6 @@ func get_enemy_damaged(area : Area3D) -> void:
 	if not can_be_damaged:
 		return
 	
-	print("damaged")
 	can_be_damaged = false
 	attack_durability -= 1.0
 	$EnemyDamage/CollisionShape3D.set_deferred("disabled", true)

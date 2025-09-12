@@ -194,6 +194,7 @@ func LMB_railgun() -> void:
 	spawn_hitscan_trail(railgun_trail, railgun_pos.global_position)
 	$Animations.speed_scale = 2.0
 	$Animations.play("LMBRailgunShoot")
+	$SFX/LMBRailgun.play()
 	Global.emit_signal("hitscan", LMB_DAMAGES[weapons.RAILGUN])
 
 ## Switches the current weapon and plays swap animation.
