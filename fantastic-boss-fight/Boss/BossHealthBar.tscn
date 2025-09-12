@@ -1,0 +1,77 @@
+[gd_scene load_steps=3 format=3 uid="uid://b14e2pje0048t"]
+
+[ext_resource type="FontFile" uid="uid://dha64xubkk3ux" path="res://VCR_OSD_MONO_1.001.ttf" id="1_4ifh1"]
+[ext_resource type="Script" uid="uid://bnj0pso2rp7jm" path="res://Boss/BossHealthBar.gd" id="1_jk6pg"]
+
+[node name="BossHealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_jk6pg")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 980
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0.099986, 0.099986, 0.099986, 1)
+
+[node name="HealthBar2" type="ColorRect" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 100.0
+offset_top = 30.0
+offset_right = 1820.0
+offset_bottom = 90.0
+color = Color(0.27451, 0.0509804, 0, 1)
+
+[node name="HealthBar1" type="ColorRect" parent="."]
+layout_mode = 2
+offset_left = 100.0
+offset_top = 30.0
+offset_right = 1820.0
+offset_bottom = 90.0
+color = Color(1, 0, 0, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 1000
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="MarginContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_4ifh1")
+theme_override_font_sizes/font_size = 60
+text = "TOMO PRIME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 237.0
+offset_right = 1714.0
+offset_bottom = 264.0
+value = 100.0
+show_percentage = false
