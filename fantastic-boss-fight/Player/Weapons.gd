@@ -174,6 +174,7 @@ func LMB_saw() -> void:
 	SpawnObject.add_child(new_sawblade)
 	
 	$Animations.play("LMBSawShoot")
+	$SFX/LMBSaw.play(0.0)
 
 func RMB_saw(delta : float) -> void:
 	Global.sawblades_orbiting = true

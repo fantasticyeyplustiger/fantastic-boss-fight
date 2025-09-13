@@ -51,6 +51,9 @@ func _physics_process(delta: float) -> void:
 	if can_orbit and Global.sawblades_orbiting:
 		orbit_time += delta
 		orbit()
+		$SawBreak.volume_db = -10.0
+	else:
+		$SawBreak.volume_db = -5.0
 	
 	if environment_durability <= 0.0 or attack_durability <= 0.0:
 		$SawBreak.play()

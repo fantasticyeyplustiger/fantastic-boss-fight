@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://ca75ar5gidsur"]
+[gd_scene load_steps=32 format=4 uid="uid://ca75ar5gidsur"]
 
 [ext_resource type="Script" uid="uid://3fm0ca44mybj" path="res://Player/Weapons.gd" id="1_uvcyd"]
 [ext_resource type="Texture2D" uid="uid://bygjv3ox3gcr" path="res://Player/Imports/Hand.png" id="2_x4g0p"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://4dsawxtyk1wb" path="res://SFX/BaseSFX/LMBPistol.mp3" id="10_su28h"]
 [ext_resource type="AudioStream" uid="uid://ddkgs83nfe5ps" path="res://SFX/BaseSFX/RMBPistol.ogg" id="11_taf3w"]
 [ext_resource type="AudioStream" uid="uid://wt4x7jvgaxcr" path="res://SFX/BaseSFX/RailcannonFire1.ogg" id="12_8uhl1"]
+[ext_resource type="AudioStream" uid="uid://dnmthrp0rce6c" path="res://SFX/BaseSFX/LMBSaw.mp3" id="13_s6chb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ijcu"]
 resource_name = "Hand"
@@ -1987,3 +1988,8 @@ volume_db = -10.0
 [node name="LMBRailgun" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("12_8uhl1")
 volume_db = -10.0
+
+[node name="LMBSaw" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("13_s6chb")
+volume_db = -5.0
+max_polyphony = 5
