@@ -39,6 +39,8 @@ func parry_punch() -> void:
 		# Play fail sfx
 		return
 	
+	$SFX/ParryPunch.play()
+	
 	
 ## Punches with the Heavy Fist (based on Ultrakill's Knuckleblaster Arm).
 ## If player is looking at something in punch range, it will be punched.
@@ -47,6 +49,8 @@ func heavy_punch() -> void:
 	if arm_exhaustion < exhaustion_consumption[Global.fists.HEAVY_FIST]:
 		# Play fail sfx
 		return
+	
+	$SFX/HeavyPunch.play()
 	
 ## If player holds down punch button for HEAVY_FIST_EXPLOSION_TIME,
 ## this shockwave will be produced. 

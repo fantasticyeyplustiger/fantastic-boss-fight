@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
 [ext_resource type="PackedScene" uid="uid://ca75ar5gidsur" path="res://Player/RightHand.tscn" id="2_s1rgi"]
 [ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/BaseSFX/LandingHeavy.wav" id="3_tok1r"]
-[ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/BaseSFX/PunchSwoosh.ogg" id="4_ddoul"]
+[ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/BaseSFX/ParryPunch.ogg" id="4_ddoul"]
 [ext_resource type="AudioStream" uid="uid://d2nmg74r4j40l" path="res://SFX/BaseSFX/Parry.wav" id="5_8g4oa"]
 [ext_resource type="AudioStream" uid="uid://defkvfvmwwamc" path="res://SFX/BaseSFX/PlayerJump.wav" id="6_6ysni"]
 [ext_resource type="AudioStream" uid="uid://bb5csxigxj37x" path="res://SFX/BaseSFX/Slide.mp3" id="7_vlldt"]

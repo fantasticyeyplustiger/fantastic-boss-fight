@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://clgqnfx0ro43d"]
+[gd_scene load_steps=5 format=3 uid="uid://clgqnfx0ro43d"]
 
 [ext_resource type="Script" uid="uid://y33w333eria" path="res://Punch.gd" id="1_b1ie1"]
+[ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/BaseSFX/ParryPunch.ogg" id="2_ipp5a"]
+[ext_resource type="AudioStream" uid="uid://d2nmg74r4j40l" path="res://SFX/BaseSFX/Parry.wav" id="3_8kf5x"]
+[ext_resource type="AudioStream" uid="uid://bfdylsxk22tjw" path="res://SFX/BaseSFX/HeavyPunch.mp3" id="3_tqupd"]
 
 [node name="LeftHand" type="Node3D"]
 script = ExtResource("1_b1ie1")
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="ParryPunch" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("2_ipp5a")
+volume_db = -6.0
+max_polyphony = 2
+
+[node name="HeavyPunch" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_tqupd")
+volume_db = -6.0
+max_polyphony = 2
+
+[node name="Parry" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_8kf5x")
+volume_db = -6.0
