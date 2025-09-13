@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b14e2pje0048t"]
+[gd_scene load_steps=11 format=3 uid="uid://b14e2pje0048t"]
 
 [ext_resource type="FontFile" uid="uid://dha64xubkk3ux" path="res://VCR_OSD_MONO_1.001.ttf" id="1_4ifh1"]
 [ext_resource type="Script" uid="uid://bnj0pso2rp7jm" path="res://Boss/BossHealthBar.gd" id="1_jk6pg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jk6pg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1cexp"]
 bg_color = Color(0.976471, 0.611765, 0, 1)
@@ -10,6 +12,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 corner_detail = 1
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4c0ii"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c0ii"]
 bg_color = Color(1, 0, 0, 1)
@@ -18,6 +24,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 corner_detail = 1
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1cexp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8sgh"]
 bg_color = Color(0.976471, 0.611765, 0, 1)
@@ -26,6 +36,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 corner_detail = 1
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b8sgh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk6pg"]
 bg_color = Color(0.27451, 0.0509804, 0, 1)
@@ -34,6 +48,8 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 corner_detail = 1
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
 
 [node name="BossHealthBar" type="Control"]
 layout_mode = 3
@@ -56,7 +72,7 @@ theme_override_constants/margin_bottom = 1000
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
-color = Color(0.099986, 0.099986, 0.099986, 1)
+color = Color(0.0980392, 0.0980392, 0.0980392, 0.588235)
 
 [node name="TransitionHealth1" type="ProgressBar" parent="."]
 layout_mode = 2
@@ -64,6 +80,7 @@ offset_left = 100.0
 offset_top = 30.0
 offset_right = 1820.0
 offset_bottom = 70.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_jk6pg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_1cexp")
 value = 100.0
 show_percentage = false
@@ -74,26 +91,31 @@ offset_left = 100.0
 offset_top = 30.0
 offset_right = 1820.0
 offset_bottom = 70.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_4c0ii")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4c0ii")
 value = 100.0
 show_percentage = false
 
 [node name="TransitionHealth2" type="ProgressBar" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 100.0
 offset_top = 30.0
 offset_right = 1820.0
 offset_bottom = 70.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_1cexp")
 theme_override_styles/fill = SubResource("StyleBoxFlat_b8sgh")
 value = 100.0
 show_percentage = false
 
 [node name="HealthBar2" type="ProgressBar" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 100.0
 offset_top = 30.0
 offset_right = 1820.0
 offset_bottom = 70.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_b8sgh")
 theme_override_styles/fill = SubResource("StyleBoxFlat_jk6pg")
 value = 100.0
 show_percentage = false
@@ -117,7 +139,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_4ifh1")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 35
 text = "TOMO PRIME"
 horizontal_alignment = 1
 vertical_alignment = 1
