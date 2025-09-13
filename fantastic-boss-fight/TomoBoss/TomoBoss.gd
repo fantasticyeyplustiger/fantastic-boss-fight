@@ -8,6 +8,7 @@ var current_attack : attacks
 func _ready() -> void:
 	
 	health = 200.0
+	$BossHealthBar.set_max_hp(health)
 	
 	connect_areas_to_hurt_func()
 	
@@ -544,12 +545,15 @@ func get_punched() -> void:
 		punch_damage *= 5.0
 	
 	health -= punch_damage
+	$BossHealthBar.lower_hp(health)
 
 func get_hitscanned(hitscan_damage : float) -> void:
 	health -= hitscan_damage
+	$BossHealthBar.lower_hp(health)
 
 func get_hurt(area : Area3D) -> void:
 	health -= area.get_parent().damage
+	$BossHealthBar.lower_hp(health)
 	
 
 func connect_areas_to_hurt_func() -> void:
