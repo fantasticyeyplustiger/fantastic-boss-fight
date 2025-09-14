@@ -26,12 +26,12 @@ func choose_attack() -> void:
 	var _distance_to_player = get_distance_to_player()
 	
 	await attack_combo()
-	#await clap()
-	#await face_kick()
-	#await grab()
-	#await stomp()
-	#await chop()
-	#await large_explosion()
+	await clap()
+	await face_kick()
+	await grab()
+	await stomp()
+	await chop()
+	await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
