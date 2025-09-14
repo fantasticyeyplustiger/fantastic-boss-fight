@@ -26,12 +26,12 @@ func choose_attack() -> void:
 	var _distance_to_player = get_distance_to_player()
 	
 	await attack_combo()
-	await clap()
-	await face_kick()
-	await grab()
-	await stomp()
-	await chop()
-	await large_explosion()
+	#await clap()
+	#await face_kick()
+	#await grab()
+	#await stomp()
+	#await chop()
+	#await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
@@ -179,8 +179,22 @@ func ground_stomp() -> void:
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
 	should_look_at_player = true
+	can_be_parried = true
 	
 	await seconds(0.49)
+	
+	if parried:
+		$AnimationPlayer.speed_scale = 1.0
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("Hurt")
+		should_look_at_player = false
+		toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
+		
+		# recoil or somethin'
+		await seconds(0.5)
+		parried = false
+		
+		return
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
@@ -543,6 +557,7 @@ func get_punched() -> void:
 	if Global.current_fist == Global.fists.PARRY_FIST and can_be_parried:
 		parried = true
 		punch_damage *= 5.0
+		can_be_parried = false
 	
 	health -= punch_damage
 	$BossHealthBar.lower_hp(health)

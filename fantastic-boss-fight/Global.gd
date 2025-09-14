@@ -3,7 +3,7 @@ extends Node
 enum fists {PARRY_FIST, HEAVY_FIST}
 
 const FIST_DAMAGE : Dictionary[fists, float] = {
-	fists.PARRY_FIST : 1,
+	fists.PARRY_FIST : 1.0,
 	fists.HEAVY_FIST : 2.5
 }
 
@@ -12,11 +12,13 @@ const BOUND_TWO : Vector3 = Vector3(22.0, 0.0, -23.0)
 
 const HITSCAN_THE_ENEMY_METHOD : String = "get_hitscanned"
 const PUNCH_THE_ENEMY_METHOD : String = "get_punched"
+const GET_TOP_NODE_METHOD : String = "get_top_node"
 
 @warning_ignore_start("unused_signal")
 signal hitscan
 signal hitscan_environment_particles
 signal hitscan_enemy_particles
+signal punch
 #signal hitscan_the_enemy
 #signal punch_the_enemy
 

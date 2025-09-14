@@ -52,6 +52,8 @@ func _ready() -> void:
 	
 	## Whenever any hitscan weapon is shot with, hitscan() gets called.
 	Global.connect("hitscan", hitscan)
+	## Whenever any player fist punches, punch() is called.
+	Global.connect("punch", punch)
 
 ## Handles camera rotation from player.
 func _unhandled_input(event: InputEvent) -> void:
@@ -154,12 +156,6 @@ func _physics_process(delta: float) -> void:
 		$ResetSlamTime.start()
 	
 	#endregion
-	
-	if Input.is_action_just_pressed("parry") and not parrying and not parry_cooldown:
-		$PunchSFX.play()
-		parrying = true
-		parry_cooldown = true
-		parry() # 0.25-second window for parrying, 0.5-second cooldown.
 	
 	if not on_floor and should_fall:
 		velocity.y -= GRAVITY * delta
@@ -274,17 +270,6 @@ func set_global_variables() -> void:
 		Global.player_target_position = aim.get_collision_point()
 	else:
 		Global.player_target_position = aim.target_position
-	
-
-##TODO: REWORK PARRYING
-func parry() -> void:
-	$Animations.play("parry")
-	await get_tree().create_timer(0.25).timeout
-	parrying = false
-	
-	$Animations.play("RESET")
-	await get_tree().create_timer(0.25).timeout
-	parry_cooldown = false
 
 ## Gets the movement direction from the player. Calculates from both input and camera rotation.
 func get_movement_direction() -> Vector3:
@@ -293,7 +278,7 @@ func get_movement_direction() -> Vector3:
 	return direction
 
 ## Hits the enemy with a hitscan.
-# Should be called when shooting the pistol or railgun in Weapons.gd.
+## Should be called when shooting the pistol or railgun in Weapons.gd.
 func hitscan(damage : float) -> void:
 	if aim.is_colliding():
 		if not aim.get_collider().is_in_group("background"):
@@ -318,6 +303,15 @@ func punch() -> void:
 			
 			if area.has_method(Global.PUNCH_THE_ENEMY_METHOD):
 				area.call(Global.PUNCH_THE_ENEMY_METHOD)
+			if area.has_method(Global.GET_TOP_NODE_METHOD):
+				
+				var enemy = area.call(Global.GET_TOP_NODE_METHOD)
+				
+				if not "parried" in enemy:
+					return
+				
+				if enemy.parried and Global.current_fist == Global.fists.PARRY_FIST:
+					$Head/Camera3D/LeftHand.hit_parry()
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:
@@ -335,7 +329,7 @@ func get_hit(area: Area3D) -> void:
 		can_move = false
 
 ## Knocks the player back / up depending on parameters given.
-# Position of knockback should always the other hitbox's global position.
+## Position of knockback should always the other hitbox's global position.
 func get_knockbacked(position_of_kb : Vector3, launch_power : float, knockback_power : float) -> void:
 	velocity -= (position_of_kb - global_position).normalized() * knockback_power
 	velocity.y = launch_power

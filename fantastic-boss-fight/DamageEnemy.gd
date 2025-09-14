@@ -20,6 +20,13 @@ func get_punched() -> void:
 	
 	top_node.call(Global.PUNCH_THE_ENEMY_METHOD)
 
+func get_top_node() -> Node3D:
+	if not top_node == null:
+		return top_node
+	else:
+		assert(not top_node == null, "Top node of this Area3D is null!")
+		return null
+
 func find_top_node() -> void:
 	recursion_find(self)
 
