@@ -15,6 +15,8 @@ const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 const SLIDING_HEAD_POSITION : Vector3 = Vector3(0.0, 0.4, 0.0)
 const FORWARD_DIRECTION : Vector3 = Vector3(0.0, 0.0, -1.0)
 
+const MAX_STAMINA : float = 3.0
+
 var dash_direction : Vector3 = Vector3.ZERO
 var slide_velocity : Vector3 = Vector3.ZERO
 
@@ -26,7 +28,8 @@ var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
 var slam_time : float = 0.0
 
-var health : float = 5000.0
+var health : float = 1000.0
+var stamina : float = 3.0
 
 var can_move : bool = true
 var parrying : bool = false
@@ -77,10 +80,14 @@ func _physics_process(delta: float) -> void:
 	
 	# Dash Jump - Jump while dashing for heavy increased speed. Uses a stamina bar, however.
 	if Input.is_action_just_pressed("jump") and dashing and was_on_floor:
-		dash_multiplier = 1.1
-		dash_jumped = true
-		$JumpSFX.play()
-		velocity.y = jump
+		if stamina > 1.0:
+			stamina -= 1.0
+			dash_multiplier = 1.1
+			dash_jumped = true
+			$JumpSFX.play()
+			velocity.y = jump
+		else:
+			pass # Play stamina fail SFX
 	# Slide Jump - Jump right after starting a slide to keep the increased momentum the slide gives.
 	elif Input.is_action_just_pressed("jump") and on_floor and sliding:
 		$JumpSFX.play()
@@ -101,24 +108,29 @@ func _physics_process(delta: float) -> void:
 	#region Dash logic
 	if Input.is_action_just_pressed("dash") and not dashing:
 		
-		$DashSFX.play()
+		if stamina < 1.0:
+			pass # Play stamina fail SFX
+		else:
+			stamina -= 1.0
+			
+			$DashSFX.play()
+			
+			was_on_floor = is_on_floor()
+			
+			dash_direction = get_movement_direction()
 		
-		was_on_floor = is_on_floor()
-		
-		dash_direction = get_movement_direction()
-	
-		# Must dash even if no movement input
-		if dash_direction == Vector3.ZERO:
-			dash_direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
-		
-		dashing = true
-		can_move = false
-		
-		# Because player will collide with the floor otherwise and slow down dramatically
-		velocity.y = 0.2
-		
-		# Resets after DASH_TIME seconds.
-		reset_dash()
+			# Must dash even if no movement input
+			if dash_direction == Vector3.ZERO:
+				dash_direction = (head.transform.basis * FORWARD_DIRECTION).normalized()
+			
+			dashing = true
+			can_move = false
+			
+			# Because player will collide with the floor otherwise and slow down dramatically
+			velocity.y = 0.2
+			
+			# Resets after DASH_TIME seconds.
+			reset_dash()
 	
 	if dashing:
 		dash()
@@ -157,6 +169,7 @@ func _physics_process(delta: float) -> void:
 	
 	#endregion
 	
+	#region Movement Logic
 	if not on_floor and should_fall:
 		velocity.y -= GRAVITY * delta
 	
@@ -204,7 +217,12 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.x = lerpf(velocity.x, direction.x * speed, delta * 3.0)
 				velocity.z = lerpf(velocity.z, direction.z * speed, delta * 3.0)
+	#endregion
 	
+	if stamina < 3.0 and not sliding:
+		stamina += delta * 0.7
+	
+	$PlayerGUI.stamina.text = "STAMINA: " + str(roundf(stamina))
 	
 	set_global_variables()
 	
@@ -312,6 +330,7 @@ func punch() -> void:
 				
 				if enemy.parried and Global.current_fist == Global.fists.PARRY_FIST:
 					$Head/Camera3D/LeftHand.hit_parry()
+					stamina = 3.0
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://15asvdbdowoj"]
+[gd_scene load_steps=3 format=3 uid="uid://15asvdbdowoj"]
 
 [ext_resource type="Script" uid="uid://3kifdeaxlnvs" path="res://GUI/PlayerGUI.gd" id="1_nr326"]
+[ext_resource type="Texture2D" uid="uid://dx21s4tbptwhn" path="res://ParticleTextures/Crosshair.png" id="2_wejk4"]
 
 [node name="PlayerGUI" type="Control"]
 layout_mode = 3
@@ -54,3 +55,28 @@ size_flags_vertical = 8
 [node name="Label" type="Label" parent="MarginContainer/ParryContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 59
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 145
+
+[node name="StaminaContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="MarginContainer2/StaminaContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "STAMINA :"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.784314)
+position = Vector2(960, 540)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_wejk4")
