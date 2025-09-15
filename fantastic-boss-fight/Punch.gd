@@ -67,7 +67,7 @@ func hit_parry() -> void:
 	$ParryFlash.visible = true
 	
 	get_tree().paused = true
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.25).timeout
 	get_tree().paused = false
 	
 	$ParryFlash.visible = false

@@ -39,7 +39,11 @@ var dashing : bool = false
 var dash_acceleration : float = 1.0
 
 var should_fall : bool = false
+
+## Looks at the player with no limits on rotation.
 var should_look_at_player : bool = false
+## Looks at the player with rotation limited to y-axis.
+var should_look_at_player_2D : bool = false
 
 ## If boss can be parried, set this to true.
 ## If boss is "punched" with the parry arm while this is true, parried should be set to true.
@@ -70,6 +74,8 @@ func _physics_process(delta: float) -> void:
 	# Difference between look_at_player() is that this includes X and Z rotation
 	if should_look_at_player:
 		look_at(Global.player_position + PLAYER_HEAD_POSITION)
+	if should_look_at_player_2D:
+		look_at_player()
 	
 	if dashing:
 		

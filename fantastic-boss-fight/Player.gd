@@ -28,7 +28,7 @@ var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
 var slam_time : float = 0.0
 
-var health : float = 1000.0
+var health : float = 100.0
 var stamina : float = 3.0
 
 var can_move : bool = true
@@ -203,8 +203,8 @@ func _physics_process(delta: float) -> void:
 				velocity.z = lerpf(velocity.z, direction.z * speed, delta)
 			# Air resistance (less compared to elif can_move because dash jump)
 			else:
-				velocity.x = lerpf(velocity.x, velocity.x * 0.95, delta * 5.0)
-				velocity.z = lerpf(velocity.z, velocity.z * 0.95, delta * 5.0)
+				velocity.x = lerpf(velocity.x, velocity.x * 0.98, delta * 5.0)
+				velocity.z = lerpf(velocity.z, velocity.z * 0.98, delta * 5.0)
 				
 		
 		elif can_move:
@@ -220,9 +220,9 @@ func _physics_process(delta: float) -> void:
 	#endregion
 	
 	if stamina < 3.0 and not sliding:
-		stamina += delta * 0.7
+		stamina += delta * 0.5
 	
-	$PlayerGUI.stamina.text = "STAMINA: " + str(roundf(stamina))
+	$PlayerGUI.stamina.text = "STAMINA: " + str(snappedf(stamina, 0.1))
 	
 	set_global_variables()
 	
@@ -247,10 +247,10 @@ func begin_slide() -> void:
 		
 		if velocity.length() < SLIDE_JUMP_SPEED_LIMIT:
 			velocity = direction * speed
-			velocity *= 2.2 + slam_time
+			velocity *= 2.5 + slam_time
 		velocity = velocity.rotated(Vector3(0.0, 1.0, 0.0), angle)
 	else:
-		velocity = direction * speed * (1.4 + slam_time)
+		velocity = direction * speed * (1.6 + slam_time)
 	
 	velocity.y = 0.0
 	
@@ -314,10 +314,10 @@ func hitscan(damage : float) -> void:
 
 func punch() -> void:
 	if punch_ray.is_colliding():
-		if not aim.get_collider().is_in_group("background"):
+		if not punch_ray.get_collider().is_in_group("background"):
 			# If it can be hit by PunchRay and isn't the background,
 			# it's an enemy's hitbox.
-			var area := aim.get_collider()
+			var area := punch_ray.get_collider()
 			
 			if area.has_method(Global.PUNCH_THE_ENEMY_METHOD):
 				area.call(Global.PUNCH_THE_ENEMY_METHOD)
@@ -331,6 +331,8 @@ func punch() -> void:
 				if enemy.parried and Global.current_fist == Global.fists.PARRY_FIST:
 					$Head/Camera3D/LeftHand.hit_parry()
 					stamina = 3.0
+					health = 100.0
+					$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:

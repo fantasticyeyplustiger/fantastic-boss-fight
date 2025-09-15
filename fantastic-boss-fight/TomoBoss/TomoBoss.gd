@@ -5,6 +5,8 @@ enum attacks {CHOP, COMBO, FACE_KICK, CLAP, DESTROY}
 var previous_attack : attacks
 var current_attack : attacks
 
+var prev_i : int = 0
+
 func _ready() -> void:
 	
 	health = 200.0
@@ -25,15 +27,31 @@ func choose_attack() -> void:
 	
 	var _distance_to_player = get_distance_to_player()
 	
-	await attack_combo()
-	await clap()
-	await face_kick()
-	await grab()
-	await stomp()
-	await chop()
-	await large_explosion()
+	var i : int = randi_range(0, 6)
 	
-	set_atk_cooldown_in_seconds(0.1)
+	while i == prev_i:
+		i = randi_range(0, 6)
+	
+	prev_i = i
+	
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await large_explosion()
+	
+	#await attack_combo()
+	#await clap()
+	#await face_kick()
+	#await grab()
+	#await stomp()
+	#await chop()
+	#await large_explosion()
+	
+	set_atk_cooldown_in_seconds(0.6)
 
 #region all attacks
 
@@ -130,7 +148,7 @@ func knee() -> void:
 	
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
-	await seconds(0.4)
+	await seconds(0.35)
 	
 	toggle_all_trails_in($KneeTrails)
 	dashing = false
@@ -178,25 +196,24 @@ func ground_stomp() -> void:
 	$AnimationPlayer.play("GroundStomp")
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
-	should_look_at_player = true
+	should_look_at_player_2D = true
 	
 	await seconds(0.2)
 	can_be_parried = true
 	
-	await seconds(0.27)
+	await seconds(0.2)
 	
-	should_look_at_player = false
+	should_look_at_player_2D = false
 	can_be_parried = false
 	
 	if parried:
 		parried = false
 		$AnimationPlayer.pause()
-		await seconds(0.3)
+		await seconds(0.25)
 		$AnimationPlayer.play()
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
-	should_look_at_player = false
 	$AnimationPlayer.speed_scale = 1.0
 	
 	dash_towards_on_ground(Global.player_position, 25.0)
@@ -216,7 +233,7 @@ func ground_stomp() -> void:
 func grab(from_combo : bool = false) -> void:
 	
 	if from_combo:
-		await seconds(0.2)
+		pass
 	# else: play voiceline
 	
 	# Trail should toggle BEFORE switching positions so player knows where boss went
@@ -227,7 +244,7 @@ func grab(from_combo : bool = false) -> void:
 	damage = 50.0
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
-	look_at_player()
+	should_look_at_player_2D = true
 	
 	$UnparriableSFX.play()
 	$ParrySparkles/Grab.emitting = true
@@ -238,9 +255,9 @@ func grab(from_combo : bool = false) -> void:
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
-	look_at_player()
+	should_look_at_player_2D = false
 	
-	dash_towards_on_ground(Global.player_position, 15.0)
+	dash_towards_on_ground(Global.player_position, 18.0)
 	set_dash_acceleration(0.99)
 	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
 	toggle_all_trails_in($Armature/Skeleton3D/Grab)
@@ -274,25 +291,19 @@ func face_kick() -> void:
 	
 	dash_towards(Global.player_position)
 	
+	can_be_parried = true
+	
 	await seconds(0.1)
 	
 	dashing = false
-	can_be_parried = true
+	should_look_at_player_2D = true
 	
 	await seconds(0.2)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-	look_at_player()
+	should_look_at_player_2D = false
 	
-	can_be_parried = false
-	
-	if parried:
-		parried = false
-		$AnimationPlayer.pause()
-		await seconds(0.3)
-		$AnimationPlayer.play()
-	
-	await seconds(0.2)
+	await seconds(0.17)
 	
 	$Explosion.play()
 	SpawnObject.particle_shockwave($FaceKickShockwavePosition.global_position,)
@@ -302,6 +313,12 @@ func face_kick() -> void:
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.1)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
+	
+	can_be_parried = false
+	
+	if parried:
+		parried = false
+		await seconds(0.25)
 	
 	await seconds(0.3)
 
@@ -324,20 +341,12 @@ func clap() -> void:
 	should_look_at_player = true
 	can_be_parried = true
 	
-	await seconds(0.3)
-	
-	can_be_parried = false
-	
-	if parried:
-		parried = false
-		$AnimationPlayer.pause()
-		await seconds(0.3)
-		$AnimationPlayer.play()
+	await seconds(0.35)
 	
 	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
 	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
 	
-	await seconds(0.15)
+	await seconds(0.1)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AnimationPlayer.speed_scale = 1.0
@@ -350,15 +359,19 @@ func clap() -> void:
 	
 	await seconds(0.1)
 	
+	can_be_parried = false
 	dashing = false
+		
 	toggle_hitbox_on_for_seconds($Hitbox/Clap, 0.15)
 	
-	var spawn_position := global_position
-	spawn_position.y += 3
-	
+	var spawn_position : Vector3 = $ClapShockwavePosition.global_position
 	var spawn_rotation := global_rotation + RIGHT_X_ANGLE + RIGHT_Y_ANGLE
 	
-	SpawnObject.colliding_shockwave(spawn_position, spawn_rotation)
+	SpawnObject.colliding_shockwave(spawn_position, spawn_rotation, 1.2)
+	
+	if parried:
+		parried = false
+		await seconds(0.25)
 	
 	await seconds(0.15)
 	
@@ -514,11 +527,11 @@ func chop() -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	toggle_trail($Armature/Skeleton3D/Chop/Trail)
+	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.1)
 	
 	await seconds(0.2)
 	
 	stop_dashing()
-	toggle_hitbox_on_for_seconds($Hitbox/Chop, 0.1)
 	toggle_trail($Armature/Skeleton3D/Chop/Trail)
 	
 	await seconds(0.1)
@@ -550,7 +563,7 @@ func large_explosion() -> void:
 	if parried:
 		$AnimationPlayer.stop()
 		parried = false
-		await seconds(0.3)
+		await seconds(0.25)
 		return
 	
 	var explosion_position := global_position + Vector3(0.0, 1.5, 0.0)
