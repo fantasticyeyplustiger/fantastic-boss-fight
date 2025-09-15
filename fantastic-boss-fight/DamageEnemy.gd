@@ -1,6 +1,6 @@
 extends Area3D
 
-var top_node : Node3D = null
+@export var top_node : Node3D = null
 
 func get_hitscanned(damage : float) -> void:
 	assert(not top_node == null, "Top node of this Area3D is null!")

@@ -123,7 +123,7 @@ func knee() -> void:
 	$AnimationPlayer.play("RightKnee")
 	
 	look_at_player()
-	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 40.0)
+	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 25.0)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
 	toggle_all_trails_in($KneeTrails)
@@ -156,7 +156,7 @@ func combo_kick() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	
-	dash_towards(Global.player_position, 32.0)
+	dash_towards(Global.player_position, 18.0)
 	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
 	
@@ -179,22 +179,20 @@ func ground_stomp() -> void:
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
 	should_look_at_player = true
+	
+	await seconds(0.1)
 	can_be_parried = true
 	
-	await seconds(0.49)
+	await seconds(0.37)
+	
+	should_look_at_player = false
+	can_be_parried = false
 	
 	if parried:
-		$AnimationPlayer.speed_scale = 1.0
-		$AnimationPlayer.stop()
-		$AnimationPlayer.play("Hurt")
-		should_look_at_player = false
-		toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-		
-		# recoil or somethin'
-		await seconds(0.5)
 		parried = false
-		
-		return
+		$AnimationPlayer.pause()
+		await seconds(0.3)
+		$AnimationPlayer.play()
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
@@ -242,8 +240,8 @@ func grab(from_combo : bool = false) -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	look_at_player()
 	
-	dash_towards_on_ground(Global.player_position, 75)
-	set_dash_acceleration(0.9)
+	dash_towards_on_ground(Global.player_position, 15.0)
+	set_dash_acceleration(0.99)
 	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
 	toggle_all_trails_in($Armature/Skeleton3D/Grab)
 	
@@ -279,16 +277,25 @@ func face_kick() -> void:
 	await seconds(0.1)
 	
 	dashing = false
+	can_be_parried = true
 	
-	await seconds(0.3)
+	await seconds(0.2)
+	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-	
 	look_at_player()
+	
+	can_be_parried = false
+	
+	if parried:
+		parried = false
+		$AnimationPlayer.pause()
+		await seconds(0.3)
+		$AnimationPlayer.play()
+	
+	await seconds(0.2)
+	
 	$Explosion.play()
-	SpawnObject.particle_shockwave(
-		$FaceKickShockwavePosition.global_position,
-		$FaceKickShockwavePosition.global_rotation + RIGHT_X_ANGLE
-	)
+	SpawnObject.particle_shockwave($FaceKickShockwavePosition.global_position,)
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FF0000", 0.5, true)
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFC5", 0.45, true)
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.11, true)
@@ -296,7 +303,7 @@ func face_kick() -> void:
 	
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
 	
-	await seconds(0.1)
+	await seconds(0.3)
 
 func clap() -> void:
 	current_attack = attacks.CLAP
@@ -315,13 +322,22 @@ func clap() -> void:
 	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.1)
 	should_look_at_player = true
+	can_be_parried = true
 	
-	await seconds(0.1)
+	await seconds(0.3)
+	
+	can_be_parried = false
+	
+	if parried:
+		parried = false
+		$AnimationPlayer.pause()
+		await seconds(0.3)
+		$AnimationPlayer.play()
 	
 	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
 	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
 	
-	await seconds(0.35)
+	await seconds(0.15)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AnimationPlayer.speed_scale = 1.0
@@ -522,10 +538,19 @@ func large_explosion() -> void:
 	await seconds(1.5)
 	
 	$ExplosionPrepare.emitting = false
+	can_be_parried = true
 	
 	await seconds(0.5)
 	
-	var explosion_position := global_position + Vector3(0.0, 1.0, 0.0)
+	can_be_parried = false
+	
+	if parried:
+		$AnimationPlayer.stop()
+		parried = false
+		await seconds(0.3)
+		return
+	
+	var explosion_position := global_position + Vector3(0.0, 1.5, 0.0)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/LargeExplosion, 0.1)
 	SpawnObject.explosion_detailed(explosion_position, "#FF0000", 2.0, true)

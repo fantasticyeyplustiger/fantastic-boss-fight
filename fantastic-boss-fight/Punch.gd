@@ -59,7 +59,15 @@ func parry_punch() -> void:
 func hit_parry() -> void:
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryHit")
+	$AnimationPlayer.advance(0)
 	$SFX/Parry.play()
+	$ParryFlash.visible = true
+	
+	get_tree().paused = true
+	await get_tree().create_timer(0.3).timeout
+	get_tree().paused = false
+	
+	$ParryFlash.visible = false
 
 ## Punches with the Heavy Fist (based on Ultrakill's Knuckleblaster Arm).
 ## If player is looking at something in punch range, it will be punched.
@@ -72,7 +80,7 @@ func heavy_punch() -> void:
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("HeavyPunch")
 	
-	await get_tree().create_timer(0.3)
+	await get_tree().create_timer(0.1).timeout
 	
 	if current_fist == Global.fists.PARRY_FIST:
 		return
@@ -80,7 +88,7 @@ func heavy_punch() -> void:
 	arm_exhaustion -= exhaustion_consumption[current_fist]
 	Global.emit_signal("punch")
 	
-	await get_tree().create_timer(0.6).timeout
+	await get_tree().create_timer(0.8).timeout
 	
 	if current_fist == Global.fists.PARRY_FIST:
 		return

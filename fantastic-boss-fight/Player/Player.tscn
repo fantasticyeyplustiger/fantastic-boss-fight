@@ -55,8 +55,8 @@ collide_with_areas = true
 
 [node name="PunchRay" type="RayCast3D" parent="Head/Camera3D"]
 visible = false
-target_position = Vector3(0, 0, -4)
-collision_mask = 5
+target_position = Vector3(0, 0, -5)
+collision_mask = 261
 collide_with_areas = true
 
 [node name="Hurtbox" type="Area3D" parent="."]

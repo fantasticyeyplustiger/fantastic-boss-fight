@@ -211,7 +211,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 ## Begins sliding.
-# If player jumps during SLIDE_JUMP_TIME_WINDOW, velocity increases.
+## If player jumps during SLIDE_JUMP_TIME_WINDOW, velocity increases.
 func begin_slide() -> void:
 	if sliding: return
 	
@@ -241,7 +241,7 @@ func begin_slide() -> void:
 	switch_hurtboxes(false) # Because player is on the floor when sliding
 
 ## Dashes in the direction the player is moving for 0.2 seconds.
-# If not moving, dash forward.
+## If not moving, dash forward.
 func dash() -> void:
 	velocity.x = dash_direction.x * DASH_SPEED * dash_multiplier
 	velocity.z = dash_direction.z * DASH_SPEED * dash_multiplier

@@ -12,7 +12,7 @@ const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
 const WALK_SPEED : float = 10.0
-const SPRINT_SPEED : float = 20.0
+const SPRINT_SPEED : float = 10.0
 
 const GRAVITY : float = 19.6
 
@@ -270,12 +270,14 @@ func set_kb_stats(area : Area3D, knockback_collision : CollisionShape3D) -> void
 ## Waits n seconds.
 ## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await seconds(1).
-func seconds(n : float) -> void:
-	await get_tree().create_timer(n).timeout
+## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
+func seconds(n : float, process_always : bool = false) -> void:
+	await get_tree().create_timer(n, process_always).timeout
 
 ## Waits n milliseconds.
 ## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await milliseconds(1).
+## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
 ## seconds() is technically more efficient, but the difference is so small it doesn't matter.
-func milliseconds(n : float) -> void:
-	await seconds(n / 1000)
+func milliseconds(n : float, process_always : bool = false) -> void:
+	await seconds(n / 1000, process_always)
