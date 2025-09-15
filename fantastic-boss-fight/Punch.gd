@@ -12,6 +12,9 @@ var arm_exhaustion : float = 2.0
 var heavy_fist_hold_time : float = 0.0
 #var fist_swap_cooldown : float = 0.0
 
+## Shockwave damage.
+var damage : float = 1.0
+
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("swap_fists"):
@@ -88,7 +91,7 @@ func heavy_punch() -> void:
 	arm_exhaustion -= exhaustion_consumption[current_fist]
 	Global.emit_signal("punch")
 	
-	await get_tree().create_timer(0.8).timeout
+	await get_tree().create_timer(0.7).timeout
 	
 	if current_fist == Global.fists.PARRY_FIST:
 		return
@@ -102,5 +105,18 @@ func heavy_punch() -> void:
 ## If player keeps holding punch with Heavy Fist for 0.9 seconds (or presses it at that mark)
 ## this shockwave will be made.
 func heavy_fist_shockwave() -> void:
-	pass
+	$AnimationPlayer.play("HeavyPunchShockwave")
+	$SFX/HeavyPunchShockwave.play()
+	
+	SpawnObject.explosion_detailed(
+		$Armature/Skeleton3D/ShockwavePosition.global_position,
+		"#FFFFFF96",
+		0.75,
+		true
+	)
+	
+	$Shockwave/Hitbox.set_deferred("disabled", false)
+	await get_tree().create_timer(0.5).timeout
+	$SFX/HeavyPunchReload.play()
+	$Shockwave/Hitbox.set_deferred("disabled", true)
 	

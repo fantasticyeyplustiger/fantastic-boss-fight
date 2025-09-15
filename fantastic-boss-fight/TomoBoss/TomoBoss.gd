@@ -180,10 +180,10 @@ func ground_stomp() -> void:
 	global_position.y = 0.0
 	should_look_at_player = true
 	
-	await seconds(0.1)
+	await seconds(0.2)
 	can_be_parried = true
 	
-	await seconds(0.37)
+	await seconds(0.27)
 	
 	should_look_at_player = false
 	can_be_parried = false
@@ -538,9 +538,12 @@ func large_explosion() -> void:
 	await seconds(1.5)
 	
 	$ExplosionPrepare.emitting = false
+	
+	await seconds(0.3)
+	
 	can_be_parried = true
 	
-	await seconds(0.5)
+	await seconds(0.2)
 	
 	can_be_parried = false
 	
@@ -580,9 +583,9 @@ func get_punched() -> void:
 	var punch_damage = Global.FIST_DAMAGE[Global.current_fist]
 	
 	if Global.current_fist == Global.fists.PARRY_FIST and can_be_parried:
+		can_be_parried = false
 		parried = true
 		punch_damage *= 5.0
-		can_be_parried = false
 	
 	health -= punch_damage
 	$BossHealthBar.lower_hp(health)
