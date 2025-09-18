@@ -19,32 +19,32 @@ signal hitscan
 signal hitscan_environment_particles
 signal hitscan_enemy_particles
 signal punch
-#signal hitscan_the_enemy
-#signal punch_the_enemy
 
 var current_fist : fists = fists.PARRY_FIST
 
 var player_position : Vector3
 
-# Useful for seeing where the player is looking at.
+## Useful for seeing where the player is looking at.
 var front_of_player : Vector3
 
-# Location where boss should appear in front of the player.
+## Location where boss should appear in front of the player.
 var boss_to_player : Vector3
 
-# In radians.
+## In radians.
 var player_rotation : Vector3
 
 var player_velocity : Vector3
+
+## A hitscan pointing towards where the player's camera is looking at. Roughly 250m long.
 var player_target_position : Vector3
 
-# is_on_floor()
+## same as player not is_on_floor()
 var player_in_air : bool
 
-# Makes sawblades orbit around player if true
+## Makes sawblades orbit around player if true
 var sawblades_orbiting : bool = false
 
-# Allows projectiles to home into boss.
+## Allows projectiles to home into boss.
 var boss_position : Vector3
 
 ## Predicts where player will be at x seconds according to current velocity.
