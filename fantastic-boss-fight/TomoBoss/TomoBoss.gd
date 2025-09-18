@@ -51,7 +51,7 @@ func choose_attack() -> void:
 	#await chop()
 	#await large_explosion()
 	
-	set_atk_cooldown_in_seconds(0.6)
+	set_atk_cooldown_in_seconds(0.1)
 
 #region all attacks
 
