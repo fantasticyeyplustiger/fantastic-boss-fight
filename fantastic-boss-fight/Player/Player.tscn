@@ -73,7 +73,6 @@ shape = SubResource("CylinderShape3D_6ysni")
 disabled = true
 
 [node name="FrontOfBodyPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

@@ -44,12 +44,12 @@ func choose_attack() -> void:
 		#6: await large_explosion()
 	
 	await attack_combo()
-	await clap()
-	await face_kick()
-	await grab()
-	await stomp()
-	await chop()
-	await large_explosion()
+	#await clap()
+	#await face_kick()
+	#await grab()
+	#await stomp()
+	#await chop()
+	#await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
@@ -171,7 +171,13 @@ func combo_kick() -> void:
 	look_at_player()
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
+	var old_position := global_position
+	var new_position := Global.boss_to_player
+	
 	global_position = Global.boss_to_player
+	
+	if old_position.y <= 1.0 and new_position.y <= 1.0:
+		SpawnObject.rock_trail(old_position, new_position)
 	
 	$AnimationPlayer.play("LeftRoundhouse") # Technically not but whatever
 	await seconds(0.15)
@@ -183,6 +189,9 @@ func combo_kick() -> void:
 	dash_towards(Global.player_position, 18.0)
 	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
+	
+	if not Global.player_in_air:
+		$RockSpawnPositions/Center.spawn_rocks_for(0.3)
 	
 	await seconds(0.32)
 	
@@ -197,12 +206,18 @@ func ground_stomp() -> void:
 	
 	await seconds(0.1)
 	
+	var old_position := global_position
+	var new_position := Global.boss_to_player
+	
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.speed_scale = 0.75
 	$AnimationPlayer.play("GroundStomp")
 	global_position = Global.boss_to_player
 	global_position.y = 0.0
 	should_look_at_player_2D = true
+	
+	if old_position.y <= 1.0 and new_position.y <= 1.0:
+		SpawnObject.rock_trail(old_position, new_position)
 	
 	await seconds(0.2)
 	can_be_parried = true
@@ -224,6 +239,7 @@ func ground_stomp() -> void:
 	
 	dash_towards_on_ground(Global.player_position, 25.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
+	$RockSpawnPositions/Center.spawn_rocks_for(0.2)
 	
 	await seconds(0.1)
 	

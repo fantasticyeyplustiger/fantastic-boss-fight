@@ -8,7 +8,7 @@ func _ready() -> void:
 			continue
 		
 		var new_position : Vector3
-		new_position.x = randf_range(-1.5, 1.5)
+		new_position.x = randf_range(-1.0, 1.0)
 		new_position.y += randf_range(-0.1, 0.1)
 		new_position.z = randf_range(-0.5, 0.5)
 		
@@ -19,7 +19,7 @@ func _ready() -> void:
 		new_rotation.y = randf_range(0.0, PI * 2)
 		new_rotation.z = randf_range(0.0, PI * 2)
 		
-		var new_scale : float = randf_range(1.2, 2.0)
+		var new_scale : float = randf_range(1.2, 1.8)
 		child.scale *= Vector3(new_scale, new_scale, new_scale)
 		
 		child.rotation = new_rotation

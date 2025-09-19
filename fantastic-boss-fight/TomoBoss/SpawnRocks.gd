@@ -9,6 +9,7 @@ func _ready() -> void:
 	old_position = global_position
 	set_physics_process(false)
 
+## No need for rotation, inherits from parent node
 func _physics_process(_delta: float) -> void:
 	
 	var distance : float = old_position.distance_to(global_position)
