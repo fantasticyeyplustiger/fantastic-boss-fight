@@ -21,6 +21,8 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 @onready var pistol_explosion_mesh = preload("res://Player/WeaponExplosions/PistolExplosion.tscn")
 @onready var explosion_mesh = preload("res://Level/SpawnedObjects/Explosion.tscn")
 
+@onready var rock_group_mesh = preload("res://Rocks/RockGroup.tscn")
+
 ## Instantiates and sets the transform of the given node.
 func new_object(node : PackedScene, target_position : Vector3,
 				angle : Vector3 = Vector3.ZERO, new_scale : float = 1.0) -> Node3D:
@@ -70,6 +72,10 @@ func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZER
 	
 	add_child(node)
 
+func rock_group(target_position : Vector3, angle : Vector3) -> void:
+	var node := new_object(rock_group_mesh, target_position, angle)
+	add_child(node)
+
 func blue_flash(target_position : Vector3, angle : Vector3, new_scale : float) -> void:
 	var node := new_object(blue_flash_node, target_position, angle)
 	
@@ -107,3 +113,28 @@ func explosion_detailed(target_position : Vector3, new_color : String = "#FFFFFF
 	new_explosion.disable_sound(disable_sound)
 	
 	add_child(new_explosion)
+
+## Spawns an instant trail of rocks from the start position to end position.
+## Sets y of both positions to be zero (zero acts as the floor currently).
+func rock_trail(start_position : Vector3, end_position : Vector3) -> void:
+	
+	start_position.y = 0.0
+	end_position.y = 0.0
+	
+	var direction := start_position.direction_to(end_position)
+	var new_rotation := start_position.angle_to(end_position)
+	
+	var new_spawn_position := start_position
+	var distance := start_position.distance_to(end_position)
+	var current_distance : float = 0.0
+	
+	while distance > current_distance:
+		
+		var new_rocks = rock_group_mesh.instantiate()
+		new_rocks.position = new_spawn_position
+		new_rocks.rotation = Vector3(0.0, new_rotation, 0.0)
+		
+		add_child(new_rocks)
+		
+		new_spawn_position += direction * 1.2
+		current_distance += direction.length() * 1.2

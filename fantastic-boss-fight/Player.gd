@@ -28,8 +28,8 @@ var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
 var slam_time : float = 0.0
 
-var health : float = 100.0
-var stamina : float = 3.0
+var health : float = 1000.0
+var stamina : float = 30.0
 
 var can_move : bool = true
 var parrying : bool = false

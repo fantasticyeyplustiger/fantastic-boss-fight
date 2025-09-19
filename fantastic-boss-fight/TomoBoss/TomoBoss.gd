@@ -34,22 +34,22 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await large_explosion()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await large_explosion()
 	
-	#await attack_combo()
-	#await clap()
-	#await face_kick()
-	#await grab()
-	#await stomp()
-	#await chop()
-	#await large_explosion()
+	await attack_combo()
+	await clap()
+	await face_kick()
+	await grab()
+	await stomp()
+	await chop()
+	await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
@@ -87,10 +87,14 @@ func karate_punch() -> void:
 	await seconds(0.05) # Because it needs time to toggle apparently idk why
 	
 	$AttackSFX.play_sfx("BossDash")
+	global_position.y = 0.0
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	var old_position : Vector3 = global_position
 	go_to_predicted_position_at_seconds(0.35)
 	look_at_player()
 	global_position.y = 0.0 # Stay on ground
+	SpawnObject.rock_trail(old_position, global_position)
+	
 	
 	await seconds(0.2)
 	
@@ -143,7 +147,8 @@ func knee() -> void:
 	look_at_player()
 	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 25.0)
 	
-	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.4)
+	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
+	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
 	toggle_all_trails_in($KneeTrails)
 	
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
@@ -165,6 +170,7 @@ func combo_kick() -> void:
 	
 	look_at_player()
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	
 	global_position = Global.boss_to_player
 	
 	$AnimationPlayer.play("LeftRoundhouse") # Technically not but whatever
@@ -261,6 +267,7 @@ func grab(from_combo : bool = false) -> void:
 	set_dash_acceleration(0.99)
 	toggle_hitbox_on_for_seconds($Hitbox/Grab, 0.2)
 	toggle_all_trails_in($Armature/Skeleton3D/Grab)
+	$RockSpawnPositions/Center.spawn_rocks_for(0.2)
 	
 	await seconds(0.2)
 	

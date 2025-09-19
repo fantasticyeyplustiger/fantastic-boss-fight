@@ -4,6 +4,7 @@ const exhaustion_consumption : Dictionary[Global.fists, float] = {
 	Global.fists.PARRY_FIST : 1.0, Global.fists.HEAVY_FIST : 1.5
 }
 
+const MAX_HEAVY_FIST_HOLD_TIME : float = 0.7
 #const MAX_FIST_SWAP_COOLDOWN : float = 0.5
 
 var current_fist : Global.fists = Global.fists.PARRY_FIST
@@ -62,7 +63,7 @@ func parry_punch() -> void:
 func hit_parry() -> void:
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryHit")
-	$AnimationPlayer.advance(0)
+	$AnimationPlayer.advance(0) # Because animation doesn't change instantly, call this
 	$SFX/Parry.play()
 	$ParryFlash.visible = true
 	
@@ -91,7 +92,7 @@ func heavy_punch() -> void:
 	arm_exhaustion -= exhaustion_consumption[current_fist]
 	Global.emit_signal("punch")
 	
-	await get_tree().create_timer(0.7).timeout
+	await get_tree().create_timer(MAX_HEAVY_FIST_HOLD_TIME).timeout
 	
 	if current_fist == Global.fists.PARRY_FIST:
 		return
@@ -102,8 +103,8 @@ func heavy_punch() -> void:
 		$AnimationPlayer.stop(true)
 		$AnimationPlayer.play("TakeBackHeavyPunch")
 	
-## If player keeps holding punch with Heavy Fist for 0.9 seconds (or presses it at that mark)
-## this shockwave will be made.
+## If player keeps holding punch with Heavy Fist for MAX_HEAVY_FIST_HOLD_TIME seconds
+## (or presses it at that mark) this shockwave will be made.
 func heavy_fist_shockwave() -> void:
 	$AnimationPlayer.play("HeavyPunchShockwave")
 	$SFX/HeavyPunchShockwave.play()
