@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+class_name Player
+
 const JUMP_VELOCITY : float = 16.0
 const GRAVITY : float = 23.5
 const WALK_SPEED : float = 15.0
@@ -33,11 +35,11 @@ var stamina : float = 30.0
 
 var can_move : bool = true
 var parrying : bool = false
-var parry_cooldown : bool = false
 var sliding : bool = false
 var slide_jumped : bool = false
 var slam_jump : bool = false
 
+var dashed_during_parry : bool = false
 var dashing : bool = false
 var dash_jumped : bool = false
 var was_on_floor : bool = false
@@ -106,7 +108,9 @@ func _physics_process(delta: float) -> void:
 	#endregion
 	
 	#region Dash logic
-	if Input.is_action_just_pressed("dash") and not dashing:
+	if Input.is_action_just_pressed("dash") or dashed_during_parry and not dashing:
+		
+		dashed_during_parry = false
 		
 		if stamina < 1.0:
 			pass # Play stamina fail SFX
@@ -329,6 +333,7 @@ func punch() -> void:
 					return
 				
 				if enemy.parried and Global.current_fist == Global.fists.PARRY_FIST:
+					$DashDuringParry.parrying = true
 					$Head/Camera3D/LeftHand.hit_parry()
 					stamina = 3.0
 					health = 100.0

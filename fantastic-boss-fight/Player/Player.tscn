@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=14 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://clgqnfx0ro43d" path="res://Player/LeftHand.tscn" id="2_0j2ni"]
+[ext_resource type="Script" uid="uid://dyvdb2g5qbuf8" path="res://Player/DashDuringParry.gd" id="2_j23h2"]
 [ext_resource type="PackedScene" uid="uid://15asvdbdowoj" path="res://GUI/PlayerGUI.tscn" id="2_q3lat"]
 [ext_resource type="PackedScene" uid="uid://ca75ar5gidsur" path="res://Player/RightHand.tscn" id="2_s1rgi"]
 [ext_resource type="AudioStream" uid="uid://cylk2bx3n41kw" path="res://SFX/BaseSFX/LandingHeavy.wav" id="3_tok1r"]
@@ -22,6 +23,10 @@ height = 1.0
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 16
 script = ExtResource("1_3qydi")
+
+[node name="DashDuringParry" type="Node" parent="."]
+process_mode = 2
+script = ExtResource("2_j23h2")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
