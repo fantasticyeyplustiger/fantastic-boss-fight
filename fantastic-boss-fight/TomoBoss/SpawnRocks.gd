@@ -1,6 +1,6 @@
 extends Node3D
 
-const MAX_ROCK_DISTANCE : float = 1.2
+const MAX_ROCK_DISTANCE : float = 1.5
 
 var distance_between_rocks : float = 0.0
 var old_position : Vector3

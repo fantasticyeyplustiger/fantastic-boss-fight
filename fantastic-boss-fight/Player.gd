@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			pass # Play stamina fail SFX
 	# Slide Jump - Jump right after starting a slide to keep the increased momentum the slide gives.
-	elif Input.is_action_just_pressed("jump") and on_floor and sliding:
+	elif Input.is_action_just_pressed("jump") and on_floor and sliding and not dashing:
 		$JumpSFX.play()
 		$ResetSlideJump.stop()
 		velocity.y = jump / 1.2

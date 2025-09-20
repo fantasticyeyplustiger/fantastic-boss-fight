@@ -136,5 +136,5 @@ func rock_trail(start_position : Vector3, end_position : Vector3) -> void:
 		
 		add_child(new_rocks)
 		
-		new_spawn_position += direction * 1.2
-		current_distance += direction.length() * 1.2
+		new_spawn_position += direction * 1.4
+		current_distance += direction.length() * 1.4

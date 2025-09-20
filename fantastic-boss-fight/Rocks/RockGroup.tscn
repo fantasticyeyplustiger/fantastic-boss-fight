@@ -1,7 +1,6 @@
 [gd_scene load_steps=28 format=4 uid="uid://hmekn0cl34iw"]
 
 [ext_resource type="Script" uid="uid://7feywl8ebvrn" path="res://Rocks/Disappear.gd" id="1_0mxu2"]
-[ext_resource type="Texture2D" uid="uid://u06jxk7hc565" path="res://Rocks/RockTexture.png" id="1_slipw"]
 [ext_resource type="Texture2D" uid="uid://daydynn6s5wfd" path="res://ParticleTextures/Flash.png" id="3_cyugc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7idot"]
@@ -42,6 +41,8 @@ shadow_mesh = SubResource("ArrayMesh_qdg7b")
 load_path = "res://.godot/imported/RockTexture.png-6be0174d754cf257942c7e3434f47c58.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cyugc"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
 albedo_texture = SubResource("CompressedTexture2D_0mxu2")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bps2r"]
@@ -78,8 +79,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hnasg")
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cyugc"]
+load_path = "res://.godot/imported/RockTexture.png-6be0174d754cf257942c7e3434f47c58.s3tc.ctex"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aecys"]
-albedo_texture = ExtResource("1_slipw")
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
+albedo_texture = SubResource("CompressedTexture2D_cyugc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5faj"]
 
@@ -119,6 +125,8 @@ shadow_mesh = SubResource("ArrayMesh_cyugc")
 load_path = "res://.godot/imported/RockTexture.png-6be0174d754cf257942c7e3434f47c58.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_437tg"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
 albedo_texture = SubResource("CompressedTexture2D_1jk0w")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ggi5"]
@@ -155,14 +163,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_bebbi")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ws5df"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bebbi"]
 load_path = "res://.godot/imported/RockTexture.png-6be0174d754cf257942c7e3434f47c58.s3tc.ctex"
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ute6x"]
-albedo_texture = SubResource("CompressedTexture2D_ws5df")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7y4kt"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
+albedo_texture = SubResource("CompressedTexture2D_bebbi")
 
 [sub_resource type="Curve" id="Curve_aecys"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.4386344, 0.0, 0, 0]
+_data = [Vector2(0, 0.3370787), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.66508234, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_1jk0w"]
@@ -173,7 +183,7 @@ direction = Vector3(0, 1, 0)
 spread = 0.0
 initial_velocity_min = 9.0
 initial_velocity_max = 12.0
-gravity = Vector3(0, -5, 0)
+gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_1jk0w")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bebbi"]
@@ -181,12 +191,14 @@ transparency = 1
 blend_mode = 1
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_cyugc")
-emission_energy_multiplier = 1.31
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.1
+emission_operator = 1
 billboard_mode = 2
 
 [sub_resource type="QuadMesh" id="QuadMesh_7y4kt"]
 material = SubResource("StandardMaterial3D_bebbi")
-size = Vector2(3, 13)
+size = Vector2(1.5, 24)
 
 [node name="RockGroup" type="Node3D"]
 script = ExtResource("1_0mxu2")
@@ -204,7 +216,7 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_aecys")
 
 [node name="Rock3" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.48090047, 0, 0, 0, 0.6715765, 0, 0, 0, 0.5948247, 0, 0.6630224, 0)
+transform = Transform3D(0.48090047, 0, 0, 0, 0.6715765, 0, 0, 0, 0.5948247, 0, 0.523008, 0)
 mesh = SubResource("ArrayMesh_aecys")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_437tg")
@@ -213,13 +225,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_437tg")
 transform = Transform3D(0.25139394, 0, 0, 0, 0.36008364, 0, 0, 0, 0.26648238, 0, 0.13012445, 0)
 mesh = SubResource("ArrayMesh_7y4kt")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_ute6x")
+surface_material_override/0 = SubResource("StandardMaterial3D_7y4kt")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 emitting = false
 amount = 1
-lifetime = 1.5
 one_shot = true
-speed_scale = 1.5
+speed_scale = 5.0
 process_material = SubResource("ParticleProcessMaterial_437tg")
 draw_pass_1 = SubResource("QuadMesh_7y4kt")

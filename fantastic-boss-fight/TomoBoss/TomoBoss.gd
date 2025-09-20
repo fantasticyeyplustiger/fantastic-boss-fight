@@ -14,7 +14,6 @@ func _ready() -> void:
 	
 	connect_areas_to_hurt_func()
 	
-	$Aura.visible = false # Particles annoying in editor
 	$AnimationPlayer.play("Walking")
 	set_atk_cooldown_in_seconds(1.0)
 
@@ -22,7 +21,6 @@ func _physics_process(_delta: float) -> void:
 	super(_delta)
 
 func choose_attack() -> void:
-	$Aura.amount = 32
 	previous_attack = current_attack
 	
 	var _distance_to_player = get_distance_to_player()
@@ -34,16 +32,16 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	#match i:
-		#0: await attack_combo()
-		#1: await clap()
-		#2: await face_kick()
-		#3: await grab()
-		#4: await stomp()
-		#5: await chop()
-		#6: await large_explosion()
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await large_explosion()
 	
-	await attack_combo()
+	#await attack_combo()
 	#await clap()
 	#await face_kick()
 	#await grab()
@@ -171,13 +169,7 @@ func combo_kick() -> void:
 	look_at_player()
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
-	var old_position := global_position
-	var new_position := Global.boss_to_player
-	
-	global_position = Global.boss_to_player
-	
-	if old_position.y <= 1.0 and new_position.y <= 1.0:
-		SpawnObject.rock_trail(old_position, new_position)
+	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
 	$AnimationPlayer.play("LeftRoundhouse") # Technically not but whatever
 	await seconds(0.15)
@@ -206,18 +198,14 @@ func ground_stomp() -> void:
 	
 	await seconds(0.1)
 	
-	var old_position := global_position
-	var new_position := Global.boss_to_player
-	
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.speed_scale = 0.75
 	$AnimationPlayer.play("GroundStomp")
-	global_position = Global.boss_to_player
+	
+	set_new_position_with_trail(global_position, Global.boss_to_player)
+	
 	global_position.y = 0.0
 	should_look_at_player_2D = true
-	
-	if old_position.y <= 1.0 and new_position.y <= 1.0:
-		SpawnObject.rock_trail(old_position, new_position)
 	
 	await seconds(0.2)
 	can_be_parried = true
@@ -264,7 +252,8 @@ func grab(from_combo : bool = false) -> void:
 	
 	can_walk = false
 	damage = 50.0
-	global_position = Global.boss_to_player
+	
+	set_new_position_with_trail(global_position, Global.boss_to_player)
 	global_position.y = 0.0
 	should_look_at_player_2D = true
 	
@@ -308,7 +297,7 @@ func face_kick() -> void:
 	
 	look_at_player()
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	global_position = Global.boss_to_player
+	set_new_position_with_trail(global_position, Global.boss_to_player)
 	$AttackSFX.play_sfx("BossDash")
 	look_at_player()
 	
@@ -613,6 +602,13 @@ func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	
 func stop_walk_animation() -> void:
 	$AnimationPlayer.stop(true)
+
+## Sets global_position to 'new_position' and spawns a rock trail between the
+## old position and new position if both relatively close to the ground.
+func set_new_position_with_trail(old_position : Vector3, new_position : Vector3) -> void:
+	if old_position.y <= 1.5 and new_position.y <= 1.5:
+		SpawnObject.rock_trail(old_position, new_position)
+	global_position = new_position
 
 func get_punched() -> void:
 	

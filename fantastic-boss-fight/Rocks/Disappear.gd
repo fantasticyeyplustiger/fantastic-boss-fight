@@ -2,9 +2,15 @@ extends Node3D
 
 func _ready() -> void:
 	
+	$GPUParticles3D.emitting = true
+	
 	for child in self.get_children():
 		
 		if not child is MeshInstance3D:
+			continue
+		
+		if randi_range(0, 2) == 2:
+			child.queue_free()
 			continue
 		
 		var new_position : Vector3
