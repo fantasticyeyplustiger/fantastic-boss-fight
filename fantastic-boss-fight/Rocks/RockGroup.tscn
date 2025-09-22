@@ -202,6 +202,11 @@ size = Vector2(1.5, 24)
 
 [node name="RockGroup" type="Node3D"]
 script = ExtResource("1_0mxu2")
+position_range = Vector3(1, 0.1, 0.5)
+rotation_range = Vector3(6.28, 6.28, 6.28)
+scale_range_one = Vector3(1.2, 1.2, 1.2)
+scale_range_two = Vector3(1.8, 1.8, 1.8)
+has_GPUParticles3D = true
 
 [node name="Rock1" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.47812164, 0, 0, 0, 0.47130692, 0, 0, 0, 0.48634222, 0, 0, 0)

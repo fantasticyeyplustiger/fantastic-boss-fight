@@ -22,6 +22,7 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 @onready var explosion_mesh = preload("res://Level/SpawnedObjects/Explosion.tscn")
 
 @onready var rock_group_mesh = preload("res://Rocks/RockGroup.tscn")
+@onready var spiky_rock_mesh = preload("res://Rocks/SpikyRockGroup.tscn")
 
 ## Instantiates and sets the transform of the given node.
 func new_object(node : PackedScene, target_position : Vector3,
@@ -74,6 +75,10 @@ func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZER
 
 func rock_group(target_position : Vector3, angle : Vector3) -> void:
 	var node := new_object(rock_group_mesh, target_position, angle)
+	add_child(node)
+
+func spiky_rock_group(target_position : Vector3) -> void:
+	var node := new_object(spiky_rock_mesh, target_position)
 	add_child(node)
 
 func blue_flash(target_position : Vector3, angle : Vector3, new_scale : float) -> void:

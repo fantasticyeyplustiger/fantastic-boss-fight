@@ -492,8 +492,9 @@ func stomp() -> void:
 	
 	global_position.y = 0.0
 	$Hitbox/AirStomp.shape.height = height * 2 # Multiply by 2 because "center" of shape is on floor
-	toggle_hitbox_on_for_seconds($Hitbox/AirStomp, 0.1)
+	toggle_hitbox_on_for_seconds($Hitbox/AirStomp, 0.1) 
 	
+	SpawnObject.spiky_rock_group(global_position)
 	SpawnObject.ground_shockwave(global_position)
 	SpawnObject.air_shockwave(global_position)
 	SpawnObject.particle_shockwave(global_position)
