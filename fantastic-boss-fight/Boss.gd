@@ -231,7 +231,7 @@ func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
 
 ## Switches 'disabled' of collision to be the opposite state.
 ## If collision has Knockback.gd as its script and an Area3D as a parent that
-## also has AreaKnockback.gd, set_kb_stats will be called with those two as parameters.
+## also has AreaKnockback.gd, 'set_kb_stats' will be called with those two as parameters.
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
 	
@@ -276,14 +276,22 @@ func set_kb_stats(area : Area3D, knockback_collision : CollisionShape3D) -> void
 ## Waits n seconds.
 ## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await seconds(1).
+## 'difficulty_speed_change' multiplies wait time by 'Global.difficulty_speed'.
 ## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
-func seconds(n : float, process_always : bool = false) -> void:
+func seconds(n : float, difficulty_speed_change : bool = true, process_always : bool = false) -> void:
+	
+	if difficulty_speed_change:
+		n *= Global.difficulty_speed
+	
 	await get_tree().create_timer(n, process_always).timeout
 
 ## Waits n milliseconds.
 ## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
 ## Example: await milliseconds(1).
+## 'difficulty_speed_change' multiplies wait time by 'Global.difficulty_speed'.
 ## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
-## seconds() is technically more efficient, but the difference is so small it doesn't matter.
-func milliseconds(n : float, process_always : bool = false) -> void:
-	await seconds(n / 1000, process_always)
+func milliseconds(n : float, difficulty_speed_change : bool = true, process_always : bool = false) -> void:
+	if difficulty_speed_change:
+		n *= Global.difficulty_speed
+	
+	await get_tree().create_timer(n / 1000.0, process_always).timeout

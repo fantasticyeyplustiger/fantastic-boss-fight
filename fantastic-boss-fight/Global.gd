@@ -22,6 +22,8 @@ signal punch
 
 var current_fist : fists = fists.PARRY_FIST
 
+var difficulty_speed : float = 1.0
+
 var player_position : Vector3
 
 ## Useful for seeing where the player is looking at.

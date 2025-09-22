@@ -15,6 +15,7 @@ func _ready() -> void:
 	connect_areas_to_hurt_func()
 	
 	$AnimationPlayer.play("Walking")
+	$AnimationPlayer.speed_scale /= Global.difficulty_speed
 	set_atk_cooldown_in_seconds(1.0)
 
 func _physics_process(_delta: float) -> void:
@@ -199,7 +200,7 @@ func ground_stomp() -> void:
 	await seconds(0.1)
 	
 	$AttackSFX.play_sfx("BossDash")
-	$AnimationPlayer.speed_scale = 0.75
+	$AnimationPlayer.speed_scale = 0.75 / Global.difficulty_speed
 	$AnimationPlayer.play("GroundStomp")
 	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
@@ -223,7 +224,7 @@ func ground_stomp() -> void:
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AttackSFX.play_sfx("BloodyDash")
-	$AnimationPlayer.speed_scale = 1.0
+	$AnimationPlayer.speed_scale = 1.0 / Global.difficulty_speed
 	
 	dash_towards_on_ground(Global.player_position, 25.0)
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
@@ -346,7 +347,7 @@ func clap() -> void:
 	
 	$Voicelines.play_sfx("Begone1")
 	$AnimationPlayer.play("Clap")
-	$AnimationPlayer.speed_scale = 1.5
+	$AnimationPlayer.speed_scale = 1.5 / Global.difficulty_speed
 	$AttackSFX.play_sfx("BossDash")
 	SpawnObject.air_shockwave(global_position, Vector3.ZERO)
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.1)
@@ -361,7 +362,7 @@ func clap() -> void:
 	await seconds(0.1)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
-	$AnimationPlayer.speed_scale = 1.0
+	$AnimationPlayer.speed_scale = 1.0 / Global.difficulty_speed
 	should_look_at_player = false
 	dash_towards(Global.player_position)
 	
@@ -502,12 +503,12 @@ func stomp() -> void:
 	
 	await seconds(0.5)
 	
-	$AnimationPlayer.speed_scale = 0.5
+	$AnimationPlayer.speed_scale = 0.5 / Global.difficulty_speed
 	$AnimationPlayer.play("StompEnd")
 	
 	await seconds(0.5)
 	
-	$AnimationPlayer.speed_scale = 1.0
+	$AnimationPlayer.speed_scale = 1.0 / Global.difficulty_speed
 
 func chop() -> void:
 	
@@ -627,7 +628,7 @@ func glow_for(transition_seconds : float, stay_seconds : float, end_transition_s
 		material,
 		"albedo_color",
 		Color("FFFFFFFF"),
-		transition_seconds
+		transition_seconds * Global.difficulty_speed
 	)
 	
 	await tween.finished
@@ -640,7 +641,7 @@ func glow_for(transition_seconds : float, stay_seconds : float, end_transition_s
 		material,
 		"albedo_color",
 		Color("FFFFFF00"),
-		end_transition_seconds
+		end_transition_seconds * Global.difficulty_speed
 	)
 	
 	await tween.finished
