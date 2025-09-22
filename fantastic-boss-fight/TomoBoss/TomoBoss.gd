@@ -618,6 +618,8 @@ func set_new_position_with_trail(old_position : Vector3, new_position : Vector3)
 ## 'end_transition_seconds':
 func glow_for(transition_seconds : float, stay_seconds : float, end_transition_seconds) -> void:
 	
+	## Affects outfit and hair materials too because all of their material overlays
+	## are from the same material.
 	var material : StandardMaterial3D = $Armature/Skeleton3D/Body.material_overlay
 	var tween : Tween = get_tree().create_tween()
 	
