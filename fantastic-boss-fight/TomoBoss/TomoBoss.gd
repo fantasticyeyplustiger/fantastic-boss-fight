@@ -558,6 +558,8 @@ func large_explosion() -> void:
 	global_position = Global.boss_to_player
 	look_at_player()
 	
+	glow_for(1.6, 0.4, 0.4)
+	
 	$ExplosionPrepare.emitting = true
 	
 	await seconds(1.5)
@@ -609,6 +611,37 @@ func set_new_position_with_trail(old_position : Vector3, new_position : Vector3)
 	if old_position.y <= 1.5 and new_position.y <= 1.5:
 		SpawnObject.rock_trail(old_position, new_position)
 	global_position = new_position
+
+## Makes the boss' materials transition into pure glowing white.
+## 'transition_seconds': transition time to pure glow
+## 'stay_seconds': stays in pure glow for this time
+## 'end_transition_seconds':
+func glow_for(transition_seconds : float, stay_seconds : float, end_transition_seconds) -> void:
+	
+	var material : StandardMaterial3D = $Armature/Skeleton3D/Body.material_overlay
+	var tween : Tween = get_tree().create_tween()
+	
+	tween.tween_property(
+		material,
+		"albedo_color",
+		Color("FFFFFFFF"),
+		transition_seconds
+	)
+	
+	await tween.finished
+	
+	await seconds(stay_seconds)
+	
+	tween = get_tree().create_tween()
+	
+	tween.tween_property(
+		material,
+		"albedo_color",
+		Color("FFFFFF00"),
+		end_transition_seconds
+	)
+	
+	await tween.finished
 
 func get_punched() -> void:
 	
