@@ -18,11 +18,15 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 
 @onready var blue_flash_node = preload("res://ParryFlashes/UnparriableFlash.tscn")
 
+@onready var shotgun_pellet_mesh = preload("res://Player/WeaponProjectiles/ShotgunPellet.tscn")
+
 @onready var pistol_explosion_mesh = preload("res://Player/WeaponExplosions/PistolExplosion.tscn")
 @onready var explosion_mesh = preload("res://Level/SpawnedObjects/Explosion.tscn")
 
 @onready var rock_group_mesh = preload("res://Rocks/RockGroup.tscn")
 @onready var spiky_rock_mesh = preload("res://Rocks/SpikyRockGroup.tscn")
+
+var shotgun_pellets : Array[Node3D] = []
 
 ## Instantiates and sets the transform of the given node.
 func new_object(node : PackedScene, target_position : Vector3,
@@ -97,6 +101,52 @@ func pistol_explosion() -> void:
 	var new_explosion = pistol_explosion_mesh.instantiate()
 	new_explosion.position = Global.player_target_position
 	add_child(new_explosion)
+
+func projectile_boost() -> void:
+	
+	for pellet in shotgun_pellets:
+		if not pellet == null:
+			pellet.projectile_boost()
+	
+	shotgun_pellet(4, false)
+	
+	#var new_explosive_pellet : Node3D
+
+func shotgun_pellet(amount : int, can_projectile_boost : bool = true) -> void:
+	
+	Global.can_projectile_boost = can_projectile_boost
+	
+	#var pistol_trail_LMB = load("res://Player/WeaponProjectiles/PistolTrailLMB.tscn")
+	
+	for pellet in amount:
+		var new_pellet : Node3D = shotgun_pellet_mesh.instantiate()
+		
+		var target_position = Global.player_target_position
+		var accuracy_range = (target_position.length()) * 0.5
+		
+		target_position.x += randf_range(-accuracy_range, accuracy_range)
+		target_position.y += randf_range(-accuracy_range, accuracy_range)
+		target_position.z += randf_range(-accuracy_range, accuracy_range)
+		
+		new_pellet.position = Global.camera_position
+		new_pellet.initialize(Global.camera_position, target_position)
+		
+		#var trail = pistol_trail_LMB.instantiate()
+		#
+		#trail.initialize(Global.camera_position, target_position)
+		#add_child(trail)
+		
+		#add_child(new_pellet)
+		
+		if can_projectile_boost:
+			shotgun_pellets.insert(pellet, new_pellet)
+		else:
+			new_pellet.projectile_boost()
+	
+	await get_tree().create_timer(0.15).timeout
+	
+	Global.can_projectile_boost = false
+		
 
 func explosion(target_position : Vector3, disable_sound : bool = false) -> void:
 	var new_explosion = explosion_mesh.instantiate()

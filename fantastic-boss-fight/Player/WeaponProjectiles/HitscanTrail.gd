@@ -25,7 +25,7 @@ func initialize(position_one : Vector3, target_position : Vector3) -> void:
 	
 	$AnimationPlayer.play("fade")
 
-func draw_mesh(position_one : Vector3, target_position : Vector3, trail_size) -> ImmediateMesh:
+func draw_mesh(position_one : Vector3, target_position : Vector3, trail_size : Vector3) -> ImmediateMesh:
 	var new_mesh = ImmediateMesh.new()
 	
 	new_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, material_override)

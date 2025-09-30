@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://p8lfqudt37c"]
-
-[node name="ShotgunPellets" type="Node3D"]
-
-[node name="Pivot" type="Node3D" parent="."]

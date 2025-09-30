@@ -21,7 +21,7 @@ const RMB_DAMAGES : Dictionary[weapons, float] = {
 # In seconds.
 const LMB_COOLDOWNS : Dictionary[weapons, float] = {
 	weapons.PISTOL : 0.65,
-	weapons.SHOTGUN : 1.75,
+	weapons.SHOTGUN : 0.5,
 	weapons.SAW : 0.25,
 	weapons.RAILGUN : 1.0, # Railgun has a separate cooldown
 	weapons.ORB : 1.0
@@ -124,7 +124,7 @@ func _physics_process(delta: float) -> void:
 			
 			match current_weapon:
 				weapons.PISTOL:  LMB_pistol()
-				weapons.SHOTGUN: pass
+				weapons.SHOTGUN: LMB_shotgun()
 				
 				weapons.SAW:
 					if saw_ammo < 1.0:
@@ -163,6 +163,13 @@ func RMB_pistol() -> void:
 	Global.emit_signal("hitscan", RMB_DAMAGES[weapons.PISTOL])
 	
 	SpawnObject.pistol_explosion()
+
+
+func LMB_shotgun() -> void:
+	
+	$Animations.play("LMBShotgunShoot")
+	SpawnObject.shotgun_pellet(10)
+	
 
 
 func LMB_saw() -> void:

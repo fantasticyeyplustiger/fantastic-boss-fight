@@ -32,12 +32,15 @@ var front_of_player : Vector3
 ## Location where boss should appear in front of the player.
 var boss_to_player : Vector3
 
+## Location where player's camera is.
+var camera_position : Vector3
+
 ## In radians.
 var player_rotation : Vector3
 
 var player_velocity : Vector3
 
-## A hitscan pointing towards where the player's camera is looking at. Roughly 250m long.
+## A hitscan pointing towards where the player's camera is looking at. Roughly 400m long.
 var player_target_position : Vector3
 
 ## same as player not is_on_floor()
@@ -45,6 +48,9 @@ var player_in_air : bool
 
 ## Makes sawblades orbit around player if true
 var sawblades_orbiting : bool = false
+
+## If true and player punches with Parry Fist, projectile boost.
+var can_projectile_boost : bool = false
 
 ## Allows projectiles to home into boss.
 var boss_position : Vector3

@@ -17,7 +17,8 @@ const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
 const SLIDING_HEAD_POSITION : Vector3 = Vector3(0.0, 0.4, 0.0)
 const FORWARD_DIRECTION : Vector3 = Vector3(0.0, 0.0, -1.0)
 
-const MAX_STAMINA : float = 3.0
+@export var max_health : float = 100.0
+@export var max_stamina : float = 3.0
 
 var dash_direction : Vector3 = Vector3.ZERO
 var slide_velocity : Vector3 = Vector3.ZERO
@@ -30,8 +31,8 @@ var dash_multiplier : float = 1.0
 var slide_jump_time : float = 0.0
 var slam_time : float = 0.0
 
-var health : float = 1000.0
-var stamina : float = 30.0
+var health : float
+var stamina : float
 
 var can_move : bool = true
 var parrying : bool = false
@@ -52,6 +53,9 @@ var crushing : bool = false
 @onready var punch_ray : RayCast3D = $Head/Camera3D/PunchRay
 
 func _ready() -> void:
+	health = max_health
+	stamina = max_stamina
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 	
@@ -94,7 +98,7 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_pressed("jump") and on_floor and sliding and not dashing:
 		$JumpSFX.play()
 		$ResetSlideJump.stop()
-		velocity.y = jump / 1.2
+		velocity.y = jump / 0.85
 		slide_jumped = true
 	# Slam Jump - Jump right after slamming the ground for extra height.
 	elif Input.is_action_just_pressed("jump") and on_floor and slam_jump:
@@ -131,7 +135,7 @@ func _physics_process(delta: float) -> void:
 			can_move = false
 			
 			# Because player will collide with the floor otherwise and slow down dramatically
-			velocity.y = 0.2
+			velocity.y = 0.1
 			
 			# Resets after DASH_TIME seconds.
 			reset_dash()
@@ -223,7 +227,7 @@ func _physics_process(delta: float) -> void:
 				velocity.z = lerpf(velocity.z, direction.z * speed, delta * 3.0)
 	#endregion
 	
-	if stamina < 3.0 and not sliding:
+	if stamina < max_stamina and not sliding:
 		stamina += delta * 0.5
 	
 	$PlayerGUI.stamina.text = "STAMINA: " + str(snappedf(stamina, 0.1))
@@ -284,6 +288,7 @@ func set_global_variables() -> void:
 	Global.player_in_air = not is_on_floor()
 	Global.player_position = global_position
 	Global.front_of_player = $FrontOfBodyPivot/FrontOfBody.global_position
+	Global.camera_position = camera.global_position
 	Global.player_rotation = camera.global_rotation
 	Global.boss_to_player = $FrontOfBodyPivot/FrontOfBody2.global_position - Vector3(0.0, 0.5, 0.0)
 	Global.player_velocity = velocity
@@ -335,8 +340,8 @@ func punch() -> void:
 				if enemy.parried and Global.current_fist == Global.fists.PARRY_FIST:
 					$DashDuringParry.parrying = true
 					$Head/Camera3D/LeftHand.hit_parry()
-					stamina = 3.0
-					health = 100.0
+					stamina = max_stamina
+					health = max_health
 					$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 
 ## Damages the player if possible.

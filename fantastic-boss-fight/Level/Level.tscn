@@ -74,6 +74,8 @@ material = SubResource("StandardMaterial3D_r3cbp")
 
 [node name="Player" parent="." instance=ExtResource("1_a526m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19)
+max_health = 10000.0
+max_stamina = 300.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)

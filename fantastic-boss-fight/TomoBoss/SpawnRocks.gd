@@ -30,7 +30,7 @@ func start_spawning_rocks() -> void:
 
 func spawn_rocks_for(seconds : float) -> void:
 	start_spawning_rocks()
-	await get_tree().create_timer(seconds).timeout
+	await get_tree().create_timer(seconds * Global.difficulty_speed).timeout
 	stop_spawning_rocks()
 
 func stop_spawning_rocks() -> void:

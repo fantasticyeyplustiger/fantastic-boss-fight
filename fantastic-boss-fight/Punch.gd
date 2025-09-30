@@ -55,20 +55,24 @@ func parry_punch() -> void:
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryPunch")
 	
-	arm_exhaustion -= exhaustion_consumption[current_fist]
-	Global.emit_signal("punch")
+	if Global.can_projectile_boost:
+		SpawnObject.projectile_boost()
+		hit_parry(false, 0.1)
+	else:
+		arm_exhaustion -= exhaustion_consumption[current_fist]
+		Global.emit_signal("punch")
 	
 ## This function should be called when the player hits a parry.
 ## Plays the parry animation and SFX.
-func hit_parry() -> void:
+func hit_parry(flash_screen : bool = true, stop_time : float = 0.25) -> void:
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryHit")
 	$AnimationPlayer.advance(0) # Because animation doesn't change instantly, call this
 	$SFX/Parry.play()
-	$ParryFlash.visible = true
+	$ParryFlash.visible = flash_screen
 	
 	get_tree().paused = true
-	await get_tree().create_timer(0.25).timeout
+	await get_tree().create_timer(stop_time).timeout
 	get_tree().paused = false
 	
 	$ParryFlash.visible = false

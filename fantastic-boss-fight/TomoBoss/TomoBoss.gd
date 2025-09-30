@@ -16,7 +16,10 @@ func _ready() -> void:
 	
 	$AnimationPlayer.play("Walking")
 	$AnimationPlayer.speed_scale /= Global.difficulty_speed
+	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
 	set_atk_cooldown_in_seconds(1.0)
+	
+	set_physics_process(false)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
@@ -144,7 +147,7 @@ func knee() -> void:
 	$AnimationPlayer.play("RightKnee")
 	
 	look_at_player()
-	dash_towards_on_ground(Global.predict_player_position_at_seconds(0.2), 25.0)
+	dash_towards_on_ground(Global.player_position, 25.0)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
