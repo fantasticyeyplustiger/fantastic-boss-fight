@@ -1,7 +1,7 @@
 extends Node3D
 
-const DEFAULT_SPEED : float = 3.0
-const PROJECTILE_BOOST_SPEED : float = 5.0
+const DEFAULT_SPEED : float = 6.0
+const PROJECTILE_BOOST_SPEED : float = 10.0
 
 const DELTA : float = 1.0 / 60.0
 
@@ -14,17 +14,14 @@ func _ready() -> void:
 	pellet = $EnemyDetection
 
 ## Gives the shotgun pellet its velocity. Pellet will look at direction of velocity.
-func initialize(from : Vector3, to : Vector3) -> void:
-	
-	var direction = from.direction_to(to)
+func initialize(direction : Vector3) -> void:
 	velocity = direction * DEFAULT_SPEED
-	
 
 func projectile_boost() -> void:
 	velocity = velocity.normalized() * PROJECTILE_BOOST_SPEED
 
 func _physics_process(_delta: float) -> void:
-	translate(velocity * DELTA)
+	position += velocity * DELTA
 	
 	## code stolen from my player script lol
 	if pellet.is_colliding():
