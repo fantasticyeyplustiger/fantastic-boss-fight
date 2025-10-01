@@ -1,7 +1,7 @@
 extends Node3D
 
-const DEFAULT_SPEED : float = 6.0
-const PROJECTILE_BOOST_SPEED : float = 10.0
+const DEFAULT_SPEED : float = 30.0
+const PROJECTILE_BOOST_SPEED : float = 50.0
 
 const DELTA : float = 1.0 / 60.0
 
@@ -10,18 +10,19 @@ var velocity : Vector3
 var pellet : RayCast3D
 
 func _ready() -> void:
-	look_at(global_position + velocity)
-	pellet = $EnemyDetection
-
-## Gives the shotgun pellet its velocity. Pellet will look at direction of velocity.
-func initialize(direction : Vector3) -> void:
-	velocity = direction * DEFAULT_SPEED
+	velocity = Vector3.FORWARD * DEFAULT_SPEED
+	pellet = $LocalMovement/EnemyDetection
+	
+	# delete self after 10 seconds of not hitting anything so no lag
+	await get_tree().create_timer(10.0).timeout
+	
+	queue_free()
 
 func projectile_boost() -> void:
 	velocity = velocity.normalized() * PROJECTILE_BOOST_SPEED
 
 func _physics_process(_delta: float) -> void:
-	position += velocity * DELTA
+	$LocalMovement.position += velocity * DELTA
 	
 	## code stolen from my player script lol
 	if pellet.is_colliding():
@@ -33,4 +34,4 @@ func _physics_process(_delta: float) -> void:
 			if area.has_method(Global.HITSCAN_THE_ENEMY_METHOD):
 				area.call(Global.HITSCAN_THE_ENEMY_METHOD, damage)
 			
-			queue_free()
+		queue_free()

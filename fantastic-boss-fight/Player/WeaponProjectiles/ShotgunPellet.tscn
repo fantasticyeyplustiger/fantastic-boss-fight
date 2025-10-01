@@ -16,11 +16,14 @@ orientation = 0
 [node name="ShotgunPellet" type="Node3D"]
 script = ExtResource("1_vmope")
 
-[node name="Pellet" type="MeshInstance3D" parent="."]
+[node name="LocalMovement" type="Node3D" parent="."]
+
+[node name="Pellet" type="MeshInstance3D" parent="LocalMovement"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 mesh = SubResource("QuadMesh_nxf52")
+skeleton = NodePath("../..")
 
-[node name="EnemyDetection" type="RayCast3D" parent="."]
+[node name="EnemyDetection" type="RayCast3D" parent="LocalMovement"]
 target_position = Vector3(0, 0, -1.2)
 collision_mask = 5
 collide_with_areas = true

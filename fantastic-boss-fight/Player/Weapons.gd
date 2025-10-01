@@ -21,7 +21,7 @@ const RMB_DAMAGES : Dictionary[weapons, float] = {
 # In seconds.
 const LMB_COOLDOWNS : Dictionary[weapons, float] = {
 	weapons.PISTOL : 0.65,
-	weapons.SHOTGUN : 0.5,
+	weapons.SHOTGUN : 1.75,
 	weapons.SAW : 0.25,
 	weapons.RAILGUN : 1.0, # Railgun has a separate cooldown
 	weapons.ORB : 1.0

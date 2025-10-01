@@ -116,23 +116,17 @@ func shotgun_pellet(amount : int, can_projectile_boost : bool = true) -> void:
 	
 	Global.can_projectile_boost = can_projectile_boost
 	
+	var accuracy_range : float = deg_to_rad(20.0)
+	
 	for pellet in amount:
 		var new_pellet : Node3D = shotgun_pellet_mesh.instantiate()
 		
-		var target_position = Global.player_target_position
-		var accuracy_range = (target_position.length()) * 0.2
-		
-		#print("target_position length: ", target_position.length())
-		#print("accuracy range: ", accuracy_range)
-		
-		#target_position.x += randf_range(-accuracy_range, accuracy_range)
-		#target_position.y += randf_range(-accuracy_range, accuracy_range)
-		#target_position.z += randf_range(-accuracy_range, accuracy_range)
-		
-		var direction := Global.camera_position.direction_to(target_position)
-		
 		new_pellet.position = Global.camera_position
-		new_pellet.initialize(direction)
+		new_pellet.rotation = Global.player_rotation
+		
+		new_pellet.rotation.x += randf_range(-accuracy_range, accuracy_range)
+		new_pellet.rotation.y += randf_range(-accuracy_range, accuracy_range)
+		new_pellet.rotation.z += randf_range(-accuracy_range, accuracy_range)
 		
 		add_child(new_pellet)
 		

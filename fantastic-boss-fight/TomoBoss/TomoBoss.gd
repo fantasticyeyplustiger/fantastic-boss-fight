@@ -18,8 +18,6 @@ func _ready() -> void:
 	$AnimationPlayer.speed_scale /= Global.difficulty_speed
 	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
 	set_atk_cooldown_in_seconds(1.0)
-	
-	set_physics_process(false)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
