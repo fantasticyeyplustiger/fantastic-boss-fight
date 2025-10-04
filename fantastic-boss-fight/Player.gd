@@ -236,7 +236,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-## Begins sliding.
+## Begins sliding.[br]
 ## If player jumps during SLIDE_JUMP_TIME_WINDOW, velocity increases.
 func begin_slide() -> void:
 	if sliding: return
@@ -266,7 +266,7 @@ func begin_slide() -> void:
 	$Head/Camera3D.position = SLIDING_HEAD_POSITION
 	switch_hurtboxes(false) # Because player is on the floor when sliding
 
-## Dashes in the direction the player is moving for 0.2 seconds.
+## Dashes in the direction the player is moving for 0.2 seconds at a speed of 'DASH_SPEED'.[br]
 ## If not moving, dash forward.
 func dash() -> void:
 	velocity.x = dash_direction.x * DASH_SPEED * dash_multiplier
@@ -304,7 +304,7 @@ func get_movement_direction() -> Vector3:
 	var direction : Vector3 = (head.transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	return direction
 
-## Hits the enemy with a hitscan.
+## Hits the enemy with a hitscan.[br]
 ## Should be called when shooting the pistol or railgun in Weapons.gd.
 func hitscan(damage : float) -> void:
 	if aim.is_colliding():
@@ -321,6 +321,8 @@ func hitscan(damage : float) -> void:
 		else:
 			Global.emit_signal("hitscan_environment_particles")
 
+## Hits the enemy with a punch.[br]
+## Should be called when punching in Punch.gd.
 func punch() -> void:
 	if punch_ray.is_colliding():
 		if not punch_ray.get_collider().is_in_group("background"):
@@ -359,7 +361,7 @@ func get_hit(area: Area3D) -> void:
 	if health <= 0.0:
 		can_move = false
 
-## Knocks the player back / up depending on parameters given.
+## Knocks the player back / up depending on parameters given.[br]
 ## Position of knockback should always the other hitbox's global position.
 func get_knockbacked(position_of_kb : Vector3, launch_power : float, knockback_power : float) -> void:
 	velocity -= (position_of_kb - global_position).normalized() * knockback_power

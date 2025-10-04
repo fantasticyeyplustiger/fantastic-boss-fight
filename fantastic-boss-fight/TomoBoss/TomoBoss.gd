@@ -56,7 +56,7 @@ func choose_attack() -> void:
 #region all attacks
 
 #region attack combo
-## Does karate_punch(), knee(), combo_kick(), and ground_stomp() in a row.
+## Does karate_punch(), knee(), combo_kick(), and ground_stomp() in a row.[br]
 ## Additionally does grab() if hardest difficulty is on.
 func attack_combo() -> void:
 	can_walk = false
@@ -615,10 +615,12 @@ func set_new_position_with_trail(old_position : Vector3, new_position : Vector3)
 		SpawnObject.rock_trail(old_position, new_position)
 	global_position = new_position
 
-## Makes the boss' materials transition into pure glowing white.
-## 'transition_seconds': transition time to pure glow
-## 'stay_seconds': stays in pure glow for this time
-## 'end_transition_seconds':
+
+
+## Makes the boss' materials transition into pure glowing white.[br][br]
+## 'transition_seconds': transition time to pure glow[br]
+## 'stay_seconds': stays in pure glow for this time[br]
+## 'end_transition_seconds': transition time to invisible[br]
 func glow_for(transition_seconds : float, stay_seconds : float, end_transition_seconds) -> void:
 	
 	## Affects outfit and hair materials too because all of their material overlays

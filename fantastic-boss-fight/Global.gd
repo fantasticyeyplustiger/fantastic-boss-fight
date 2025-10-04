@@ -1,10 +1,11 @@
 extends Node
 
-enum fists {PARRY_FIST, HEAVY_FIST}
+enum fists {PARRY_FIST, HEAVY_FIST, HOOK}
 
 const FIST_DAMAGE : Dictionary[fists, float] = {
 	fists.PARRY_FIST : 1.0,
-	fists.HEAVY_FIST : 2.5
+	fists.HEAVY_FIST : 2.5,
+	fists.HOOK : 0.5
 }
 
 const BOUND_ONE : Vector3 = Vector3(-22.0, 0.0, 23.0)
@@ -22,7 +23,7 @@ signal punch
 
 var current_fist : fists = fists.PARRY_FIST
 
-var difficulty_speed : float = 0.8
+var difficulty_speed : float = 1.0
 
 var player_position : Vector3
 
@@ -32,7 +33,7 @@ var front_of_player : Vector3
 ## Location where boss should appear in front of the player.
 var boss_to_player : Vector3
 
-## Location where player's camera is.
+## Global position where player's camera is.
 var camera_position : Vector3
 
 ## In radians.
@@ -55,7 +56,7 @@ var can_projectile_boost : bool = false
 ## Allows projectiles to home into boss.
 var boss_position : Vector3
 
-## Predicts where player will be at x seconds according to current velocity.
+## Predicts where player will be at [param seconds] according to current velocity.
 func predict_player_position_at_seconds(seconds : float) -> Vector3:
 	var prediction : Vector3 = player_position + (player_velocity * seconds)
 	
@@ -65,7 +66,7 @@ func predict_player_position_at_seconds(seconds : float) -> Vector3:
 	
 	return prediction
 
-## Predicts where player will be at x seconds according to current velocity FOR BOSS POSITIONING.
+## Predicts where player will be at [param seconds] according to current velocity FOR BOSS POSITIONING.[br]
 ## This is for where the boss should spawn to attack the predicted position.
 func predict_player_position_at_seconds_for_boss(seconds : float) -> Vector3:
 	var prediction : Vector3 = boss_to_player + (player_velocity * seconds)

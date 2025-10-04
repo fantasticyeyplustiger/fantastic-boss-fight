@@ -34,7 +34,7 @@ var can_walk : bool = true
 ## If turned true, have 'dash_towards()' used right after.
 var dashing : bool = false
 
-## Multiplies the speed of the dash with this every frame boss is dashing.
+## Multiplies the speed of the dash with this every frame boss is dashing.[br]
 ## Mainly for making the dash not "static" (not in the programmer sense)
 var dash_acceleration : float = 1.0
 
@@ -45,14 +45,14 @@ var should_look_at_player : bool = false
 ## Looks at the player with rotation limited to y-axis.
 var should_look_at_player_2D : bool = false
 
-## If boss can be parried, set this to true.
-## If boss is "punched" with the parry arm while this is true, parried should be set to true.
-## Otherwise, nothing happens.
-## Easy way to use this is by setting this true at the start of the parry timing window and then
+## If boss can be parried, set this to true.[br]
+## If boss is "punched" with the parry arm while this is true, parried should be set to true.[br]
+## Otherwise, nothing happens.[br][br]
+## Easy way to use this is by setting this true at the start of the parry timing window and then[br]
 ## checking if parried is true at the end of the timing window and code logic accordingly.
 var can_be_parried : bool = false
 
-## Check if this is true for parryable attacks.
+## Check if this is true for parryable attacks.[br]
 ## See 'can_be_parried' for proper usage.
 var parried : bool = false
 
@@ -98,15 +98,15 @@ func choose_attack() -> void:
 	pass
 
 
-## Predicts where the player will be at x seconds and makes boss go in front of that position.
+## Predicts where the player will be at [param seconds_to_wait] and makes boss go in front of that position.
 func go_to_predicted_position_at_seconds(seconds_to_wait : float) -> void:
 	var predicted_position : Vector3 = Global.predict_player_position_at_seconds_for_boss(seconds_to_wait)
 	position = predicted_position
 
-## Makes the boss dash towards the position at a high speed.
-## Also makes the boss look at that direction.
-## 'dashing' is automatically set to true when this function is called.
-## 'dash_acceleration' is automatically set to 1.0 to prevent any issues with other attacks
+## Makes the boss dash towards the position at a high speed.[br]
+## Also makes the boss look at that direction.[br][br]
+## [code]dashing[/code] is automatically set to true when this function is called.[br]
+## [code]dash_acceleration[/code] is automatically set to 1.0 to prevent any issues with other attacks
 ## when this function is called.
 func dash_towards(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
 	dashing = true
@@ -120,10 +120,10 @@ func dash_towards(target_position : Vector3, speed : float = SPRINT_SPEED) -> vo
 	velocity = (direction * speed) * 1.5
 	dash_acceleration = 1.0
 
-## Makes the boss go to the ground and dash towards another position on the ground.
-## Also makes the boss look at that direction.
-## 'dashing' is automatically set to true when this function is called.
-## 'target_position' does not need its y-value set to 0.
+## Makes the boss go to the ground and dash towards another position on the ground.[br]
+## Also makes the boss look at that direction.[br][br]
+## [code]dashing[/code] is automatically set to true when this function is called.[br]
+## [param target_position] does not need its y-value set to 0.
 func dash_towards_on_ground(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
 	global_position.y = 0.0
 	
@@ -131,24 +131,24 @@ func dash_towards_on_ground(target_position : Vector3, speed : float = SPRINT_SP
 	
 	dash_towards(ground_target, speed)
 
-## Sets 'dashing' to be false.
+## Sets [code]dashing[/code] to be false.
 func stop_dashing() -> void:
 	dashing = false
 
-## Sets 'dashing' to be false in 'n' seconds.
+## Sets [code]dashing[/code] to be false in 'n' seconds.
 func stop_dashing_in_seconds(n : float) -> void:
 	await seconds(n)
 	dashing = false
 
-## Sets the dash acceleration.
-## Dash speed will be multiplied with 'n' every frame where 'dashing' is true.
+## Sets the dash acceleration.[br]
+## Dash speed will be multiplied with [param n] every frame where [code]dashing[/code] is true.
 func set_dash_acceleration(n : float) -> void:
 	dash_acceleration = n
 
 func stop_walk_animation() -> void:
 	pass
 
-## Makes the boss walk towards the player.
+## Makes the boss walk towards the player.[br]
 ## Doesn't play the walk animation automatically.
 func walk_towards_player() -> void:
 	var direction = get_2d_angle_to_player()
@@ -160,7 +160,7 @@ func walk_towards_player() -> void:
 	look_at_player()
 	move_and_slide()
 
-## Rotates the boss' y-axis to look at the player.
+## Rotates the boss' y-axis to look at the player.[br]
 ## Forces boss' x and z rotation axis to be 0.
 func look_at_player() -> void:
 	
@@ -172,8 +172,8 @@ func look_at_player() -> void:
 	rotation.x = 0
 	rotation.z = 0
 
-## Gets the angle from the boss' position to the player on a flat plane.
-## IGNORES Y POSITION.
+## Gets the angle from the boss' position to the player on a flat plane.[br]
+## [b]IGNORES Y POSITION.[/b]
 func get_2d_angle_to_player() -> Vector3:
 	var vector2_pos = Vector3(global_position.x, 0.0, global_position.z)
 	var vector2_player_pos = Vector3(Global.player_position.x, 0.0, Global.player_position.z)
@@ -193,20 +193,20 @@ func get_2d_distance_to_player() -> float:
 	
 	return (boss_position - player_position).length()
 
-## Resets 'attacking' after the amount of seconds inputted to be false.
+## Resets [code]attacking[/code] after the amount of seconds inputted to be false.
 func set_atk_cooldown_in_seconds(seconds_to_wait : float) -> void:
 	await seconds(seconds_to_wait)
 	attacking = false
 
-## Resets 'can_walk' after the amount of seconds inputted to be true.
+## Resets [code]can_walk[/code] after the amount of seconds inputted to be true.
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await seconds(seconds_to_wait)
 	can_walk = true
 
-## Switches 'visible' of trail to be the opposite state.
-## Also edits the length to make trail emitting less noticeable when visible is true again.
-## 'new_length' is the amount of frames the end of the trail will last.
-## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
+## Switches [code]visible[/code] of [param trail] to be the opposite state.[br]
+## Also edits the length to make [param trail] emitting less noticeable when [code]visible[/code] is true again.[br][br]
+## [param new_length] is the amount of frames the end of the [param trail] will last.[br]
+## Only use [param new_length] if intending to toggle the [param trail] [b]ON.[/b] It does nothing otherwise.
 func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 	trail.visible = not trail.visible
 	
@@ -215,10 +215,10 @@ func toggle_trail(trail : GPUTrail3D, new_length : int = 60) -> void:
 	else:
 		trail.length = new_length # Frames.
 
-## Toggles all of the trails in the parent node.
-## Ignores any children nodes that aren't trails.
-## 'new_length' is the amount of frames the end of the trail will last.
-## Only use 'new_length' if intending to toggle the trails ON. It does nothing otherwise.
+## Toggles all of the trails in the parent node.[br]
+## Ignores any children nodes that aren't trails.[br][br]
+## [param new_length] is the amount of frames the end of the [param trail] will last.[br]
+## Only use [param new_length] if intending to toggle the [param trail] [b]ON.[/b] It does nothing otherwise.
 func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
 	
 	var children := parent_node.get_children()
@@ -229,8 +229,8 @@ func toggle_all_trails_in(parent_node : Node3D, new_length : int = 60) -> void:
 		
 		toggle_trail(child, new_length)
 
-## Switches 'disabled' of collision to be the opposite state.
-## If collision has Knockback.gd as its script and an Area3D as a parent that
+## Switches [code]disabled[/code] of [param collision] to be the opposite state.[br][br]
+## If [param collision] has Knockback.gd as its script and an [Area3D] as a parent that
 ## also has AreaKnockback.gd, 'set_kb_stats' will be called with those two as parameters.
 func toggle_hitbox(collision : CollisionShape3D) -> void:
 	collision.set_deferred("disabled", not collision.disabled)
@@ -253,31 +253,32 @@ func toggle_hitbox(collision : CollisionShape3D) -> void:
 	if script_name == "AreaKnockback":
 		set_kb_stats(parent, collision)
 
-## Switches 'disabled' of collision to be the opposite state for 'seconds_to_wait'.
-## After that period of time, collision will switch back.
-## i.e. toggle_hitbox_on_for_seconds(collision, 2.0):
+## Switches 'disabled' of collision to be the opposite state for 'seconds_to_wait'.[br][br]
+## After that period of time, [param collision] will switch back.[br][br]
+## i.e.[br]
+## [codeblock]toggle_hitbox_on_for_seconds(collision, 2.0):
 ## collision.disabled = true at the start
 ## collision.disabled = false
 ## wait 2.0 seconds
-## collision.disabled = true again
+## collision.disabled = true again[/codeblock]
 func toggle_hitbox_on_for_seconds(collision : CollisionShape3D, seconds_to_wait : float) -> void:
 	toggle_hitbox(collision)
 	await seconds(seconds_to_wait)
 	toggle_hitbox(collision)
 
-## Sets the given area's knockback power and launch power to be that of the
-## given knockback_collision.
-## NOTE: Assumes that both area and knockback_collision have
+## Sets [param area]'s [code]knockback power[/code] and [code]launch power[/code] to be that of the
+## given knockback_collision.[br][br]
+## NOTE: Assumes that both [param area] and [param knockback_collision] have
 ##       AreaKnockback.gd and Knockback.gd respectively!
 func set_kb_stats(area : Area3D, knockback_collision : CollisionShape3D) -> void:
 	area.knockback_power = knockback_collision.knockback_power
 	area.launch_power = knockback_collision.launch_power
 
-## Waits n seconds.
-## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
-## Example: await seconds(1).
-## 'difficulty_speed_change' multiplies wait time by 'Global.difficulty_speed'.
-## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
+## Waits n seconds.[br]
+## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE[br]
+## Example: [code]await seconds(1)[/code][br][br]
+## [param]difficulty_speed_change[/param] multiplies wait time by [code]Global.difficulty_speed[/code].[br]
+## [param]process_always[/param] will pause when [SceneTree] is paused unless set to [code]true.[/code] This is for parrying.
 func seconds(n : float, difficulty_speed_change : bool = true, process_always : bool = false) -> void:
 	
 	if difficulty_speed_change:
@@ -285,11 +286,11 @@ func seconds(n : float, difficulty_speed_change : bool = true, process_always : 
 	
 	await get_tree().create_timer(n, process_always).timeout
 
-## Waits n milliseconds.
-## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE
-## Example: await milliseconds(1).
-## 'difficulty_speed_change' multiplies wait time by 'Global.difficulty_speed'.
-## 'process_always' will pause when SceneTree is paused unless set to true. This is for parrying.
+## Waits n milliseconds.[br]
+## NOTE: MUST USE 'await' KEYWORD FOR PROPER USAGE[br]
+## Example: [code]await milliseconds(1)[/code][br][br]
+## [param]difficulty_speed_change[/param] multiplies wait time by [code]Global.difficulty_speed[/code].[br]
+## [param]process_always[/param] will pause when [SceneTree] is paused unless set to [code]true.[/code] This is for parrying.
 func milliseconds(n : float, difficulty_speed_change : bool = true, process_always : bool = false) -> void:
 	if difficulty_speed_change:
 		n *= Global.difficulty_speed
