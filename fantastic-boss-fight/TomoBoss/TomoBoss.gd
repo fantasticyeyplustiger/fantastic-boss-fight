@@ -2,12 +2,22 @@ extends Boss
 
 enum attacks {CHOP, COMBO, FACE_KICK, CLAP, DESTROY}
 
+var gradient : Gradient
+var colors : PackedColorArray
+var trail_mesh_mat : Material
+
 var previous_attack : attacks
 var current_attack : attacks
+
+var first_phase : bool = true
 
 var prev_i : int = 0
 
 func _ready() -> void:
+	
+	gradient = $Armature/Skeleton3D/ComboKick/Trail.color_ramp.gradient
+	colors = gradient.colors
+	trail_mesh_mat = $Armature/Skeleton3D/Chop/Trail/MeshInstance3D.mesh.material
 	
 	health = 200.0
 	$BossHealthBar.set_max_hp(health)
@@ -17,7 +27,9 @@ func _ready() -> void:
 	$AnimationPlayer.play("Walking")
 	$AnimationPlayer.speed_scale /= Global.difficulty_speed
 	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
-	set_atk_cooldown_in_seconds(1.0)
+	
+	set_atk_cooldown_in_seconds(1.5)
+	rainbow_trail_color()
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
@@ -615,7 +627,45 @@ func set_new_position_with_trail(old_position : Vector3, new_position : Vector3)
 		SpawnObject.rock_trail(old_position, new_position)
 	global_position = new_position
 
-
+## This tweens the color gradients of all trails (except air ones) through the color of the rainbow.
+func rainbow_trail_color() -> void:
+	
+	const RAINBOW : PackedColorArray = [
+		Color.RED, Color.ORANGE,
+		Color.YELLOW, Color.GREEN,
+		Color.BLUE, Color.VIOLET,
+		Color.PURPLE]
+	
+	var iterator : int = 0
+	
+	while true:
+		
+		var color_one = RAINBOW[iterator]
+		
+		iterator += 1
+		
+		if iterator >= RAINBOW.size():
+			iterator = 0
+		
+		var color_two = RAINBOW[iterator]
+		
+		var tween : Tween = get_tree().create_tween()
+		
+		tween.tween_method(
+			set_trail_color,
+			color_one,
+			color_two,
+			3.0
+		)
+		
+		await tween.finished
+	
+## Sets the color of all non-air trails and any included meshes with those trails to [param new_color].
+func set_trail_color(new_color : Color) -> void:
+	gradient.set_color(1, new_color)
+	trail_mesh_mat.albedo_color = new_color
+	trail_mesh_mat.albedo_color.a8 = 150
+	
 
 ## Makes the boss' materials transition into pure glowing white.[br][br]
 ## 'transition_seconds': transition time to pure glow[br]

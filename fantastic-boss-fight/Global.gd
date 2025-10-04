@@ -23,7 +23,7 @@ signal punch
 
 var current_fist : fists = fists.PARRY_FIST
 
-var difficulty_speed : float = 1.0
+var difficulty_speed : float = 0.8
 
 var player_position : Vector3
 
