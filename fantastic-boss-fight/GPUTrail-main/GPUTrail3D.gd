@@ -191,7 +191,7 @@ func _process(delta):
 		var delta_position = global_position - _old_pos
 		
 		if delta_position:
-			var tangent = global_transform.basis[1].length() * (delta_position).normalized()
+			var tangent = global_transform.basis[0].length() * (delta_position).normalized()
 			_update_billboard_transform(tangent)
 
 		RenderingServer.instance_set_transform(get_instance(), _billboard_transform)
@@ -200,14 +200,17 @@ func _process(delta):
 
 func _update_billboard_transform(tangent : Vector3):
 	_billboard_transform = global_transform
-	var p : Vector3 = _billboard_transform.basis[1]
+	var p : Vector3 = _billboard_transform.basis[0]
 	var x : Vector3 = tangent
 	var angle : float = p.angle_to(x)
+	
 	var rotation_axis : Vector3 = p.cross(x).normalized()
-	if rotation_axis != Vector3():
+	
+	if rotation_axis is Vector3 and rotation_axis.is_normalized():
+		
 		_billboard_transform.basis = _billboard_transform.basis.rotated(rotation_axis,angle)
-		_billboard_transform.basis = _billboard_transform.basis.scaled(Vector3(0.5,0.5,0.5))
-		_billboard_transform.origin += _billboard_transform.basis[1]
+		#_billboard_transform.basis = _billboard_transform.basis.scaled(Vector3(0.5,0.5,0.5))
+		_billboard_transform.origin += _billboard_transform.basis[0]
 
 var _flags = 0
 func _set_flag(i, idx : int, value : bool):
