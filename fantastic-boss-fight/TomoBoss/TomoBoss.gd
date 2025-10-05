@@ -51,21 +51,21 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await large_explosion()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await large_explosion()
 	
-	#await attack_combo()
-	#await clap()
-	#await face_kick()
-	#await grab()
-	#await stomp()
-	#await chop()
+	await attack_combo()
+	await clap()
+	await face_kick()
+	await grab()
+	await stomp()
+	await chop()
 	#await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
@@ -106,12 +106,13 @@ func karate_punch() -> void:
 	$AttackSFX.play_sfx("BossDash")
 	global_position.y = 0.0
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
+	
 	var old_position : Vector3 = global_position
+	
 	go_to_predicted_position_at_seconds(0.35)
 	look_at_player()
 	global_position.y = 0.0 # Stay on ground
 	SpawnObject.rock_trail(old_position, global_position)
-	
 	
 	await seconds(0.2)
 	
@@ -119,8 +120,10 @@ func karate_punch() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	$AnimationPlayer.play("LeftStraight")
+	$AnimationPlayer.advance(0) # So the trail isn't bugged by going from end_pos to start_pos
 	look_at_player()
 	dash_towards_on_ground(Global.player_position)
+	toggle_trail($LeftStraightTrail)
 	
 	await seconds(0.1)
 	
@@ -152,6 +155,8 @@ func karate_punch() -> void:
 	)
 	
 	await seconds(0.035)
+	
+	toggle_trail($LeftStraightTrail)
 
 func knee() -> void:
 	damage = 25.0
@@ -162,7 +167,7 @@ func knee() -> void:
 	$AnimationPlayer.play("RightKnee")
 	
 	look_at_player()
-	dash_towards_on_ground(Global.player_position, 25.0)
+	dash_towards_on_ground(Global.player_position, 45.0)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
@@ -197,7 +202,7 @@ func combo_kick() -> void:
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	
-	dash_towards(Global.player_position, 18.0)
+	dash_towards(Global.player_position, 20.0)
 	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
 	toggle_hitbox_on_for_seconds($Hitbox/LeftRoundhouse, 0.25)
 	
@@ -331,6 +336,7 @@ func face_kick() -> void:
 	
 	await seconds(0.2)
 	
+	toggle_trail($FaceKickTrail)
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	should_look_at_player_2D = false
 	
@@ -341,9 +347,9 @@ func face_kick() -> void:
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FF0000", 0.5, true)
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFC5", 0.45, true)
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.11, true)
-	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.1)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
+	toggle_trail($FaceKickTrail)
 	
 	can_be_parried = false
 	
@@ -576,7 +582,7 @@ func large_explosion() -> void:
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("LargeExplosion")
 	global_position = Global.boss_to_player
-	look_at_player()
+	should_look_at_player = true
 	
 	glow_for(1.6, 0.4, 0.4)
 	
@@ -611,6 +617,7 @@ func large_explosion() -> void:
 	
 	await seconds(0.85)
 	
+	should_look_at_player = false
 	should_fall = true
 	
 	await seconds(0.6)

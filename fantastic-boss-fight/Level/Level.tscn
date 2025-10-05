@@ -79,31 +79,31 @@ max_stamina = 300.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
-light_color = Color(1, 0.745098, 0.745098, 1)
+light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 7, 0)
-light_color = Color(1, 0.745098, 0.745098, 1)
+light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 7, 0)
-light_color = Color(1, 0.745098, 0.745098, 1)
+light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 60)
-light_color = Color(1, 0.745098, 0.745098, 1)
+light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -60)
-light_color = Color(1, 0.745098, 0.745098, 1)
+light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 

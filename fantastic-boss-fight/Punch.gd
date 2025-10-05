@@ -16,6 +16,14 @@ var heavy_fist_hold_time : float = 0.0
 ## Shockwave damage.
 var damage : float = 1.0
 
+var arm_material : Material
+
+func _ready() -> void:
+	arm_material = $Armature/Skeleton3D/LeftArm.get_surface_override_material(0)
+	arm_material.emission = Color.CYAN
+	
+	print(arm_material.emission)
+
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("swap_fists"):
@@ -51,6 +59,9 @@ func parry_punch() -> void:
 	if arm_exhaustion < 1.0:
 		return
 	
+	arm_material.emission = Color.CYAN
+	arm_material.emission_energy_multiplier = 4.0
+	
 	$SFX/ParryPunch.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryPunch")
@@ -65,6 +76,8 @@ func parry_punch() -> void:
 ## This function should be called when the player hits a parry.
 ## Plays the parry animation and SFX.
 func hit_parry(flash_screen : bool = true, stop_time : float = 0.25) -> void:
+	arm_material.emission_energy_multiplier = 8.0
+	arm_material.emission = Color.WHITE
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("ParryHit")
 	$AnimationPlayer.advance(0) # Because animation doesn't change instantly, call this
@@ -76,6 +89,15 @@ func hit_parry(flash_screen : bool = true, stop_time : float = 0.25) -> void:
 	get_tree().paused = false
 	
 	$ParryFlash.visible = false
+	
+	var tween : Tween = get_tree().create_tween()
+	
+	tween.tween_property(
+		arm_material,
+		"emission",
+		Color.CYAN,
+		0.65
+	).set_ease(Tween.EASE_IN)
 
 ## Punches with the Heavy Fist (based on Ultrakill's Knuckleblaster Arm).
 ## If player is looking at something in punch range, it will be punched.
@@ -83,6 +105,9 @@ func heavy_punch() -> void:
 	
 	if arm_exhaustion < 1.0:
 		return
+	
+	arm_material.emission = Color.ORANGE
+	arm_material.emission_energy_multiplier = 2.0
 	
 	$SFX/HeavyPunch.play()
 	$AnimationPlayer.stop()
@@ -113,6 +138,8 @@ func heavy_fist_shockwave() -> void:
 	$AnimationPlayer.play("HeavyPunchShockwave")
 	$SFX/HeavyPunchShockwave.play()
 	
+	arm_material.emission_energy_multiplier = 0.0
+	
 	SpawnObject.explosion_detailed(
 		$Armature/Skeleton3D/ShockwavePosition.global_position,
 		"#FFFFFF96",
@@ -124,4 +151,13 @@ func heavy_fist_shockwave() -> void:
 	await get_tree().create_timer(0.5).timeout
 	$SFX/HeavyPunchReload.play()
 	$Shockwave/Hitbox.set_deferred("disabled", true)
+	
+	var tween : Tween = get_tree().create_tween()
+	
+	tween.tween_property(
+		arm_material,
+		"emission_energy_multiplier",
+		2.0,
+		0.2
+	)
 	

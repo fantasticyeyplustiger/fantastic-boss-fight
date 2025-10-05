@@ -102,6 +102,7 @@ bind/16/bone = -1
 bind/16/pose = Transform3D(-0.000129815, 1, 0.000672244, -0.981861, 5.93282e-08, -0.189601, -0.189601, -0.000684651, 0.981861, 0.00473336, -0.079872, 0.0136023)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nonic"]
+diffuse_mode = 3
 albedo_texture = ExtResource("2_x4g0p")
 
 [sub_resource type="Animation" id="Animation_182p5"]
