@@ -4,7 +4,9 @@ enum attacks {CHOP, COMBO, FACE_KICK, CLAP, DESTROY}
 
 var gradient : Gradient
 var colors : PackedColorArray
-var trail_mesh_mat : Material
+var magic_hands_mat : Material
+var magic_legs_mat : Material
+var magic_shoes_mat : Material
 
 var previous_attack : attacks
 var current_attack : attacks
@@ -17,7 +19,9 @@ func _ready() -> void:
 	
 	gradient = $Armature/Skeleton3D/ComboKick/Trail.color_ramp.gradient
 	colors = gradient.colors
-	trail_mesh_mat = $Armature/Skeleton3D/Chop/Trail/MeshInstance3D.mesh.material
+	magic_hands_mat = $Armature/Skeleton3D/Body.get_surface_override_material(11)
+	magic_legs_mat = $Armature/Skeleton3D/Outfit.get_surface_override_material(4)
+	magic_shoes_mat = $Armature/Skeleton3D/Outfit.get_surface_override_material(5)
 	
 	health = 200.0
 	$BossHealthBar.set_max_hp(health)
@@ -28,8 +32,9 @@ func _ready() -> void:
 	$AnimationPlayer.speed_scale /= Global.difficulty_speed
 	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
 	
-	set_atk_cooldown_in_seconds(1.5)
 	rainbow_trail_color()
+	
+	set_atk_cooldown_in_seconds(1.5)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
@@ -221,10 +226,10 @@ func ground_stomp() -> void:
 	global_position.y = 0.0
 	should_look_at_player_2D = true
 	
-	await seconds(0.2)
+	await seconds(0.1)
 	can_be_parried = true
 	
-	await seconds(0.2)
+	await seconds(0.3)
 	
 	should_look_at_player_2D = false
 	can_be_parried = false
@@ -663,8 +668,9 @@ func rainbow_trail_color() -> void:
 ## Sets the color of all non-air trails and any included meshes with those trails to [param new_color].
 func set_trail_color(new_color : Color) -> void:
 	gradient.set_color(1, new_color)
-	trail_mesh_mat.albedo_color = new_color
-	trail_mesh_mat.albedo_color.a8 = 150
+	magic_hands_mat.emission = new_color
+	magic_legs_mat.emission = new_color
+	magic_shoes_mat.emission = new_color
 	
 
 ## Makes the boss' materials transition into pure glowing white.[br][br]
