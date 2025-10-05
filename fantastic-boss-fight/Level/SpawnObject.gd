@@ -19,6 +19,7 @@ Methods don't have "spawn" in their names, as the script name itself makes it se
 @onready var blue_flash_node = preload("res://ParryFlashes/UnparriableFlash.tscn")
 
 @onready var shotgun_pellet_mesh = preload("res://Player/WeaponProjectiles/ShotgunPellet.tscn")
+@onready var explosive_shotgun_pellet_mesh = preload("res://Player/WeaponProjectiles/ExplosiveShotgunPellet.tscn")
 
 @onready var pistol_explosion_mesh = preload("res://Player/WeaponExplosions/PistolExplosion.tscn")
 @onready var explosion_mesh = preload("res://Level/SpawnedObjects/Explosion.tscn")
@@ -97,9 +98,9 @@ func blue_flash(target_position : Vector3, angle : Vector3, new_scale : float) -
 	node.queue_free()
 
 ## Adds an explosion where the player is aiming.
-func pistol_explosion() -> void:
+func pistol_explosion(target_position : Vector3 = Global.player_target_position) -> void:
 	var new_explosion = pistol_explosion_mesh.instantiate()
-	new_explosion.position = Global.player_target_position
+	new_explosion.position = target_position
 	add_child(new_explosion)
 
 func projectile_boost() -> void:
@@ -110,7 +111,14 @@ func projectile_boost() -> void:
 	
 	shotgun_pellet(4, false)
 	
-	#var new_explosive_pellet : Node3D
+	var new_explosive_pellet : Node3D = explosive_shotgun_pellet_mesh.instantiate()
+	
+	new_explosive_pellet.position = Global.camera_position
+	new_explosive_pellet.rotation = Global.player_rotation
+	
+	add_child(new_explosive_pellet)
+	
+	new_explosive_pellet.projectile_boost()
 
 func shotgun_pellet(amount : int, can_projectile_boost : bool = true) -> void:
 	

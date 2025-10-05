@@ -1,26 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://p8lfqudt37c"]
+[gd_scene load_steps=4 format=3 uid="uid://d3qc4bb43kwmw"]
 
-[ext_resource type="Script" uid="uid://dtv7hiisi4wrj" path="res://Player/WeaponProjectiles/ShotgunPellet.gd" id="1_vmope"]
+[ext_resource type="Script" uid="uid://b6m81sojar1gt" path="res://Player/WeaponProjectiles/ExplosiveShotgunPellet.gd" id="1_doh2v"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vmope"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_27tun"]
 cull_mode = 2
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 stencil_flags = 2
 
-[sub_resource type="QuadMesh" id="QuadMesh_nxf52"]
-material = SubResource("StandardMaterial3D_vmope")
+[sub_resource type="QuadMesh" id="QuadMesh_doh2v"]
+material = SubResource("StandardMaterial3D_27tun")
 size = Vector2(1, 0.1)
 orientation = 0
 
-[node name="ShotgunPellet" type="Node3D"]
-script = ExtResource("1_vmope")
+[node name="ExplosiveShotgunPellet" type="Node3D"]
+script = ExtResource("1_doh2v")
 
 [node name="LocalMovement" type="Node3D" parent="."]
 
 [node name="Pellet" type="MeshInstance3D" parent="LocalMovement"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-mesh = SubResource("QuadMesh_nxf52")
+mesh = SubResource("QuadMesh_doh2v")
 skeleton = NodePath("../..")
 
 [node name="EnemyDetection" type="RayCast3D" parent="LocalMovement"]

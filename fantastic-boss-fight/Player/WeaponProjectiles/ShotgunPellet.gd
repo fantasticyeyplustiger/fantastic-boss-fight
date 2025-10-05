@@ -1,7 +1,9 @@
 extends Node3D
 
-const DEFAULT_SPEED : float = 30.0
-const PROJECTILE_BOOST_SPEED : float = 50.0
+class_name ShotgunPellet
+
+const DEFAULT_SPEED : float = 40.0
+const PROJECTILE_BOOST_SPEED : float = 70.0
 
 const DELTA : float = 1.0 / 60.0
 
