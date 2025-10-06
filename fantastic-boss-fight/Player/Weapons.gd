@@ -168,7 +168,17 @@ func RMB_pistol() -> void:
 func LMB_shotgun() -> void:
 	
 	$Animations.play("LMBShotgunShoot")
+	$SFX/LMBShotgun.play()
 	SpawnObject.shotgun_pellet(10)
+	
+	await get_tree().create_timer(0.8).timeout
+	if current_weapon == weapons.SHOTGUN:
+		$SFX/ShotgunFirstPump.play()
+		
+	await get_tree().create_timer(0.35).timeout
+	if current_weapon == weapons.SHOTGUN:
+		$SFX/ShotgunSecondPump.play()
+	
 	
 
 

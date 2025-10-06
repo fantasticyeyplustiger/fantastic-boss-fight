@@ -51,24 +51,24 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	#match i:
-		#0: await attack_combo()
-		#1: await clap()
-		#2: await face_kick()
-		#3: await grab()
-		#4: await stomp()
-		#5: await chop()
-		#6: await large_explosion()
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await large_explosion()
 	
-	await attack_combo()
-	await clap()
-	await face_kick()
-	await grab()
-	await stomp()
-	await chop()
+	#await attack_combo()
+	#await clap()
+	#await face_kick()
+	#await grab()
+	#await stomp()
+	#await chop()
 	#await large_explosion()
 	
-	set_atk_cooldown_in_seconds(0.1)
+	set_atk_cooldown_in_seconds(0.5)
 
 #region all attacks
 
@@ -582,7 +582,7 @@ func large_explosion() -> void:
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("LargeExplosion")
 	global_position = Global.boss_to_player
-	should_look_at_player = true
+	should_look_at_player_2D = true
 	
 	glow_for(1.6, 0.4, 0.4)
 	
@@ -617,7 +617,7 @@ func large_explosion() -> void:
 	
 	await seconds(0.85)
 	
-	should_look_at_player = false
+	should_look_at_player_2D = false
 	should_fall = true
 	
 	await seconds(0.6)
@@ -645,7 +645,7 @@ func rainbow_trail_color() -> void:
 	const RAINBOW : PackedColorArray = [
 		Color.RED, Color.ORANGE,
 		Color.YELLOW, Color.GREEN,
-		Color.BLUE, Color.VIOLET,
+		Color.SKY_BLUE, Color.VIOLET,
 		Color.PURPLE]
 	
 	var iterator : int = 0
