@@ -14,9 +14,13 @@ var pellet : RayCast3D
 func _ready() -> void:
 	velocity = Vector3.FORWARD * DEFAULT_SPEED
 	pellet = $LocalMovement/EnemyDetection
+	$LocalMovement.rotation.z = randf_range(0, PI)
 	
-	# delete self after 10 seconds of not hitting anything so no lag
-	await get_tree().create_timer(10.0).timeout
+	await get_tree().create_timer(0.2).timeout
+	$LocalMovement/PelletTrail.visible = true
+	
+	# delete self after 15 seconds of not hitting anything so no lag
+	await get_tree().create_timer(15.0).timeout
 	
 	queue_free()
 

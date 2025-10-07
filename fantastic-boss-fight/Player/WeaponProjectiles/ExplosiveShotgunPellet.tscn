@@ -1,27 +1,62 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3qc4bb43kwmw"]
+[gd_scene load_steps=10 format=3 uid="uid://d3qc4bb43kwmw"]
 
 [ext_resource type="Script" uid="uid://b6m81sojar1gt" path="res://Player/WeaponProjectiles/ExplosiveShotgunPellet.gd" id="1_doh2v"]
+[ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_op3i2"]
+
+[sub_resource type="Gradient" id="Gradient_27tun"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m1xvy"]
+gradient = SubResource("Gradient_27tun")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_27tun"]
+transparency = 1
 cull_mode = 2
+albedo_texture = SubResource("GradientTexture1D_m1xvy")
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 2.0
 stencil_flags = 2
 
 [sub_resource type="QuadMesh" id="QuadMesh_doh2v"]
 material = SubResource("StandardMaterial3D_27tun")
-size = Vector2(1, 0.1)
+size = Vector2(4, 0.1)
+center_offset = Vector3(0, 0, 1.81)
 orientation = 0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i1lct"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3di4m"]
+transparency = 1
+albedo_texture = ExtResource("2_op3i2")
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 2.0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_fjg5h"]
+material = SubResource("StandardMaterial3D_3di4m")
+size = Vector2(0.4, 0.4)
 
 [node name="ExplosiveShotgunPellet" type="Node3D"]
 script = ExtResource("1_doh2v")
 
 [node name="LocalMovement" type="Node3D" parent="."]
 
-[node name="Pellet" type="MeshInstance3D" parent="LocalMovement"]
+[node name="PelletTrail" type="MeshInstance3D" parent="LocalMovement"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+visible = false
 mesh = SubResource("QuadMesh_doh2v")
 skeleton = NodePath("../..")
+
+[node name="Pellet" type="GPUParticles3D" parent="LocalMovement"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+amount = 1
+lifetime = 15.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_i1lct")
+draw_pass_1 = SubResource("QuadMesh_fjg5h")
 
 [node name="EnemyDetection" type="RayCast3D" parent="LocalMovement"]
 target_position = Vector3(0, 0, -1.2)

@@ -603,6 +603,7 @@ func large_explosion() -> void:
 	if parried:
 		$AnimationPlayer.stop()
 		parried = false
+		should_look_at_player_2D = false
 		await seconds(0.25)
 		return
 	

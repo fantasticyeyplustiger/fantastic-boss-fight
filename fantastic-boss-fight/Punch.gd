@@ -21,8 +21,6 @@ var arm_material : Material
 func _ready() -> void:
 	arm_material = $Armature/Skeleton3D/LeftArm.get_surface_override_material(0)
 	arm_material.emission = Color.CYAN
-	
-	print(arm_material.emission)
 
 func _input(event: InputEvent) -> void:
 	

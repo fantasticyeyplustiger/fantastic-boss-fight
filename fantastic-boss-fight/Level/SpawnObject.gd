@@ -162,6 +162,7 @@ func explosion_detailed(target_position : Vector3, new_color : String = "#FFFFFF
 	# So it only changes the color of this explosion and not every other explosion
 	new_explosion.material_override = new_explosion.mesh.material.duplicate()
 	new_explosion.material_override.albedo_color = Color(new_color)
+	new_explosion.material_override.emission = Color(new_color)
 	
 	new_explosion.set_scale(Vector3(new_scale, new_scale, new_scale))
 	new_explosion.position = target_position

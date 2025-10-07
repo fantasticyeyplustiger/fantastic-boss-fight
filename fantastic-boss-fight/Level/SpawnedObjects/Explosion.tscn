@@ -6,6 +6,9 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8hhva"]
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 0.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_2iqtc"]
 material = SubResource("StandardMaterial3D_8hhva")

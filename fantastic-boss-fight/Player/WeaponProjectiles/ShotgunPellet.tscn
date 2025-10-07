@@ -1,27 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://p8lfqudt37c"]
+[gd_scene load_steps=10 format=3 uid="uid://p8lfqudt37c"]
 
 [ext_resource type="Script" uid="uid://dtv7hiisi4wrj" path="res://Player/WeaponProjectiles/ShotgunPellet.gd" id="1_vmope"]
+[ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_hky58"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vmope"]
+[sub_resource type="Gradient" id="Gradient_27tun"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nxf52"]
+gradient = SubResource("Gradient_27tun")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_040vm"]
+transparency = 1
 cull_mode = 2
+albedo_texture = SubResource("GradientTexture1D_nxf52")
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-stencil_flags = 2
 
-[sub_resource type="QuadMesh" id="QuadMesh_nxf52"]
-material = SubResource("StandardMaterial3D_vmope")
-size = Vector2(1, 0.1)
+[sub_resource type="QuadMesh" id="QuadMesh_hky58"]
+material = SubResource("StandardMaterial3D_040vm")
+size = Vector2(3, 0.04)
+center_offset = Vector3(0, 0, 1.52)
 orientation = 0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vmope"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lskg0"]
+transparency = 1
+albedo_texture = ExtResource("2_hky58")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_r0fpp"]
+material = SubResource("StandardMaterial3D_lskg0")
+size = Vector2(0.2, 0.2)
 
 [node name="ShotgunPellet" type="Node3D"]
 script = ExtResource("1_vmope")
 
 [node name="LocalMovement" type="Node3D" parent="."]
 
-[node name="Pellet" type="MeshInstance3D" parent="LocalMovement"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-mesh = SubResource("QuadMesh_nxf52")
-skeleton = NodePath("../..")
+[node name="PelletTrail" type="MeshInstance3D" parent="LocalMovement"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+visible = false
+mesh = SubResource("QuadMesh_hky58")
+skeleton = NodePath("../Pellet")
+
+[node name="Pellet" type="GPUParticles3D" parent="LocalMovement"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+amount = 1
+lifetime = 15.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_vmope")
+draw_pass_1 = SubResource("QuadMesh_r0fpp")
 
 [node name="EnemyDetection" type="RayCast3D" parent="LocalMovement"]
 target_position = Vector3(0, 0, -1.2)

@@ -171,11 +171,11 @@ func LMB_shotgun() -> void:
 	$SFX/LMBShotgun.play()
 	SpawnObject.shotgun_pellet(10)
 	
-	await get_tree().create_timer(0.8).timeout
+	await get_tree().create_timer(0.87).timeout
 	if current_weapon == weapons.SHOTGUN:
 		$SFX/ShotgunFirstPump.play()
 		
-	await get_tree().create_timer(0.35).timeout
+	await get_tree().create_timer(0.28).timeout
 	if current_weapon == weapons.SHOTGUN:
 		$SFX/ShotgunSecondPump.play()
 	
