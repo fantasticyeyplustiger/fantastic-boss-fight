@@ -23,6 +23,7 @@ class_name GPUTrail3D extends GPUParticles3D
 ## Length is the number of steps in the trail
 @export var length : int = 100 : set = _set_length
 @export var length_seconds : float : set = _set_length
+@export var disabled : bool = false
 
 @export_category("Color / Texture")
 
@@ -109,7 +110,7 @@ func _ready():
 	clip_overlaps = clip_overlaps
 	snap_to_transform = snap_to_transform
 
-func _set_length(value):
+func _set_length(value) -> void:
 	if value is int: # length is being set
 		length = value
 		length = max(length, 1)
@@ -125,33 +126,42 @@ func _set_length(value):
 	
 	restart()
 
-func _set_texture(value):
+func _set_disabled(value : bool) -> void:
+	disabled = value
+
+func _set_texture(value) -> void:
 	texture = value
 	_uv_offset = Vector2(0,0) # Reset the scroll when a new texture is assigned
 	if value: 
 		draw_pass_1.material.set_shader_parameter("tex", texture)
 	else:
 		draw_pass_1.material.set_shader_parameter("tex", preload(_DEFAULT_TEXTURE))
-func _set_scroll(value):
+
+func _set_scroll(value) -> void:
 	scroll = value
-func _set_color_ramp(value):
+	
+func _set_color_ramp(value) -> void:
 	color_ramp = value
 	draw_pass_1.material.set_shader_parameter("color_ramp", color_ramp)
-func _set_curve(value):
+	
+func _set_curve(value) -> void:
 	curve = value
 	if value: 
 		draw_pass_1.material.set_shader_parameter("curve", curve)
 	else:
 		draw_pass_1.material.set_shader_parameter("curve", preload(_DEFAULT_CURVE))
-func _set_vertical_texture(value):
+		
+func _set_vertical_texture(value) -> void:
 	vertical_texture = value
 	_flags = _set_flag(_flags,0,value)
 	draw_pass_1.material.set_shader_parameter("flags", _flags)
-func _set_use_red_as_alpha(value):
+	
+func _set_use_red_as_alpha(value) -> void:
 	use_red_as_alpha = value
 	_flags = _set_flag(_flags,1,value)
 	draw_pass_1.material.set_shader_parameter("flags", _flags)
-func _set_billboard(value):
+	
+func _set_billboard(value) -> void:
 	billboard = value
 	_flags = _set_flag(_flags,2,value)
 	draw_pass_1.material.set_shader_parameter("flags", _flags)
@@ -176,7 +186,13 @@ func _set_clip_overlaps(value):
 @onready var _old_pos : Vector3 = global_position
 @onready var _billboard_transform : Transform3D = global_transform
 var _uv_offset : Vector2
+
+
 func _process(delta):
+	
+	if disabled:
+		return
+	
 	if(snap_to_transform):
 		draw_pass_1.material.set_shader_parameter("emmission_transform", global_transform)
 	
@@ -213,5 +229,6 @@ func _update_billboard_transform(tangent : Vector3):
 		_billboard_transform.origin += _billboard_transform.basis[0]
 
 var _flags = 0
+
 func _set_flag(i, idx : int, value : bool):
 	return (i & ~(1 << idx)) | (int(value) << idx)
