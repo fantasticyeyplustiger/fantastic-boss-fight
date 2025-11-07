@@ -5,6 +5,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iwnxb"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 3.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_sikia"]
 material = SubResource("StandardMaterial3D_iwnxb")
@@ -15,23 +16,27 @@ rings = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cx07"]
 transparency = 1
-albedo_color = Color(1, 0.313726, 0, 0.784314)
+albedo_color = Color(1, 0.3137255, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.3137255, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_qb6gk"]
 material = SubResource("StandardMaterial3D_1cx07")
-radius = 2.0
-height = 4.0
+radius = 2.4
+height = 4.8
 radial_segments = 16
 rings = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgdkh"]
 transparency = 1
-albedo_color = Color(1, 0.705882, 0, 0.588235)
+albedo_color = Color(1, 0.7058824, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.7058824, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_mweg2"]
 material = SubResource("StandardMaterial3D_sgdkh")
-radius = 2.4
-height = 4.8
+radius = 2.0
+height = 4.0
 radial_segments = 16
 rings = 8
 

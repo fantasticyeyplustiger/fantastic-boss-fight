@@ -113,7 +113,7 @@ func heavy_punch() -> void:
 	
 	await get_tree().create_timer(0.1).timeout
 	
-	if current_fist == Global.fists.PARRY_FIST:
+	if not current_fist == Global.fists.HEAVY_FIST:
 		return
 	
 	arm_exhaustion -= exhaustion_consumption[current_fist]
@@ -121,7 +121,7 @@ func heavy_punch() -> void:
 	
 	await get_tree().create_timer(MAX_HEAVY_FIST_HOLD_TIME).timeout
 	
-	if current_fist == Global.fists.PARRY_FIST:
+	if not current_fist == Global.fists.HEAVY_FIST:
 		return
 	
 	if Input.is_action_pressed("parry"):
@@ -147,6 +147,10 @@ func heavy_fist_shockwave() -> void:
 	
 	$Shockwave/Hitbox.set_deferred("disabled", false)
 	await get_tree().create_timer(0.5).timeout
+	
+	if not current_fist == Global.fists.HEAVY_FIST:
+		return
+	
 	$SFX/HeavyPunchReload.play()
 	$Shockwave/Hitbox.set_deferred("disabled", true)
 	

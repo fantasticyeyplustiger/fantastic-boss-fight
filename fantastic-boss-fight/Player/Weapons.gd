@@ -169,7 +169,7 @@ func LMB_shotgun() -> void:
 	
 	$Animations.play("LMBShotgunShoot")
 	$SFX/LMBShotgun.play()
-	SpawnObject.shotgun_pellet(10)
+	SpawnObject.shotgun_pellet(9)
 	
 	await get_tree().create_timer(0.87).timeout
 	if current_weapon == weapons.SHOTGUN:
@@ -179,13 +179,11 @@ func LMB_shotgun() -> void:
 	if current_weapon == weapons.SHOTGUN:
 		$SFX/ShotgunSecondPump.play()
 	
-	
-
 
 func LMB_saw() -> void:
 	var new_sawblade = sawblade.instantiate()
 	new_sawblade.initialize(
-		Global.front_of_player + Vector3(0.0, 0.55, 0.0),
+		Global.camera_position - Vector3(0.0, 0.1, 0.0),
 		LMB_DAMAGES[weapons.SAW]
 	)
 	SpawnObject.add_child(new_sawblade)

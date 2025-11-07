@@ -109,7 +109,7 @@ func projectile_boost() -> void:
 		if not pellet == null:
 			pellet.projectile_boost()
 	
-	shotgun_pellet(4, false)
+	shotgun_pellet(3, false)
 	
 	var new_explosive_pellet : Node3D = explosive_shotgun_pellet_mesh.instantiate()
 	

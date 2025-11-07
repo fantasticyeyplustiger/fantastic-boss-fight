@@ -32,6 +32,11 @@ func _ready() -> void:
 	$AnimationPlayer.speed_scale /= Global.difficulty_speed
 	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
 	
+	for parry_flash in $ParrySparkles.get_children():
+		if not parry_flash == GPUParticles3D:
+			continue
+		parry_flash.speed_scale /= Global.difficulty_speed
+	
 	rainbow_trail_color()
 	
 	set_atk_cooldown_in_seconds(1.5)
@@ -68,7 +73,7 @@ func choose_attack() -> void:
 	#await chop()
 	#await large_explosion()
 	
-	set_atk_cooldown_in_seconds(0.5)
+	set_atk_cooldown_in_seconds(0.1)
 
 #region all attacks
 
@@ -232,6 +237,7 @@ func ground_stomp() -> void:
 	should_look_at_player_2D = true
 	
 	await seconds(0.1)
+	$ParrySparkles/GroundStomp.emitting = true
 	can_be_parried = true
 	
 	await seconds(0.3)
@@ -328,6 +334,7 @@ func face_kick() -> void:
 	dash_towards(Global.player_position)
 	
 	can_be_parried = true
+	$ParrySparkles/FaceKick.emitting = true
 	
 	await seconds(0.1)
 	
@@ -377,6 +384,7 @@ func clap() -> void:
 	global_position = Global.predict_player_position_at_seconds_for_boss(0.1)
 	should_look_at_player = true
 	can_be_parried = true
+	$ParrySparkles/Clap.emitting = true
 	
 	await seconds(0.35)
 	
@@ -545,7 +553,7 @@ func chop() -> void:
 	
 	await seconds(0.1) # Because it needs time to toggle apparently idk why
 	
-	should_look_at_player = true
+	should_look_at_player_2D = true
 	
 	SpawnObject.particle_shockwave(global_position)
 	
@@ -553,13 +561,13 @@ func chop() -> void:
 	$ParrySparkles/Chop.emitting = true
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("Chop")
-	global_position = Global.predict_player_position_at_seconds_for_boss(0.41)
+	global_position = Global.predict_player_position_at_seconds_for_boss(0.15)
 	
 	await seconds(0.4)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	
-	should_look_at_player = false
+	should_look_at_player_2D = false
 	
 	dash_towards(Global.player_position)
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
