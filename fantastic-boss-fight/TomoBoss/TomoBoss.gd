@@ -56,21 +56,21 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await large_explosion()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await large_explosion()
 	
-	#await attack_combo()
+	await attack_combo()
 	#await clap()
-	#await face_kick()
+	await face_kick()
 	#await grab()
 	#await stomp()
-	#await chop()
+	await chop()
 	#await large_explosion()
 	
 	set_atk_cooldown_in_seconds(0.1)
@@ -168,21 +168,25 @@ func knee() -> void:
 	
 	await seconds(0.25)
 	
-	$AttackSFX.play_sfx("BloodyDash")
 	$AnimationPlayer.play("RightKnee")
+	should_look_at_player_2D = true
 	
-	look_at_player()
+	await seconds(0.1)
+	
+	$AttackSFX.play_sfx("BloodyDash")
+	
+	should_look_at_player_2D = false
 	dash_towards_on_ground(Global.player_position, 45.0)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
-	toggle_all_trails_in($KneeTrails)
+	#toggle_all_trails_in($KneeTrails)
 	
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	await seconds(0.35)
 	
-	toggle_all_trails_in($KneeTrails)
+	#toggle_all_trails_in($KneeTrails)
 	dashing = false
 
 func combo_kick() -> void:
