@@ -19,6 +19,7 @@ class_name TrailRenderer
 #############################
 @onready var half_width = width * 0.5
 var points := []
+var node : Node
 var render : MeshInstance3D
 
 #############################
@@ -26,9 +27,12 @@ var render : MeshInstance3D
 #############################
 func _ready() -> void:
 	
+	node = Node.new()
+	self.add_child(node)
+	
 	render = MeshInstance3D.new()
 	render.name = "Render"
-	self.add_child(render)
+	node.add_child(render)
 
 
 func _process(_delta: float) -> void:
@@ -82,19 +86,19 @@ func _points_to_rect(st: SurfaceTool, p1: Transform3D, p2: Transform3D, idx: flo
 	var offset1 = idx / num_points
 	var mod1 = half_width * width_curve.sample(offset1)
 	
-	var v1 = (p1.origin + p1.basis.x * mod1) + global_position
+	var v1 = p1.origin + p1.basis.x * mod1
 	var uv1 = Vector2(0, offset1)
 	
-	var v2 = (p1.origin - p1.basis.x * mod1) + global_position
+	var v2 = p1.origin - p1.basis.x * mod1
 	var uv2 = Vector2(1, offset1)
 	
 	var offset2 = (idx + 1) / num_points
 	var mod2 = half_width * width_curve.sample(offset2)
 	
-	var v3 = (p2.origin + p2.basis.x * mod2) + global_position
+	var v3 = p2.origin + p2.basis.x * mod2
 	var uv3 = Vector2(0, offset2)
 	
-	var v4 = (p2.origin - p2.basis.x * mod2) + global_position
+	var v4 = p2.origin - p2.basis.x * mod2
 	var uv4 = Vector2(1, offset2)
 	
 	st.set_uv(uv1)
