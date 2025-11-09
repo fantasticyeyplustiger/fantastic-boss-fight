@@ -117,6 +117,8 @@ func dash_towards(target_position : Vector3, speed : float = SPRINT_SPEED) -> vo
 	rotation.x = 0
 	rotation.z = 0
 	
+	speed /= Global.difficulty_speed
+	
 	velocity = (direction * speed) * 1.5
 	dash_acceleration = 1.0
 

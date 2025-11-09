@@ -61,9 +61,13 @@ func air_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
 	add_child(mesh)
 
 func colliding_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
-						new_scale : float = 1.0) -> void:
+						new_scale : float = 1.0, disable_sound : bool = false) -> void:
 	
 	var node := new_object(colliding_shockwave_mesh, target_position, angle, new_scale)
+	
+	if disable_sound:
+		node.disable_sound()
+		
 	add_child(node)
 
 func particle_shockwave(target_position : Vector3, angle : Vector3 = Vector3.ZERO,
