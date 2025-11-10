@@ -56,23 +56,23 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await low_kick()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await low_kick()
 	
-	#await attack_combo()
+	await attack_combo()
 	#await clap()
-	#await face_kick()
+	await face_kick()
 	#await grab()
 	#await stomp()
-	#await chop()
+	await chop()
 	#await large_explosion()
-	#await low_kick()
+	await low_kick()
 	
 	set_atk_cooldown_in_seconds(0.1)
 
@@ -175,7 +175,10 @@ func combo_kick() -> void:
 	
 	$AttackSFX.play_sfx("BossDash")
 	
-	look_at_player()
+	if global_position.y > 1.5:
+		should_look_at_player = true
+	else:
+		should_look_at_player_2D = true
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
@@ -183,6 +186,11 @@ func combo_kick() -> void:
 	$AnimationPlayer.play("LeftRoundhouse")
 	await seconds(0.15)
 	
+	if global_position.y > 1.5:
+		should_look_at_player = false
+	else:
+		should_look_at_player_2D = false
+		
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	$AttackSFX.play_sfx("BloodyDash")
@@ -584,15 +592,20 @@ func low_kick() -> void:
 	
 	$AttackSFX.play_sfx("BossDash")
 	$AnimationPlayer.play("LowKick")
-	$AnimationPlayer.advance(0.4)
-	$AnimationPlayer.speed_scale = -0.25
+	$AnimationPlayer.advance(0.2 / Global.difficulty_speed)
+	$AnimationPlayer.speed_scale = -0.3 / Global.difficulty_speed
 	
 	#if global_position.y > 5.0:
 		#should_look_at_player = true
 	#else:
 	look_at_player()
 	
-	await seconds(0.4) # Should always be at least this much or else impossible to dodge
+	var wait_time : float = 0.35
+	
+	if Global.difficulty_speed > 1.0:
+		wait_time *= Global.difficulty_speed
+	
+	await seconds(wait_time, false) # Should always be at least this much or else impossible to dodge
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	

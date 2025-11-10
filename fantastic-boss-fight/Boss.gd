@@ -11,7 +11,7 @@ const LOW_DAMAGE : float = 15.0
 const MED_DAMAGE : float = 30.0
 const HIGH_DAMAGE : float = 50.0
 
-const WALK_SPEED : float = 10.0
+const WALK_SPEED : float = 5.0
 const SPRINT_SPEED : float = 10.0
 
 const GRAVITY : float = 19.6
@@ -73,7 +73,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Difference between look_at_player() is that this includes X and Z rotation
 	if should_look_at_player:
-		look_at(Global.player_position + PLAYER_HEAD_POSITION)
+		look_at(Global.player_position)
 	if should_look_at_player_2D:
 		look_at_player()
 	
@@ -152,11 +152,11 @@ func stop_walk_animation() -> void:
 
 ## Makes the boss walk towards the player.[br]
 ## Doesn't play the walk animation automatically.
-func walk_towards_player() -> void:
+func walk_towards_player(speed : float = WALK_SPEED) -> void:
 	var direction = get_2d_angle_to_player()
 	# play walk animation
 	
-	velocity = direction * WALK_SPEED
+	velocity = direction * speed
 	velocity.y -= GRAVITY * (1.0/60.0)
 	
 	look_at_player()
