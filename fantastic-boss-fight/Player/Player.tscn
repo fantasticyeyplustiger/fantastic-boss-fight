@@ -16,7 +16,7 @@ points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607,
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3qydi"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6ysni"]
-height = 1.0
+height = 0.6
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 16
@@ -66,7 +66,7 @@ collision_mask = 2
 shape = SubResource("CylinderShape3D_3qydi")
 
 [node name="Sliding" type="CollisionShape3D" parent="Hurtbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 shape = SubResource("CylinderShape3D_6ysni")
 disabled = true
 

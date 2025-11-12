@@ -49,32 +49,33 @@ func choose_attack() -> void:
 	
 	var _distance_to_player = get_distance_to_player()
 	
-	var i : int = randi_range(0, 6)
+	var i : int = randi_range(0, 7)
 	
 	while i == prev_i:
-		i = randi_range(0, 6)
+		i = randi_range(0, 7)
 	
 	prev_i = i
 	
-	#match i:
-		#0: await attack_combo()
-		#1: await clap()
-		#2: await face_kick()
-		#3: await grab()
-		#4: await stomp()
-		#5: await chop()
-		#6: await low_kick()
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await low_kick()
+		7: await large_explosion()
 	
-	await attack_combo()
+	#await attack_combo()
 	#await clap()
-	await face_kick()
+	#await face_kick()
 	#await grab()
 	#await stomp()
-	await chop()
+	#await chop()
 	#await large_explosion()
-	await low_kick()
+	#await low_kick()
 	
-	set_atk_cooldown_in_seconds(0.1)
+	set_atk_cooldown_in_seconds(0.25)
 
 #region all attacks
 
@@ -584,6 +585,8 @@ func low_kick() -> void:
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
 	await seconds(0.1)
+	
+	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
 	if Global.boss_to_player.y < 0.0:
 		global_position = Vector3(Global.boss_to_player.x, 0.0, Global.boss_to_player.z)

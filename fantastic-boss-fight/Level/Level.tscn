@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dc2xenywtkenk"]
+[gd_scene load_steps=10 format=3 uid="uid://dc2xenywtkenk"]
 
 [ext_resource type="PackedScene" uid="uid://bc2fo8p0qyxuj" path="res://Player/Player.tscn" id="1_a526m"]
 [ext_resource type="Texture2D" uid="uid://bn00gyyv4tuxd" path="res://Level/Tiles.png" id="1_cyxyq"]
+[ext_resource type="Script" uid="uid://dt14uifl54u8u" path="res://Restart.gd" id="1_i5eh5"]
 [ext_resource type="PackedScene" uid="uid://cagn1ohu47c2j" path="res://TomoBoss/TomoBoss.scn" id="3_cyxyq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2gduj"]
@@ -28,6 +29,7 @@ albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.0
 
 [node name="Level" type="Node3D"]
+script = ExtResource("1_i5eh5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["background"]]
 environment = SubResource("Environment_r3cbp")
@@ -74,8 +76,6 @@ material = SubResource("StandardMaterial3D_r3cbp")
 
 [node name="Player" parent="." instance=ExtResource("1_a526m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19)
-max_health = 10000.0
-max_stamina = 300.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)

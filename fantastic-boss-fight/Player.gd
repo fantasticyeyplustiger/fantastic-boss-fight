@@ -5,7 +5,7 @@ class_name Player
 const JUMP_VELOCITY : float = 16.0
 const GRAVITY : float = 23.5
 const WALK_SPEED : float = 15.0
-const DASH_SPEED : float = 50.0
+const DASH_SPEED : float = 45.0
 
 const SLIDE_JUMP_SPEED_LIMIT : float = 50.0
 
@@ -14,7 +14,7 @@ const DASH_TIME : float = 0.2
 const SLIDE_JUMP_TIME_WINDOW : float = 0.3
 
 const PLAYER_HEAD_POSITION : Vector3 = Vector3(0.0, 0.8, 0.0)
-const SLIDING_HEAD_POSITION : Vector3 = Vector3(0.0, 0.4, 0.0)
+const SLIDING_HEAD_POSITION : Vector3 = Vector3(0.0, 0.25, 0.0)
 const FORWARD_DIRECTION : Vector3 = Vector3(0.0, 0.0, -1.0)
 
 @export var max_health : float = 100.0
@@ -33,6 +33,8 @@ var slam_time : float = 0.0
 
 var health : float
 var stamina : float
+
+var i_frame_time : float = 0.0
 
 var can_move : bool = true
 var parrying : bool = false
@@ -230,6 +232,9 @@ func _physics_process(delta: float) -> void:
 	if stamina < max_stamina and not sliding:
 		stamina += delta * 0.5
 	
+	if i_frame_time > 0.0:
+		i_frame_time -= delta
+	
 	$PlayerGUI.stamina.text = "STAMINA: " + str(snappedf(stamina, 0.1))
 	
 	set_global_variables()
@@ -271,6 +276,8 @@ func begin_slide() -> void:
 func dash() -> void:
 	velocity.x = dash_direction.x * DASH_SPEED * dash_multiplier
 	velocity.z = dash_direction.z * DASH_SPEED * dash_multiplier
+	
+	i_frame_time = 0.2
 
 func reset_dash() -> void:
 	await get_tree().create_timer(DASH_TIME).timeout
@@ -279,8 +286,11 @@ func reset_dash() -> void:
 	dashing = false
 	can_move = true
 	
-	if not dash_jumped:
+	if not dash_jumped and not sliding:
 		velocity = Vector3.ZERO
+	
+	if sliding:
+		i_frame_time = 0.2
 
 ## Set global variables for general use
 func set_global_variables() -> void:
@@ -348,7 +358,7 @@ func punch() -> void:
 
 ## Damages the player if possible.
 func get_hit(area: Area3D) -> void:
-	if not dashing:
+	if i_frame_time <= 0.0:
 		
 		health -= area.get_parent().damage
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
