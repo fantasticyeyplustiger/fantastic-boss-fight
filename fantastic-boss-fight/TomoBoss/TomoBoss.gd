@@ -688,7 +688,6 @@ func large_explosion() -> void:
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
 	$AnimationPlayer.play("Walking")
-	$Aura.amount = 16
 	
 func stop_walk_animation() -> void:
 	$AnimationPlayer.stop(true)
