@@ -87,8 +87,10 @@ func _physics_process(delta: float) -> void:
 		velocity *= dash_acceleration
 		
 	elif not can_walk and should_fall:
-		velocity = Vector3.ZERO
-		velocity.y -= GRAVITY * delta
+		velocity.x = 0.0
+		velocity.y -= GRAVITY * delta * 1.5
+		velocity.z = 0.0
+		move_and_slide()
 	
 	Global.boss_position = global_position
 

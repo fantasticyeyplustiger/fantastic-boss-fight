@@ -56,24 +56,25 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await low_kick()
-		7: await large_explosion()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await low_kick()
+		#7: await large_explosion()
 	
-	#await attack_combo()
-	#await clap()
-	#await face_kick()
-	#await grab()
-	#await stomp()
-	#await chop()
-	#await large_explosion()
-	#await low_kick()
+	await attack_combo()
+	await clap()
+	await face_kick()
+	await grab()
+	await stomp()
+	await chop()
+	await large_explosion()
+	await low_kick()
+	await taunt()
 	
 	set_atk_cooldown_in_seconds(0.25)
 
@@ -88,6 +89,8 @@ func attack_combo() -> void:
 	$AnimationPlayer.play("KarateComboStart")
 	look_at_player()
 	$Voicelines.play_sfx("YouCantEscape1")
+	
+	global_position.y = 0.0
 	
 	await seconds(0.75)
 	
@@ -480,7 +483,27 @@ func mini_explosion() -> void:
 	await seconds(0.6)
 
 func taunt() -> void:
+	
+	should_fall = true
+	can_walk = false
+	should_look_at_player_2D = true
+	
+	$AnimationPlayer.play("Falling")
+	
+	while true:
+		await seconds(0.25) # Allow her time to fall
+		
+		if global_position.y <= 0.25:
+			break
+	
+	global_position.y = 0.0
+	
 	$AnimationPlayer.play("Taunt")
+	await seconds(2.0)
+	
+	should_fall = false
+	should_look_at_player_2D = false
+	
 
 func stomp() -> void:
 	damage = 50

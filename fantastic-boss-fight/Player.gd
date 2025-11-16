@@ -364,6 +364,22 @@ func get_hit(area: Area3D) -> void:
 		$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))
 		
 		get_knockbacked(area.global_position, area.launch_power, area.knockback_power)
+		
+		i_frame_time = 0.2
+		
+		
+		# show player got hit
+		$Damaged.color = Color("ff000050")
+		
+		var hurt_anim := get_tree().create_tween()
+		
+		hurt_anim.tween_property(
+			$Damaged,
+			"color",
+			Color("ff000000"),
+			0.4
+		)
+		
 	else:
 		$PlayerGUI.parry.text = "I-FRAMED!"
 		reset_parry_text()

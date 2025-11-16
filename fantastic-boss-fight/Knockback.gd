@@ -14,7 +14,7 @@ class_name Knockback
 ## Example:
 ## 
 ## CharacterBody3D ( has "damage" variable )
-## |_ Area3D
+## |_ Area3D ( has AreaKnockback.gd script )
 ##    |_ CollisionShape3D ( has Knockback.gd script )
 ##
 ## As a side note, the Area3D should have "ENEMY_ATTACKS" collision
