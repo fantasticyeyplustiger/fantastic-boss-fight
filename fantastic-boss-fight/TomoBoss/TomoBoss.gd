@@ -263,7 +263,13 @@ func ground_stomp() -> void:
 	await seconds(0.1)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/GroundStomp)
-	SpawnObject.colliding_shockwave(global_position, Vector3.ZERO)
+	SpawnObject.colliding_shockwave($GroundStompShockwavePosition.global_position)
+	SpawnObject.explosion_detailed(
+		$GroundStompShockwavePosition.global_position,
+		"#FFFFFF64",
+		0.45,
+		true
+	)
 	dashing = false
 #endregion
 
@@ -410,6 +416,12 @@ func clap() -> void:
 	var spawn_rotation := global_rotation + RIGHT_X_ANGLE + RIGHT_Y_ANGLE
 	
 	SpawnObject.colliding_shockwave(spawn_position, spawn_rotation, 1.2)
+	SpawnObject.explosion_detailed(
+		spawn_position,
+		"#FFFFFF64",
+		0.4,
+		true
+	)
 	
 	if parried:
 		parried = false
@@ -424,63 +436,6 @@ func destroy() -> void:
 	$Voicelines.play_sfx("Destroy1")
 	current_attack = attacks.DESTROY
 	
-	await uppercut()
-	await mini_explosion()
-
-func uppercut() -> void:
-	damage = 30.0
-	can_walk = false
-	
-	$AnimationPlayer.play("Uppercut")
-	$AttackSFX.play_sfx("BossDash")
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	
-	global_position = Global.boss_to_player
-	global_position.y = 0.0
-	should_look_at_player = true
-	
-	await seconds(0.4)
-	
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	should_look_at_player = false
-	$AttackSFX.play_sfx("BloodyDash")
-	dashing = true
-	var predicted_position := Global.predict_player_position_at_seconds_for_boss(0.3)
-	dash_towards_on_ground(predicted_position)
-	toggle_hitbox_on_for_seconds($Hitbox/Uppercut, 0.4)
-	
-	await seconds(0.4)
-	
-	dashing = false
-	
-	await seconds(0.1)
-
-func mini_explosion() -> void:
-	damage = 20.0
-	can_walk = false
-	$AnimationPlayer.play("MiniExplosion")
-	should_look_at_player = true
-	
-	await seconds(0.4)
-	
-	$AttackSFX.play_sfx("BossDash")
-	should_look_at_player = false
-	dashing = true
-	dash_towards_on_ground(Global.player_position)
-	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	toggle_hitbox_on_for_seconds($Hitbox/MiniExplosion, 0.4)
-	
-	await seconds(0.75)
-	
-	dashing = false
-	
-	await seconds(0.12)
-	
-	damage = 60.0
-	SpawnObject.explosion(global_position)
-	toggle_hitbox_on_for_seconds($Hitbox/MiniExplosion, 0.2)
-	
-	await seconds(0.6)
 
 func taunt() -> void:
 	
