@@ -127,13 +127,42 @@ func dash_towards(target_position : Vector3, speed : float = SPRINT_SPEED) -> vo
 ## Makes the boss go to the ground and dash towards another position on the ground.[br]
 ## Also makes the boss look at that direction.[br][br]
 ## [code]dashing[/code] is automatically set to true when this function is called.[br]
-## [param target_position] does not need its y-value set to 0.
+## [param target_position] does not need its y-value set to 0.[br]
+## [code]dash_acceleration[/code] is used to control acceleration of the recoil.
 func dash_towards_on_ground(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
 	global_position.y = 0.0
+	target_position.y = 0.0
 	
-	var ground_target = Vector3(target_position.x, 0.0, target_position.z)
+	dash_towards(target_position, speed)
+
+## Makes the boss dash in the opposite direction of [param]target_position[/param].[br]
+## Also makes the boss look at that direction.[br][br]
+## [code]dashing[/code] is automatically set to true when this function is called.[br]
+## [code]dash_acceleration[/code] is used to control acceleration of the recoil.
+func recoil_against(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
+	dashing = true
+	var direction = global_position.direction_to(target_position) * -1.0
 	
-	dash_towards(ground_target, speed)
+	# subtract to global_position so that direction is actually relative to boss
+	look_at(global_position - direction)
+	rotation.x = 0
+	rotation.z = 0
+	
+	speed /= Global.difficulty_speed
+	
+	velocity = (direction * speed) * 1.5
+	dash_acceleration = 1.0
+
+## Makes the boss go to the ground and dash towards another position on the ground.[br]
+## Also makes the boss look at that direction.[br][br]
+## [code]dashing[/code] is automatically set to true when this function is called.[br]
+## [param target_position] does not need its y-value set to 0.[br]
+## [code]dash_acceleration[/code] is used to control acceleration of the recoil.
+func recoil_against_on_ground(target_position : Vector3, speed : float = SPRINT_SPEED) -> void:
+	global_position.y = 0.0
+	target_position *= -1.0
+	target_position.y = 0.0
+	recoil_against(target_position, speed)
 
 ## Sets [code]dashing[/code] to be false.
 func stop_dashing() -> void:

@@ -2,10 +2,16 @@ extends Node3D
 
 const MAX_ROCK_DISTANCE : float = 1.5
 
+@onready var floor_detector : RayCast3D = RayCast3D.new()
+
 var distance_between_rocks : float = 0.0
 var old_position : Vector3
 
 func _ready() -> void:
+	# Automatically spawn raycast with collision mask 1, seeing the floor
+	floor_detector.target_position = Vector3(0.0, -0.5, 0.0)
+	add_child(floor_detector)
+	
 	old_position = global_position
 	set_physics_process(false)
 
@@ -16,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 	
 	distance_between_rocks += distance
 	
-	if distance_between_rocks > MAX_ROCK_DISTANCE:
+	if distance_between_rocks > MAX_ROCK_DISTANCE and floor_detector.is_colliding():
 		SpawnObject.rock_group(global_position, global_rotation)
 		distance_between_rocks = 0.0
 	
@@ -25,8 +31,6 @@ func _physics_process(_delta: float) -> void:
 
 func start_spawning_rocks() -> void:
 	set_physics_process(true)
-	distance_between_rocks = 0.0
-	SpawnObject.rock_group(global_position, global_rotation)
 
 func spawn_rocks_for(seconds : float) -> void:
 	start_spawning_rocks()

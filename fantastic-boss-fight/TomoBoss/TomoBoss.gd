@@ -319,7 +319,6 @@ func face_kick() -> void:
 	#voiceline
 	damage = 50.0
 	can_walk = false
-	should_fall = true
 	current_attack = attacks.FACE_KICK
 	
 	# Trail should toggle BEFORE switching positions so player knows where boss went
@@ -365,9 +364,24 @@ func face_kick() -> void:
 	
 	if parried:
 		parried = false
-		await seconds(0.25)
+		$AnimationPlayer.play("FaceKickRecoil")
+		recoil_against($FaceKickShockwavePosition.global_position, 50.0)
+		should_fall = true
+		
+		$RockSpawnPositions/Center.spawn_rocks_for(1.2)
+		
+		if global_position.y < 1.5:
+			set_dash_acceleration(0.95)
+		else:
+			set_dash_acceleration(0.99)
+		
+		await seconds(1.2)
+		
+		dashing = false
 	
 	await seconds(0.3)
+	
+	should_fall = false
 
 func clap() -> void:
 	current_attack = attacks.CLAP
@@ -443,7 +457,8 @@ func taunt() -> void:
 	can_walk = false
 	should_look_at_player_2D = true
 	
-	$AnimationPlayer.play("Falling")
+	if global_position.y > 0.25:
+		$AnimationPlayer.play("Falling")
 	
 	while true:
 		await seconds(0.25) # Allow her time to fall
@@ -453,7 +468,9 @@ func taunt() -> void:
 	
 	global_position.y = 0.0
 	
+	await seconds(0.25)
 	$AnimationPlayer.play("Taunt")
+	$Voicelines.play_sfx("NiceTry1")
 	await seconds(2.0)
 	
 	should_fall = false
@@ -660,6 +677,8 @@ func large_explosion() -> void:
 	should_fall = true
 	
 	await seconds(0.6)
+	
+	should_fall = false
 	
 #endregion
 
