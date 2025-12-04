@@ -11,6 +11,7 @@ render_priority = 1
 shader = ExtResource("2_rsr4g")
 shader_parameter/TomoTrailHeadColor = Color(0.934197, 1.3528494, 1.3528494, 1)
 shader_parameter/AnimationSpeed = Vector2(0, 3.5)
+shader_parameter/Transparency = 0.0
 shader_parameter/Emission = Color(1, 1, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_rh5jh"]

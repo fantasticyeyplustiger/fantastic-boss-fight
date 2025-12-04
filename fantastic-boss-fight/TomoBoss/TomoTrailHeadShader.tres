@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://dr43t3lg5li74"]
+[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://dr43t3lg5li74"]
 
 [ext_resource type="Texture2D" uid="uid://di3px5v2occha" path="res://TomoBoss/TomoImport/T_VFX_Noi55.png" id="1_ojy7d"]
 
@@ -8,6 +8,13 @@ parameter_name = "AnimationSpeed"
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_w76q4"]
 parameter_name = "Emission"
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_ojy7d"]
+operator = 1
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_v7jai"]
+parameter_name = "Transparency"
+hint = 1
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_u5uiy"]
 parameter_name = "TomoTrailHeadColor"
@@ -51,6 +58,7 @@ uniform vec4 TomoTrailHeadColor : source_color;
 uniform vec2 AnimationSpeed;
 uniform sampler2D tex_frg_3 : source_color;
 uniform sampler2D tex_frg_4;
+uniform float Transparency : hint_range(0.0, 1.0);
 uniform vec4 Emission : source_color;
 
 
@@ -92,10 +100,18 @@ void fragment() {
 	float n_out5p0 = n_out3p1 - n_out4p1;
 
 
+// FloatParameter:13
+	float n_out13p0 = Transparency;
+
+
+// FloatOp:12
+	float n_out12p0 = n_out5p0 - n_out13p0;
+
+
 // Clamp:6
 	float n_in6p1 = 0.00000;
 	float n_in6p2 = 1.00000;
-	float n_out6p0 = clamp(n_out5p0, n_in6p1, n_in6p2);
+	float n_out6p0 = clamp(n_out12p0, n_in6p1, n_in6p2);
 
 
 // ColorParameter:11
@@ -118,11 +134,11 @@ nodes/vertex/0/position = Vector2(400, 160)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_u5uiy")
 nodes/fragment/2/position = Vector2(-58.09977, 219.28857)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_5xpm8")
-nodes/fragment/3/position = Vector2(-340, 460)
+nodes/fragment/3/position = Vector2(-620, 480)
 nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_7jjkx")
-nodes/fragment/4/position = Vector2(-340, 880)
+nodes/fragment/4/position = Vector2(-660, 880)
 nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_ljvrp")
-nodes/fragment/5/position = Vector2(-40, 760)
+nodes/fragment/5/position = Vector2(-380, 760)
 nodes/fragment/6/node = SubResource("VisualShaderNodeClamp_vxg06")
 nodes/fragment/6/position = Vector2(140, 780)
 nodes/fragment/7/node = SubResource("VisualShaderNodeUVFunc_7uqyn")
@@ -135,4 +151,8 @@ nodes/fragment/10/node = SubResource("VisualShaderNodeVec2Parameter_v7jai")
 nodes/fragment/10/position = Vector2(-1460, 920)
 nodes/fragment/11/node = SubResource("VisualShaderNodeColorParameter_w76q4")
 nodes/fragment/11/position = Vector2(-60, 440)
-nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 4, 1, 5, 1, 5, 0, 6, 0, 7, 0, 3, 0, 8, 0, 9, 0, 9, 0, 7, 2, 10, 2, 9, 1, 3, 1, 5, 0, 11, 0, 0, 5, 6, 0, 0, 1)
+nodes/fragment/12/node = SubResource("VisualShaderNodeFloatOp_ojy7d")
+nodes/fragment/12/position = Vector2(-120, 780)
+nodes/fragment/13/node = SubResource("VisualShaderNodeFloatParameter_v7jai")
+nodes/fragment/13/position = Vector2(-400, 1020)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 4, 1, 5, 1, 7, 0, 3, 0, 8, 0, 9, 0, 9, 0, 7, 2, 10, 2, 9, 1, 3, 1, 5, 0, 11, 0, 0, 5, 6, 0, 0, 1, 5, 0, 12, 0, 12, 0, 6, 0, 13, 0, 12, 1)

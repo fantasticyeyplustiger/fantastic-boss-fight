@@ -32,10 +32,7 @@ func _physics_process(_delta: float) -> void:
 	material_color.h = material_hue
 	material.set_shader_parameter("TomoTrailHeadColor", material_color)
 	material.set_shader_parameter("AnimationSpeed", Vector2(0.0, velocity + 1.0))
-	
-	
-	
-	$Surrounding.transparency = clampf(1.0 - (velocity / 10.0), 0.0, 1.0)
+	#material.set_shader_parameter("Transparency", clampf(1.0 - (velocity / 5.0), 0.0, 0.9))
 	
 	$Sparks.emitting = not global_position == previous_position or not parent.visible
 	$Sparks2.emitting = $Sparks.emitting
