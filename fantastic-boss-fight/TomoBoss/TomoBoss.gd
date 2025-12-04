@@ -178,7 +178,8 @@ func knee() -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	
 	should_look_at_player_2D = false
-	dash_towards_on_ground(Global.player_position, 45.0)
+	dash_towards_on_ground(Global.player_position, 55.0)
+	set_dash_acceleration(0.94)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)

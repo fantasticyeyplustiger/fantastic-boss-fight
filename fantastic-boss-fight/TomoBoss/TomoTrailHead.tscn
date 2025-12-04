@@ -21,6 +21,7 @@ render_priority = 0
 shader = ExtResource("3_evdug")
 shader_parameter/OrbColor = Color(1, 1, 1, 1)
 shader_parameter/FresnelPower = 3.0
+shader_parameter/Transparency = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1y1jj"]
 transparency = 1
@@ -83,15 +84,15 @@ mesh = SubResource("SphereMesh_rh5jh")
 surface_material_override/0 = SubResource("ShaderMaterial_6y4t8")
 
 [node name="Ring" type="MeshInstance3D" parent="."]
+cast_shadow = 0
 mesh = SubResource("QuadMesh_evdug")
 
 [node name="Sparks" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.19826579)
 visible = false
 cast_shadow = 0
-amount = 4
 lifetime = 0.5
-explosiveness = 0.5
+explosiveness = 0.7
 process_material = SubResource("ParticleProcessMaterial_cnvcy")
 draw_pass_1 = SubResource("QuadMesh_rh5jh")
 
@@ -99,8 +100,7 @@ draw_pass_1 = SubResource("QuadMesh_rh5jh")
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, -0.19826579)
 visible = false
 cast_shadow = 0
-amount = 4
 lifetime = 0.5
-explosiveness = 0.5
+explosiveness = 0.7
 process_material = SubResource("ParticleProcessMaterial_cnvcy")
 draw_pass_1 = SubResource("QuadMesh_rh5jh")
