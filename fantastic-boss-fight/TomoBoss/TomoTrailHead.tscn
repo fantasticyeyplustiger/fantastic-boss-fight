@@ -1,0 +1,105 @@
+[gd_scene load_steps=16 format=3 uid="uid://2cj34lofcdqs"]
+
+[ext_resource type="ArrayMesh" uid="uid://83eirikkq3wn" path="res://TomoBoss/TomoImport/fireballhead.obj" id="1_1y1jj"]
+[ext_resource type="Script" uid="uid://ud6qwbwheheg" path="res://TomoBoss/TrailHead.gd" id="1_evdug"]
+[ext_resource type="Shader" uid="uid://dr43t3lg5li74" path="res://TomoBoss/TomoTrailHeadShader.tres" id="2_rsr4g"]
+[ext_resource type="Shader" uid="uid://fe3unt4wl02y" path="res://TomoBoss/TomoTrailOrbShader.tres" id="3_evdug"]
+[ext_resource type="Texture2D" uid="uid://u2crtdumyygd" path="res://ParticleTextures/BombShockwave.png" id="4_cnvcy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1y1jj"]
+render_priority = 1
+shader = ExtResource("2_rsr4g")
+shader_parameter/TomoTrailHeadColor = Color(0.934197, 1.3528494, 1.3528494, 1)
+shader_parameter/AnimationSpeed = Vector2(0, 3.5)
+shader_parameter/Emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rh5jh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6y4t8"]
+render_priority = 0
+shader = ExtResource("3_evdug")
+shader_parameter/OrbColor = Color(1, 1, 1, 1)
+shader_parameter/FresnelPower = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1y1jj"]
+transparency = 1
+albedo_texture = ExtResource("4_cnvcy")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.5
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_evdug"]
+material = SubResource("StandardMaterial3D_1y1jj")
+size = Vector2(1.3, 1.3)
+
+[sub_resource type="Curve" id="Curve_1y1jj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.2022471, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_evdug"]
+curve = SubResource("Curve_1y1jj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cnvcy"]
+particle_flag_align_y = true
+emission_shape = 2
+emission_sphere_radius = 0.5
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(0, 0, -1)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+radial_velocity_min = 0.99997765
+radial_velocity_max = 1.9999776
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_evdug")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnvcy"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_rh5jh"]
+material = SubResource("StandardMaterial3D_cnvcy")
+size = Vector2(0.1, 0.5)
+
+[node name="TomoTrailHead" type="Node3D"]
+script = ExtResource("1_evdug")
+
+[node name="Surrounding" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.25, 0, 0, -0.53758705)
+cast_shadow = 0
+mesh = ExtResource("1_1y1jj")
+surface_material_override/0 = SubResource("ShaderMaterial_1y1jj")
+
+[node name="Orb" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_rh5jh")
+surface_material_override/0 = SubResource("ShaderMaterial_6y4t8")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_evdug")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.19826579)
+visible = false
+cast_shadow = 0
+amount = 4
+lifetime = 0.5
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_cnvcy")
+draw_pass_1 = SubResource("QuadMesh_rh5jh")
+
+[node name="Sparks2" type="GPUParticles3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, -0.19826579)
+visible = false
+cast_shadow = 0
+amount = 4
+lifetime = 0.5
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_cnvcy")
+draw_pass_1 = SubResource("QuadMesh_rh5jh")

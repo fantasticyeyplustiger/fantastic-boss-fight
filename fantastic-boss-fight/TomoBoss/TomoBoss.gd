@@ -12,11 +12,15 @@ var previous_attack : attacks
 var current_attack : attacks
 
 var first_phase : bool = true
+var walking_time : float = 0.0
+var running_time : float = 0.0
+
 
 var prev_i : int = 0
 
 func _ready() -> void:
 	
+	attacking = false
 	gradient = $Armature/Skeleton3D/ComboKick/Trail.color_ramp.gradient
 	colors = gradient.colors
 	magic_hands_mat = $Armature/Skeleton3D/Body.get_surface_override_material(11)
@@ -39,13 +43,29 @@ func _ready() -> void:
 	
 	rainbow_trail_color()
 	
-	set_atk_cooldown_in_seconds(1.5)
+	set_atk_cooldown_in_seconds(0.5)
 
 func _physics_process(_delta: float) -> void:
 	super(_delta)
+	
+	# prevent constant function calls
+	var velocity_length := velocity.length()
+	
+	if not attacking:
+		
+		if velocity_length < 15.0 and can_walk: 
+			$AnimationPlayer.play("Walking")
+			$AnimationPlayer.speed_scale = 1.0
+		elif velocity_length > 15.0 and can_walk:
+			$AnimationPlayer.play("Running")
+			$AnimationPlayer.speed_scale = 1.5
+	
 
 func choose_attack() -> void:
 	previous_attack = current_attack
+	
+	$AnimationPlayer.speed_scale /= Global.difficulty_speed
+	$ExplosionPrepare.speed_scale /= Global.difficulty_speed
 	
 	var _distance_to_player = get_distance_to_player()
 	
@@ -67,16 +87,17 @@ func choose_attack() -> void:
 		#7: await large_explosion()
 	
 	await attack_combo()
-	await clap()
-	await face_kick()
-	await grab()
-	await stomp()
-	await chop()
-	await large_explosion()
-	await low_kick()
-	await taunt()
+	#await clap()
+	#await face_kick()
+	#await grab()
+	#await stomp()
+	#await chop()
+	#await large_explosion()
+	#await low_kick()
+	#await taunt()
 	
-	set_atk_cooldown_in_seconds(0.25)
+	set_atk_cooldown_in_seconds(0.5)
+	can_walk_again_in_seconds(0.25)
 
 #region all attacks
 
@@ -132,6 +153,7 @@ func karate_punch() -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	$AnimationPlayer.play("LeftStraight")
 	$AnimationPlayer.advance(0) # So the trail isn't bugged by going from end_pos to start_pos
+	$AnimationPlayer.speed_scale = 1.25 / Global.difficulty_speed
 	look_at_player()
 	dash_towards_on_ground(Global.player_position)
 	toggle_all_trails_in($Armature/Skeleton3D/LeftStraight)
@@ -188,6 +210,7 @@ func combo_kick() -> void:
 	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
 	$AnimationPlayer.play("LeftRoundhouse")
+	$AnimationPlayer.speed_scale = 1.4 / Global.difficulty_speed
 	await seconds(0.15)
 	
 	if global_position.y > 1.5:
@@ -684,7 +707,8 @@ func large_explosion() -> void:
 
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
 	await super(seconds_to_wait)
-	$AnimationPlayer.play("Walking")
+	can_walk = true
+	attacking = false
 	
 func stop_walk_animation() -> void:
 	$AnimationPlayer.stop(true)
@@ -735,6 +759,7 @@ func set_trail_color(new_color : Color) -> void:
 	magic_hands_mat.emission = new_color
 	magic_legs_mat.emission = new_color
 	magic_shoes_mat.emission = new_color
+	TomoTrailHead.material_hue = new_color.h
 	
 
 ## Makes the boss' materials transition into pure glowing white.[br][br]

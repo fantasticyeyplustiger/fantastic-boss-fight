@@ -30,6 +30,7 @@ var damage : float
 
 var attacking : bool = true
 var can_walk : bool = true
+var attack_cooldown : bool = true
 
 ## If turned true, have 'dash_towards()' used right after.
 var dashing : bool = false
@@ -62,10 +63,13 @@ func _physics_process(delta: float) -> void:
 	var distance_to_player := get_distance_to_player()
 	
 	# Prevent constant attack calls
-	if not attacking:
+	if not attacking and not attack_cooldown:
 		attacking = true
+		attack_cooldown = true
 		choose_attack()
 	# Shouldn't walk towards player while attacking
+	elif can_walk and distance_to_player > 15:
+		walk_towards_player(25.0)
 	elif can_walk and distance_to_player > 5:
 		walk_towards_player()
 	elif can_walk and distance_to_player <= 5:
@@ -229,7 +233,7 @@ func get_2d_distance_to_player() -> float:
 ## Resets [code]attacking[/code] after the amount of seconds inputted to be false.
 func set_atk_cooldown_in_seconds(seconds_to_wait : float) -> void:
 	await seconds(seconds_to_wait)
-	attacking = false
+	attack_cooldown = false
 
 ## Resets [code]can_walk[/code] after the amount of seconds inputted to be true.
 func can_walk_again_in_seconds(seconds_to_wait : float) -> void:
