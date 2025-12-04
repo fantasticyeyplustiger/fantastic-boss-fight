@@ -14,7 +14,8 @@ var current_attack : attacks
 var first_phase : bool = true
 var walking_time : float = 0.0
 var running_time : float = 0.0
-
+var distance_to_ground : float = 0.0
+var floor_position : float
 
 var prev_i : int = 0
 
@@ -48,6 +49,13 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	super(_delta)
 	
+	if $DistanceToGround.is_colliding():
+		var collision_point : float = $DistanceToGround.get_collision_point().y
+		floor_position = collision_point
+		distance_to_ground = global_position.y - collision_point
+	else:
+		distance_to_ground = 100.0
+	
 	# prevent constant function calls
 	var velocity_length := velocity.length()
 	
@@ -59,7 +67,6 @@ func _physics_process(_delta: float) -> void:
 		elif velocity_length > 15.0 and can_walk:
 			$AnimationPlayer.play("Running")
 			$AnimationPlayer.speed_scale = 1.5
-	
 
 func choose_attack() -> void:
 	previous_attack = current_attack
@@ -87,13 +94,13 @@ func choose_attack() -> void:
 		#7: await large_explosion()
 	
 	await attack_combo()
-	#await clap()
-	#await face_kick()
+	await clap()
+	await face_kick()
 	#await grab()
 	#await stomp()
-	#await chop()
+	await chop()
 	#await large_explosion()
-	#await low_kick()
+	await low_kick()
 	#await taunt()
 	
 	set_atk_cooldown_in_seconds(0.5)
@@ -111,7 +118,7 @@ func attack_combo() -> void:
 	look_at_player()
 	$Voicelines.play_sfx("YouCantEscape1")
 	
-	global_position.y = 0.0
+	global_position.y = floor_position
 	
 	await seconds(0.75)
 	
@@ -136,14 +143,14 @@ func karate_punch() -> void:
 	await seconds(0.05) # Because it needs time to toggle apparently idk why
 	
 	$AttackSFX.play_sfx("BossDash")
-	global_position.y = 0.0
+	global_position.y = floor_position
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	var old_position : Vector3 = global_position
 	
 	go_to_predicted_position_at_seconds(0.35)
 	look_at_player()
-	global_position.y = 0.0 # Stay on ground
+	global_position.y = floor_position # Stay on ground
 	SpawnObject.rock_trail(old_position, global_position)
 	
 	await seconds(0.2)
@@ -178,8 +185,8 @@ func knee() -> void:
 	$AttackSFX.play_sfx("BloodyDash")
 	
 	should_look_at_player_2D = false
-	dash_towards_on_ground(Global.player_position, 55.0)
-	set_dash_acceleration(0.94)
+	dash_towards_on_ground(Global.player_position, 60.0)
+	set_dash_acceleration(0.97)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
@@ -202,7 +209,7 @@ func combo_kick() -> void:
 	
 	$AttackSFX.play_sfx("BossDash")
 	
-	if global_position.y > 1.5:
+	if distance_to_ground > 1.5:
 		should_look_at_player = true
 	else:
 		should_look_at_player_2D = true
@@ -214,7 +221,7 @@ func combo_kick() -> void:
 	$AnimationPlayer.speed_scale = 1.4 / Global.difficulty_speed
 	await seconds(0.15)
 	
-	if global_position.y > 1.5:
+	if distance_to_ground > 1.5:
 		should_look_at_player = false
 	else:
 		should_look_at_player_2D = false
@@ -254,7 +261,7 @@ func ground_stomp() -> void:
 	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
-	global_position.y = 0.0
+	global_position.y = floor_position
 	should_look_at_player_2D = true
 	
 	await seconds(0.1)
@@ -311,7 +318,7 @@ func grab(from_combo : bool = false) -> void:
 	damage = 50.0
 	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
-	global_position.y = 0.0
+	global_position.y = floor_position
 	should_look_at_player_2D = true
 	
 	$UnparriableSFX.play()
@@ -369,11 +376,11 @@ func face_kick() -> void:
 	
 	await seconds(0.2)
 	
-	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
+	toggle_all_trails_in($Armature/Skeleton3D/FaceKick)
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	should_look_at_player_2D = false
 	
-	await seconds(0.17)
+	await seconds(0.2)
 	
 	$Explosion.play()
 	SpawnObject.particle_shockwave($FaceKickShockwavePosition.global_position,)
@@ -382,7 +389,7 @@ func face_kick() -> void:
 	SpawnObject.explosion_detailed($FaceKickShockwavePosition.global_position, "#FFFFFF", 0.11, true)
 	
 	toggle_hitbox_on_for_seconds($Hitbox/FaceKick, 0.1)
-	toggle_all_trails_in($Armature/Skeleton3D/ComboKick)
+	toggle_all_trails_in($Armature/Skeleton3D/FaceKick)
 	
 	can_be_parried = false
 	
@@ -394,10 +401,10 @@ func face_kick() -> void:
 		
 		$RockSpawnPositions/Center.spawn_rocks_for(1.2)
 		
-		if global_position.y < 1.5:
+		if distance_to_ground < 1.5:
 			set_dash_acceleration(0.95)
 		else:
-			set_dash_acceleration(0.99)
+			set_dash_acceleration(0.99) # cause air won't slow tomo down as much
 		
 		await seconds(1.2)
 		
@@ -427,12 +434,7 @@ func clap() -> void:
 	can_be_parried = true
 	$ParrySparkles/Clap.emitting = true
 	
-	await seconds(0.35)
-	
-	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
-	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
-	
-	await seconds(0.1)
+	await seconds(0.45)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	$AnimationPlayer.speed_scale = 1.0 / Global.difficulty_speed
@@ -440,6 +442,9 @@ func clap() -> void:
 	dash_towards(Global.player_position)
 	
 	await seconds(0.05)
+	
+	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
+	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
 	
 	$AttackSFX.play_sfx("BloodyDash")
 	
@@ -465,7 +470,7 @@ func clap() -> void:
 		parried = false
 		await seconds(0.25)
 	
-	await seconds(0.15)
+	await seconds(0.2)
 	
 	toggle_trail($Armature/Skeleton3D/ClapRightHand/Trail)
 	toggle_trail($Armature/Skeleton3D/ClapLeftHand/Trail)
@@ -481,16 +486,16 @@ func taunt() -> void:
 	can_walk = false
 	should_look_at_player_2D = true
 	
-	if global_position.y > 0.25:
+	if distance_to_ground > 0.25:
 		$AnimationPlayer.play("Falling")
 	
 	while true:
 		await seconds(0.25) # Allow her time to fall
 		
-		if global_position.y <= 0.25:
+		if distance_to_ground <= 0.25:
 			break
 	
-	global_position.y = 0.0
+	global_position.y = floor_position
 	
 	await seconds(0.25)
 	$AnimationPlayer.play("Taunt")
@@ -529,13 +534,13 @@ func stomp() -> void:
 	
 	toggle_all_trails_in($Armature/Skeleton3D/AirTrails)
 	
-	var height : float = global_position.y
+	var height : float = distance_to_ground
 	
 	SpawnObject.air_shockwave(global_position)
 	SpawnObject.particle_shockwave(global_position, Vector3.ZERO, "#FFFFFF", 1.0, true)
 	SpawnObject.particle_shockwave(global_position)
 	
-	global_position.y = 0.0
+	global_position.y = floor_position
 	$Hitbox/AirStomp.shape.height = height * 2 # Multiply by 2 because "center" of shape is on floor
 	toggle_hitbox_on_for_seconds($Hitbox/AirStomp, 0.1) 
 	

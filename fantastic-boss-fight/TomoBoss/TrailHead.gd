@@ -30,7 +30,11 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	
-	# per second not per frame
+	# Parent is usually invisible (GPUTrail3D)
+	if not parent.visible:
+		return
+	
+	# Per second not per frame
 	velocity = (previous_position.distance_to(global_position)) * 60.0
 	
 	if velocity > 5.0:
