@@ -128,7 +128,7 @@ func shotgun_pellet(amount : int, can_projectile_boost : bool = true) -> void:
 	
 	Global.can_projectile_boost = can_projectile_boost
 	
-	var accuracy_range : float = deg_to_rad(10.0)
+	const accuracy_range : float = deg_to_rad(5.0)
 	
 	for pellet in amount:
 		var new_pellet : Node3D = shotgun_pellet_mesh.instantiate()

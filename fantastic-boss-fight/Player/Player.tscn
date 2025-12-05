@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene load_steps=14 format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://clgqnfx0ro43d" path="res://Player/LeftHand.tscn" id="2_0j2ni"]
@@ -16,6 +16,9 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6ysni"]
 height = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j23h2"]
+radius = 1.0
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 16
@@ -68,6 +71,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 shape = SubResource("CylinderShape3D_6ysni")
 disabled = true
 
+[node name="HealDetection" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealDetection"]
+shape = SubResource("SphereShape3D_j23h2")
+
 [node name="FrontOfBodyPivot" type="Node3D" parent="."]
 
 [node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot"]
@@ -116,5 +127,6 @@ offset_bottom = 1080.0
 color = Color(1, 0, 0, 0)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="get_hit"]
+[connection signal="area_entered" from="HealDetection" to="." method="heal"]
 [connection signal="timeout" from="ResetSlideJump" to="." method="reset_slide_jump"]
 [connection signal="timeout" from="ResetSlamTime" to="." method="reset_slam_time"]

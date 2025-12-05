@@ -409,3 +409,11 @@ func reset_slide_jump() -> void:
 
 func reset_slam_time() -> void:
 	slam_time = 0.0
+
+func heal(_area: Area3D) -> void:
+	health += 15.0
+	
+	if health >= max_health:
+		health = max_health
+	
+	$PlayerGUI.hp.text = "HP: " + str(int(roundf(health)))

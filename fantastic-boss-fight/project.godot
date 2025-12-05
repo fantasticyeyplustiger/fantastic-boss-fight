@@ -162,3 +162,4 @@ orb={
 3d_physics/layer_7="PLAYER_SAWBLADES"
 3d_physics/layer_8="ENEMY_SAWBLADE_HITBOX"
 3d_physics/layer_9="ENEMY_PARRY_HITBOX"
+3d_physics/layer_10="PLAYER_HEAL"

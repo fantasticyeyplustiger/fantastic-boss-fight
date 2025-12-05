@@ -57,16 +57,16 @@ func _physics_process(_delta: float) -> void:
 		distance_to_ground = 100.0
 	
 	# prevent constant function calls
-	var velocity_length := velocity.length()
+	#var velocity_length := velocity.length()
 	
 	if not attacking:
 		
-		if velocity_length < 15.0 and can_walk: 
+		if can_walk: 
 			$AnimationPlayer.play("Walking")
 			$AnimationPlayer.speed_scale = 1.0
-		elif velocity_length > 15.0 and can_walk:
-			$AnimationPlayer.play("Running")
-			$AnimationPlayer.speed_scale = 1.5
+		#elif velocity_length > 15.0 and can_walk:
+			#$AnimationPlayer.play("Running")
+			#$AnimationPlayer.speed_scale = 1.5
 
 func choose_attack() -> void:
 	previous_attack = current_attack
@@ -83,27 +83,27 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	#match i:
-		#0: await attack_combo()
-		#1: await clap()
-		#2: await face_kick()
-		#3: await grab()
-		#4: await stomp()
-		#5: await chop()
-		#6: await low_kick()
-		#7: await large_explosion()
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await low_kick()
+		7: await large_explosion()
 	
-	await attack_combo()
-	await clap()
-	await face_kick()
+	#await attack_combo()
+	#await clap()
+	#await face_kick()
 	#await grab()
 	#await stomp()
-	await chop()
+	#await chop()
 	#await large_explosion()
-	await low_kick()
+	#await low_kick()
 	#await taunt()
 	
-	set_atk_cooldown_in_seconds(0.5)
+	set_atk_cooldown_in_seconds(0.4)
 	can_walk_again_in_seconds(0.25)
 
 #region all attacks
@@ -812,14 +812,23 @@ func get_punched() -> void:
 	
 	health -= punch_damage
 	$BossHealthBar.lower_hp(health)
+	
+	if $HealArea/CollisionShape3D.disabled:
+		toggle_hitbox_on_for_seconds($HealArea/CollisionShape3D, 0.2)
 
 func get_hitscanned(hitscan_damage : float) -> void:
 	health -= hitscan_damage
 	$BossHealthBar.lower_hp(health)
+	
+	if $HealArea/CollisionShape3D.disabled:
+		toggle_hitbox_on_for_seconds($HealArea/CollisionShape3D, 0.2)
 
 func get_hurt(area : Area3D) -> void:
 	health -= area.get_parent().damage
 	$BossHealthBar.lower_hp(health)
+	
+	if $HealArea/CollisionShape3D.disabled:
+		toggle_hitbox_on_for_seconds($HealArea/CollisionShape3D, 0.2)
 	
 
 func connect_areas_to_hurt_func() -> void:
