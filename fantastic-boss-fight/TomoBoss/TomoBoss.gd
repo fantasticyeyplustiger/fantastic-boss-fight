@@ -2,6 +2,8 @@ extends Boss
 
 enum attacks {CHOP, COMBO, FACE_KICK, CLAP, DESTROY}
 
+#@onready var animation : AnimationPlayer = $AnimationPlayer
+
 var gradient : Gradient
 var colors : PackedColorArray
 var magic_hands_mat : Material
@@ -83,17 +85,17 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	match i:
-		0: await attack_combo()
-		1: await clap()
-		2: await face_kick()
-		3: await grab()
-		4: await stomp()
-		5: await chop()
-		6: await low_kick()
-		7: await large_explosion()
+	#match i:
+		#0: await attack_combo()
+		#1: await clap()
+		#2: await face_kick()
+		#3: await grab()
+		#4: await stomp()
+		#5: await chop()
+		#6: await low_kick()
+		#7: await large_explosion()
 	
-	#await attack_combo()
+	await attack_combo()
 	#await clap()
 	#await face_kick()
 	#await grab()
@@ -131,7 +133,7 @@ func attack_combo() -> void:
 		await seconds(0.1)
 	
 	await ground_stomp()
-	await seconds(0.5)
+	await seconds(0.1)
 	#await grab(true)
 
 func karate_punch() -> void:
@@ -165,12 +167,12 @@ func karate_punch() -> void:
 	dash_towards_on_ground(Global.player_position)
 	toggle_all_trails_in($Armature/Skeleton3D/LeftStraight)
 	
-	await seconds(0.1)
+	await seconds(0.25)
 	
 	dashing = false
 	toggle_hitbox_on_for_seconds($Hitbox/LeftStraight, 0.1)
 	
-	await seconds(0.35)
+	await seconds(0.2)
 	
 	toggle_all_trails_in($Armature/Skeleton3D/LeftStraight)
 
@@ -186,7 +188,7 @@ func knee() -> void:
 	
 	should_look_at_player_2D = false
 	dash_towards_on_ground(Global.player_position, 60.0)
-	set_dash_acceleration(0.97)
+	set_dash_acceleration(0.95)
 	
 	$RockSpawnPositions/RightKnee.spawn_rocks_for(0.35)
 	toggle_hitbox_on_for_seconds($Hitbox/RightKnee, 0.3)
@@ -213,12 +215,19 @@ func combo_kick() -> void:
 		should_look_at_player = true
 	else:
 		should_look_at_player_2D = true
+		
 	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
-	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
 	$AnimationPlayer.play("LeftRoundhouse")
 	$AnimationPlayer.speed_scale = 1.4 / Global.difficulty_speed
+	$AnimationPlayer.pause()
+	$AnimationPlayer.advance(0.0)
+	
+	await seconds(0.1)
+	
+	$AnimationPlayer.play()
+	
 	await seconds(0.15)
 	
 	if distance_to_ground > 1.5:
@@ -256,15 +265,17 @@ func ground_stomp() -> void:
 	await seconds(0.1)
 	
 	$AttackSFX.play_sfx("BossDash")
-	$AnimationPlayer.speed_scale = 1.1 / Global.difficulty_speed
+	$AnimationPlayer.speed_scale = 1.0 / Global.difficulty_speed
 	$AnimationPlayer.play("GroundStomp")
+	look_at(Global.player_position)
+	SpawnObject.air_shockwave(global_position, global_rotation + RIGHT_X_ANGLE)
 	
 	set_new_position_with_trail(global_position, Global.boss_to_player)
 	
 	global_position.y = floor_position
 	should_look_at_player_2D = true
 	
-	await seconds(0.1)
+	await seconds(0.15)
 	$ParrySparkles/GroundStomp.emitting = true
 	can_be_parried = true
 	
