@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://byownf0n8g04s"]
+[gd_scene format=3 uid="uid://byownf0n8g04s"]
 
 [ext_resource type="ArrayMesh" uid="uid://ddfixeyfopnll" path="res://Boss/BossOBJ/RightArm.obj" id="1_54uvx"]
 [ext_resource type="Script" uid="uid://b3mlci34x4swv" path="res://Level/SpawnedObjects/RightArm.gd" id="1_rpk7q"]
@@ -192,56 +192,54 @@ _data = {
 &"explosion": SubResource("Animation_8qf71")
 }
 
-[node name="RightArm" type="CharacterBody3D"]
+[node name="RightArm" type="CharacterBody3D" unique_id=829122449]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
 collision_layer = 0
 collision_mask = 17
 script = ExtResource("1_rpk7q")
 
-[node name="RightArmMesh" type="MeshInstance3D" parent="."]
+[node name="RightArmMesh" type="MeshInstance3D" parent="." unique_id=2117535355]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.56, 0, 0)
 mesh = ExtResource("1_54uvx")
 surface_material_override/0 = SubResource("StandardMaterial3D_qukvd")
 
-[node name="Explosion" type="MeshInstance3D" parent="."]
+[node name="Explosion" type="MeshInstance3D" parent="." unique_id=932966286]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
 visible = false
 mesh = SubResource("SphereMesh_e1rwd")
 surface_material_override/0 = SubResource("StandardMaterial3D_c4nw0")
 
-[node name="Hitbox" type="Area3D" parent="."]
+[node name="Hitbox" type="Area3D" parent="." unique_id=528246959]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("4_e1rwd")
 knockback_power = 500.0
 
-[node name="Collision" type="CollisionShape3D" parent="Hitbox"]
+[node name="Collision" type="CollisionShape3D" parent="Hitbox" unique_id=562586465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00878014, -0.00193787)
 shape = SubResource("BoxShape3D_54uvx")
 
-[node name="NoCollision" type="CollisionShape3D" parent="."]
+[node name="NoCollision" type="CollisionShape3D" parent="." unique_id=353382367]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.12874e-08)
 visible = false
 shape = SubResource("BoxShape3D_e1rwd")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=720645153]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.38)
 amount = 32
 lifetime = 1.5
 process_material = SubResource("ParticleProcessMaterial_c4nw0")
 draw_pass_1 = SubResource("SphereMesh_8qf71")
 
-[node name="Parryable" type="GPUParticles3D" parent="."]
+[node name="Parryable" type="GPUParticles3D" parent="." unique_id=761607158]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.142857, -0.5)
 amount = 16
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_5u3nt")
 draw_pass_1 = SubResource("QuadMesh_lx842")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_sb5gs")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=290695299]
+libraries/ = SubResource("AnimationLibrary_sb5gs")
 speed_scale = 3.0
 
 [connection signal="area_entered" from="Hitbox" to="." method="hit"]

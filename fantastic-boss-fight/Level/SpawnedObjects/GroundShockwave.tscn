@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://deyfmbyhdj6lj"]
+[gd_scene format=3 uid="uid://deyfmbyhdj6lj"]
 
 [ext_resource type="ArrayMesh" uid="uid://b412a23gunaxw" path="res://Level/Shockwave.obj" id="1_jeblo"]
 [ext_resource type="Script" uid="uid://dt4fgiwlsna0x" path="res://Level/SpawnedObjects/Shockwave.gd" id="2_n68n2"]
@@ -98,7 +98,7 @@ _data = {
 &"shockwave": SubResource("Animation_n68n2")
 }
 
-[node name="Shockwave" type="MeshInstance3D"]
+[node name="Shockwave" type="MeshInstance3D" unique_id=70787363]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 cast_shadow = 0
 mesh = ExtResource("1_jeblo")
@@ -108,9 +108,7 @@ surface_material_override/2 = SubResource("StandardMaterial3D_vsp7x")
 surface_material_override/3 = SubResource("StandardMaterial3D_qukvd")
 script = ExtResource("2_n68n2")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_vqysv")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=932716830]
+libraries/ = SubResource("AnimationLibrary_vqysv")
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

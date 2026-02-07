@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://fe3unt4wl02y"]
+[gd_resource type="VisualShader" format=3 uid="uid://fe3unt4wl02y"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_pns5m"]
 parameter_name = "OrbColor"
@@ -19,49 +19,6 @@ hint = 1
 [sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_pns5m"]
 
 [resource]
-code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded, shadows_disabled, ambient_light_disabled, fog_disabled;
-
-uniform vec4 OrbColor : source_color;
-uniform float FresnelPower;
-uniform float Transparency : hint_range(0.0, 1.0);
-
-
-
-void fragment() {
-// ColorParameter:2
-	vec4 n_out2p0 = OrbColor;
-
-
-// FloatParameter:4
-	float n_out4p0 = FresnelPower;
-
-
-// Fresnel:3
-	float n_out3p0 = pow(clamp(dot(NORMAL, VIEW), 0.0, 1.0), n_out4p0);
-
-
-// FloatParameter:6
-	float n_out6p0 = Transparency;
-
-
-// FloatOp:5
-	float n_out5p0 = n_out3p0 - n_out6p0;
-
-
-// Clamp:7
-	float n_in7p1 = 0.00000;
-	float n_in7p2 = 1.00000;
-	float n_out7p0 = clamp(n_out5p0, n_in7p1, n_in7p2);
-
-
-// Output:0
-	ALBEDO = vec3(n_out2p0.xyz);
-	ALPHA = n_out7p0;
-
-
-}
-"
 modes/cull = 2
 flags/unshaded = true
 flags/shadows_disabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://hmekn0cl34iw"]
+[gd_scene format=4 uid="uid://hmekn0cl34iw"]
 
 [ext_resource type="Script" uid="uid://7feywl8ebvrn" path="res://Rocks/Disappear.gd" id="1_0mxu2"]
 [ext_resource type="Texture2D" uid="uid://daydynn6s5wfd" path="res://ParticleTextures/Flash.png" id="3_cyugc"]
@@ -200,7 +200,7 @@ billboard_mode = 2
 material = SubResource("StandardMaterial3D_bebbi")
 size = Vector2(1.5, 24)
 
-[node name="RockGroup" type="Node3D"]
+[node name="RockGroup" type="Node3D" unique_id=1197818523]
 script = ExtResource("1_0mxu2")
 position_range = Vector3(1, 0.1, 0.5)
 rotation_range = Vector3(6.28, 6.28, 6.28)
@@ -208,31 +208,27 @@ scale_range_one = Vector3(0.8, 0.8, 0.8)
 scale_range_two = Vector3(1.2, 1.2, 1.2)
 has_GPUParticles3D = true
 
-[node name="Rock1" type="MeshInstance3D" parent="."]
+[node name="Rock1" type="MeshInstance3D" parent="." unique_id=1393018239]
 transform = Transform3D(0.47812164, 0, 0, 0, 0.47130692, 0, 0, 0, 0.48634222, 0, 0, 0)
 mesh = SubResource("ArrayMesh_gg4l7")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_cyugc")
 
-[node name="Rock2" type="MeshInstance3D" parent="."]
+[node name="Rock2" type="MeshInstance3D" parent="." unique_id=381079233]
 transform = Transform3D(0.36567166, 0, -0.25567168, 0, 0.38062632, 0, 0.29511252, 0, 0.31680083, 0, 0, 0)
 mesh = SubResource("ArrayMesh_bqmcc")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_aecys")
 
-[node name="Rock3" type="MeshInstance3D" parent="."]
+[node name="Rock3" type="MeshInstance3D" parent="." unique_id=1616342294]
 transform = Transform3D(0.48090047, 0, 0, 0, 0.6715765, 0, 0, 0, 0.5948247, 0, 0.523008, 0)
 mesh = SubResource("ArrayMesh_aecys")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_437tg")
 
-[node name="Rock4" type="MeshInstance3D" parent="."]
+[node name="Rock4" type="MeshInstance3D" parent="." unique_id=328258437]
 transform = Transform3D(0.25139394, 0, 0, 0, 0.36008364, 0, 0, 0, 0.26648238, 0, 0.13012445, 0)
 mesh = SubResource("ArrayMesh_7y4kt")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_7y4kt")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1533060361]
 emitting = false
 amount = 1
 one_shot = true

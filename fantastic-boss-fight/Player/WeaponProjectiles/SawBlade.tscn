@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhwj1y1v7bnpk"]
+[gd_scene format=3 uid="uid://bhwj1y1v7bnpk"]
 
 [ext_resource type="Script" uid="uid://dj53draupmjwa" path="res://Player/WeaponProjectiles/SawBlade.gd" id="1_6juo4"]
 [ext_resource type="Shader" uid="uid://dpqvjo58nkoj2" path="res://GPUTrail-main/shaders/trail.gdshader" id="2_rxu3b"]
@@ -48,40 +48,40 @@ shader_parameter/flags = 40
 [sub_resource type="QuadMesh" id="QuadMesh_b838h"]
 material = SubResource("ShaderMaterial_3lhch")
 
-[node name="SawBlade" type="CharacterBody3D"]
+[node name="SawBlade" type="CharacterBody3D" unique_id=1512671767]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_6juo4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=504159162]
 mesh = SubResource("CylinderMesh_fkjgd")
 
-[node name="EnvironmentCollision" type="CollisionShape3D" parent="."]
+[node name="EnvironmentCollision" type="CollisionShape3D" parent="." unique_id=163507207]
 shape = SubResource("CylinderShape3D_6juo4")
 
-[node name="EnemyDamage" type="Area3D" parent="."]
+[node name="EnemyDamage" type="Area3D" parent="." unique_id=495281039]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyDamage"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyDamage" unique_id=1215345070]
 shape = SubResource("CylinderShape3D_wpmvy")
 
-[node name="EnvironmentRay" type="RayCast3D" parent="."]
+[node name="EnvironmentRay" type="RayCast3D" parent="." unique_id=107170620]
 visible = false
 target_position = Vector3(0, 0, -2.5)
 
-[node name="Pivot" type="Node3D" parent="."]
+[node name="Pivot" type="Node3D" parent="." unique_id=1990352754]
 
-[node name="VelocityDirection" type="Node3D" parent="Pivot"]
+[node name="VelocityDirection" type="Node3D" parent="Pivot" unique_id=1511957745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="SawBreak" type="AudioStreamPlayer3D" parent="."]
+[node name="SawBreak" type="AudioStreamPlayer3D" parent="." unique_id=1654532932]
 stream = ExtResource("2_t66yn")
 volume_db = -5.0
 max_db = 1.0
 max_distance = 150.0
 
-[node name="GPUTrail3D" type="GPUParticles3D" parent="."]
+[node name="GPUTrail3D" type="GPUParticles3D" parent="." unique_id=1818547970]
 transform = Transform3D(-8.74228e-09, 0.2, -8.74228e-09, 0, -8.74228e-09, -0.2, -0.2, -8.74228e-09, 3.82137e-16, 0, 0, 0)
 amount = 15
 lifetime = 15.0

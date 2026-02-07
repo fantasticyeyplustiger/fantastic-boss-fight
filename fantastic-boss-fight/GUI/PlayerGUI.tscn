@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://15asvdbdowoj"]
+[gd_scene format=3 uid="uid://15asvdbdowoj"]
 
 [ext_resource type="Script" uid="uid://3kifdeaxlnvs" path="res://GUI/PlayerGUI.gd" id="1_nr326"]
 [ext_resource type="Texture2D" uid="uid://dx21s4tbptwhn" path="res://ParticleTextures/Crosshair.png" id="2_wejk4"]
 
-[node name="PlayerGUI" type="Control"]
+[node name="PlayerGUI" type="Control" unique_id=828165309]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,23 +12,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nr326")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 2
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1392413605]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 938.0
 offset_right = 358.0
 offset_bottom = 1020.0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-layout_mode = 2
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1698522687]
+layout_mode = 0
 offset_left = 1562.0
 offset_top = 938.0
 offset_right = 1860.0
 offset_bottom = 1020.0
 color = Color(0, 0, 0, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1290600799]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -37,26 +37,26 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 60
 
-[node name="HealthContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HealthContainer" type="HBoxContainer" parent="MarginContainer" unique_id=133480102]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="Label" type="Label" parent="MarginContainer/HealthContainer"]
+[node name="Label" type="Label" parent="MarginContainer/HealthContainer" unique_id=599761545]
 layout_mode = 2
 theme_override_font_sizes/font_size = 59
 text = "HP : "
 
-[node name="ParryContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="ParryContainer" type="HBoxContainer" parent="MarginContainer" unique_id=672060063]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Label" type="Label" parent="MarginContainer/ParryContainer"]
+[node name="Label" type="Label" parent="MarginContainer/ParryContainer" unique_id=396927173]
 layout_mode = 2
 theme_override_font_sizes/font_size = 59
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=447896197]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -65,17 +65,17 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 145
 
-[node name="StaminaContainer" type="HBoxContainer" parent="MarginContainer2"]
+[node name="StaminaContainer" type="HBoxContainer" parent="MarginContainer2" unique_id=2067684281]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="Label" type="Label" parent="MarginContainer2/StaminaContainer"]
+[node name="Label" type="Label" parent="MarginContainer2/StaminaContainer" unique_id=568289649]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "STAMINA :"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1896795356]
 self_modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(960, 540)
 scale = Vector2(0.05, 0.05)

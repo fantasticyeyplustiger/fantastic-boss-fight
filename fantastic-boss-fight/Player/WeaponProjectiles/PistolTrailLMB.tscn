@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xuyjhqi1kyid"]
+[gd_scene format=3 uid="uid://xuyjhqi1kyid"]
 
 [ext_resource type="Script" uid="uid://7ilf0425idih" path="res://Player/WeaponProjectiles/HitscanTrail.gd" id="1_mn650"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_bf8nx"]
@@ -104,23 +104,21 @@ emission = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_bf8nx")
 size = Vector2(0.1, 0.7)
 
-[node name="PistolTrail" type="MeshInstance3D"]
+[node name="PistolTrail" type="MeshInstance3D" unique_id=84863506]
 material_override = SubResource("StandardMaterial3D_d22l6")
 script = ExtResource("1_mn650")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_01dsd")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1802647369]
+libraries/ = SubResource("AnimationLibrary_01dsd")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=456069368]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 visible = false
 modulate = Color(1, 1, 0.745098, 1)
 pixel_size = 0.002
 texture = ExtResource("2_bf8nx")
 
-[node name="Environment" type="GPUParticles3D" parent="."]
+[node name="Environment" type="GPUParticles3D" parent="." unique_id=826033148]
 emitting = false
 lifetime = 4.0
 one_shot = true
@@ -129,7 +127,7 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_mn650")
 draw_pass_1 = SubResource("QuadMesh_6y3dw")
 
-[node name="Enemy" type="GPUParticles3D" parent="."]
+[node name="Enemy" type="GPUParticles3D" parent="." unique_id=8193537]
 emitting = false
 amount = 6
 lifetime = 4.0

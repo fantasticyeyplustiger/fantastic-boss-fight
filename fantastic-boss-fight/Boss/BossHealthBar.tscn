@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b14e2pje0048t"]
+[gd_scene format=3 uid="uid://b14e2pje0048t"]
 
 [ext_resource type="FontFile" uid="uid://dha64xubkk3ux" path="res://VCR_OSD_MONO_1.001.ttf" id="1_4ifh1"]
 [ext_resource type="Script" uid="uid://bnj0pso2rp7jm" path="res://Boss/BossHealthBar.gd" id="1_jk6pg"]
@@ -51,7 +51,7 @@ corner_detail = 1
 shadow_color = Color(0, 0, 0, 0)
 anti_aliasing = false
 
-[node name="BossHealthBar" type="Control"]
+[node name="BossHealthBar" type="Control" unique_id=1205563785]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,7 +61,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_jk6pg")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=950819609]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -70,11 +70,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 60
 theme_override_constants/margin_bottom = 980
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=679214527]
 layout_mode = 2
 color = Color(0.0980392, 0.0980392, 0.0980392, 0.588235)
 
-[node name="TransitionHealth1" type="ProgressBar" parent="."]
+[node name="TransitionHealth1" type="ProgressBar" parent="." unique_id=1154141049]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 30.0
@@ -85,7 +85,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_1cexp")
 value = 100.0
 show_percentage = false
 
-[node name="HealthBar1" type="ProgressBar" parent="."]
+[node name="HealthBar1" type="ProgressBar" parent="." unique_id=632874894]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 30.0
@@ -96,7 +96,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_4c0ii")
 value = 100.0
 show_percentage = false
 
-[node name="TransitionHealth2" type="ProgressBar" parent="."]
+[node name="TransitionHealth2" type="ProgressBar" parent="." unique_id=1718549974]
 visible = false
 layout_mode = 0
 offset_left = 100.0
@@ -108,7 +108,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_b8sgh")
 value = 100.0
 show_percentage = false
 
-[node name="HealthBar2" type="ProgressBar" parent="."]
+[node name="HealthBar2" type="ProgressBar" parent="." unique_id=562319820]
 visible = false
 layout_mode = 0
 offset_left = 100.0
@@ -120,7 +120,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_jk6pg")
 value = 100.0
 show_percentage = false
 
-[node name="MarginContainer2" type="MarginContainer" parent="."]
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1811410479]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -129,12 +129,12 @@ theme_override_constants/margin_top = 13
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 980
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2" unique_id=1016919797]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="MarginContainer2/HBoxContainer" unique_id=837086866]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)

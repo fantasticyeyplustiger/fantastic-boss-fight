@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://ccwy8pjw4qgfs"]
+[gd_scene format=3 uid="uid://ccwy8pjw4qgfs"]
 
 [ext_resource type="Script" uid="uid://dt4dnl2aj1nh" path="res://Boss/IceCreamBoss.gd" id="1_xtogi"]
 [ext_resource type="ArrayMesh" uid="uid://2qscve14bh6r" path="res://Boss/BossOBJ/Cape.obj" id="2_8ujus"]
@@ -1309,41 +1309,41 @@ _data = {
 &"slam_to_reset": SubResource("Animation_3q8av")
 }
 
-[node name="Boss" type="CharacterBody3D"]
+[node name="Boss" type="CharacterBody3D" unique_id=1315194202]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 collision_layer = 0
 script = ExtResource("1_xtogi")
 
-[node name="Cape" type="MeshInstance3D" parent="."]
+[node name="Cape" type="MeshInstance3D" parent="." unique_id=1438480885]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.4, 0)
 mesh = ExtResource("2_8ujus")
 surface_material_override/0 = SubResource("StandardMaterial3D_exinx")
 
-[node name="HeadPivot" type="Node3D" parent="."]
+[node name="HeadPivot" type="Node3D" parent="." unique_id=1371277493]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 6.8, 0)
 
-[node name="Head" type="MeshInstance3D" parent="HeadPivot"]
+[node name="Head" type="MeshInstance3D" parent="HeadPivot" unique_id=1364585744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 mesh = ExtResource("4_p0rjq")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_c22uo")
 surface_material_override/1 = SubResource("StandardMaterial3D_vao3h")
 
-[node name="Torso" type="MeshInstance3D" parent="."]
+[node name="Torso" type="MeshInstance3D" parent="." unique_id=2021411396]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.4, 0)
 mesh = ExtResource("6_i6vrr")
 surface_material_override/0 = SubResource("StandardMaterial3D_7utkh")
 
-[node name="LeftArmPivot" type="Node3D" parent="Torso"]
+[node name="LeftArmPivot" type="Node3D" parent="Torso" unique_id=2104555045]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56, 0, 0)
 
-[node name="LeftArm" type="MeshInstance3D" parent="Torso/LeftArmPivot"]
+[node name="LeftArm" type="MeshInstance3D" parent="Torso/LeftArmPivot" unique_id=26257028]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56, 0, 0)
 mesh = ExtResource("8_10u17")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_871t7")
 
-[node name="SideTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+[node name="SideTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot" unique_id=1284462133]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.481, -0.591, 0)
 visible = false
 amount = 1
@@ -1353,13 +1353,13 @@ process_material = SubResource("ShaderMaterial_48a3m")
 draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 1
-length_seconds = 0.0166667
+length_seconds = 0.016666666666666666
 color_ramp = SubResource("GradientTexture1D_nospa")
 curve = SubResource("CurveTexture_f8v66")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="BehindTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+[node name="BehindTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot" unique_id=11758228]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0.0282638, -0.591, 0.402593)
 visible = false
 amount = 1
@@ -1369,13 +1369,13 @@ process_material = SubResource("ShaderMaterial_48a3m")
 draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 1
-length_seconds = 0.0166667
+length_seconds = 0.016666666666666666
 color_ramp = SubResource("GradientTexture1D_3q8av")
 curve = SubResource("CurveTexture_bu51h")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="FistTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot"]
+[node name="FistTrail" type="GPUParticles3D" parent="Torso/LeftArmPivot" unique_id=1459314692]
 transform = Transform3D(-1.74846e-08, 0.4, -1.74846e-08, 0, -1.74846e-08, -0.4, -0.4, -1.74846e-08, 7.64274e-16, -0.01, -0.452, -0.3)
 visible = false
 amount = 1
@@ -1385,36 +1385,36 @@ process_material = SubResource("ShaderMaterial_48a3m")
 draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 1
-length_seconds = 0.0166667
+length_seconds = 0.016666666666666666
 color_ramp = SubResource("GradientTexture1D_f8v66")
 curve = SubResource("CurveTexture_bypl5")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="LeftLegPivot" type="Node3D" parent="Torso"]
+[node name="LeftLegPivot" type="Node3D" parent="Torso" unique_id=999757308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, -0.748, 0)
 
-[node name="LeftLeg" type="MeshInstance3D" parent="Torso/LeftLegPivot"]
+[node name="LeftLeg" type="MeshInstance3D" parent="Torso/LeftLegPivot" unique_id=1657853946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.174658, 0.747603, 0)
 mesh = ExtResource("10_48a3m")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3n4ec")
 
-[node name="SpellBook" type="MeshInstance3D" parent="Torso/LeftLegPivot/LeftLeg"]
+[node name="SpellBook" type="MeshInstance3D" parent="Torso/LeftLegPivot/LeftLeg" unique_id=1773310266]
 mesh = ExtResource("12_bu51h")
 skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_m51oy")
 
-[node name="RightArmPivot" type="Node3D" parent="Torso"]
+[node name="RightArmPivot" type="Node3D" parent="Torso" unique_id=1112783544]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56, 0, 0)
 
-[node name="RightArm" type="MeshInstance3D" parent="Torso/RightArmPivot"]
+[node name="RightArm" type="MeshInstance3D" parent="Torso/RightArmPivot" unique_id=1778305689]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56, 0, 0)
 mesh = ExtResource("14_jr5wi")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_p2cc3")
 
-[node name="SideTrail" type="GPUParticles3D" parent="Torso/RightArmPivot"]
+[node name="SideTrail" type="GPUParticles3D" parent="Torso/RightArmPivot" unique_id=127488901]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.481437, -0.591062, 0)
 visible = false
 amount = 1
@@ -1424,13 +1424,13 @@ process_material = SubResource("ShaderMaterial_48a3m")
 draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 1
-length_seconds = 0.0166667
+length_seconds = 0.016666666666666666
 color_ramp = SubResource("GradientTexture1D_bu51h")
 curve = SubResource("CurveTexture_jr5wi")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="FistTrail" type="GPUParticles3D" parent="Torso/RightArmPivot"]
+[node name="FistTrail" type="GPUParticles3D" parent="Torso/RightArmPivot" unique_id=210893086]
 transform = Transform3D(-1.74846e-08, 0.4, -1.74846e-08, 0, -1.74846e-08, -0.4, -0.4, -1.74846e-08, 7.64274e-16, -0.01, -0.452, -0.3)
 visible = false
 amount = 1
@@ -1440,22 +1440,22 @@ process_material = SubResource("ShaderMaterial_48a3m")
 draw_pass_1 = SubResource("QuadMesh_0s803")
 script = ExtResource("18_3q8av")
 length = 1
-length_seconds = 0.0166667
+length_seconds = 0.016666666666666666
 color_ramp = SubResource("GradientTexture1D_kxks5")
 curve = SubResource("CurveTexture_c22uo")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="RightLegPivot" type="Node3D" parent="Torso"]
+[node name="RightLegPivot" type="Node3D" parent="Torso" unique_id=1470582760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, -0.748, 0)
 
-[node name="RightLeg" type="MeshInstance3D" parent="Torso/RightLegPivot"]
+[node name="RightLeg" type="MeshInstance3D" parent="Torso/RightLegPivot" unique_id=2038781353]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.175, 0.748, 0)
 mesh = ExtResource("16_0s803")
 skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_qcpgp")
 
-[node name="Trail" type="GPUParticles3D" parent="Torso"]
+[node name="Trail" type="GPUParticles3D" parent="Torso" unique_id=1207471578]
 amount = 60
 lifetime = 60.0
 explosiveness = 1.0
@@ -1470,7 +1470,7 @@ curve = SubResource("CurveTexture_bu51h")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="Trail2" type="GPUParticles3D" parent="Torso"]
+[node name="Trail2" type="GPUParticles3D" parent="Torso" unique_id=1731542287]
 transform = Transform3D(-2.18557e-08, 0.5, -2.18557e-08, 0, -2.18557e-08, -0.5, -0.5, -2.18557e-08, 9.55343e-16, 0, 0, 0)
 amount = 45
 lifetime = 45.0
@@ -1486,78 +1486,77 @@ curve = SubResource("CurveTexture_bu51h")
 _defaults_have_been_set = true
 metadata/_custom_type_script = "uid://cr8knack2mui6"
 
-[node name="RightHook" type="Area3D" parent="."]
+[node name="RightHook" type="Area3D" parent="." unique_id=1778634077]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
 knockback_power = 100.0
 launch_power = 1.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHook"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHook" unique_id=1209850607]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.908875, 5.88119, -4.81201)
 visible = false
 shape = SubResource("BoxShape3D_p0rjq")
 disabled = true
 
-[node name="LeftUppercut" type="Area3D" parent="."]
+[node name="LeftUppercut" type="Area3D" parent="." unique_id=2114143592]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
 knockback_power = 10.0
 launch_power = 30.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftUppercut"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftUppercut" unique_id=1422035165]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.432165, 7.64357, -4.81201)
 visible = false
 shape = SubResource("BoxShape3D_56y8k")
 disabled = true
 
-[node name="Slam" type="Area3D" parent="."]
+[node name="Slam" type="Area3D" parent="." unique_id=1002451779]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
 knockback_power = 20.0
 launch_power = 30.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Slam"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slam" unique_id=1375315312]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.9073, -4.057)
 visible = false
 shape = SubResource("CylinderShape3D_10u17")
 disabled = true
 
-[node name="AirChop" type="Area3D" parent="."]
+[node name="AirChop" type="Area3D" parent="." unique_id=455180298]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
 knockback_power = 15.0
 launch_power = -60.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AirChop"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AirChop" unique_id=2103712383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.39433, -4.057)
 visible = false
 shape = SubResource("BoxShape3D_10u17")
 disabled = true
 
-[node name="Clap" type="Area3D" parent="."]
+[node name="Clap" type="Area3D" parent="." unique_id=2007526414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("18_p0rjq")
 knockback_power = 80.0
 launch_power = 5.0
-parryable = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clap"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Clap" unique_id=732619707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.394, -8.057)
 visible = false
 shape = SubResource("BoxShape3D_10u17")
 disabled = true
 
-[node name="EnviromentCollision" type="CollisionShape3D" parent="."]
+[node name="EnviromentCollision" type="CollisionShape3D" parent="." unique_id=2134837084]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.01816, -0.0121338)
 shape = SubResource("BoxShape3D_xtogi")
 
-[node name="Aura" type="GPUParticles3D" parent="."]
+[node name="Aura" type="GPUParticles3D" parent="." unique_id=477547926]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 emitting = false
 amount = 32
@@ -1566,7 +1565,7 @@ explosiveness = 0.1
 process_material = SubResource("ParticleProcessMaterial_i6vrr")
 draw_pass_1 = SubResource("QuadMesh_f8v66")
 
-[node name="Parryable" type="GPUParticles3D" parent="."]
+[node name="Parryable" type="GPUParticles3D" parent="." unique_id=1749072975]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 emitting = false
 amount = 64
@@ -1575,25 +1574,23 @@ speed_scale = 2.0
 process_material = SubResource("ParticleProcessMaterial_p0rjq")
 draw_pass_1 = SubResource("QuadMesh_56y8k")
 
-[node name="Animations" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_b0eo8")
-}
+[node name="Animations" type="AnimationPlayer" parent="." unique_id=1964346256]
+libraries/ = SubResource("AnimationLibrary_b0eo8")
 
-[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+[node name="DashSFX" type="AudioStreamPlayer" parent="." unique_id=166554522]
 stream = ExtResource("24_3q8av")
 volume_db = -10.0
 pitch_scale = 0.2
 
-[node name="CraterSFX" type="AudioStreamPlayer" parent="."]
+[node name="CraterSFX" type="AudioStreamPlayer" parent="." unique_id=385283444]
 stream = ExtResource("25_nospa")
 volume_db = -8.0
 pitch_scale = 3.0
 
-[node name="ExplosionSFX" type="AudioStreamPlayer" parent="."]
+[node name="ExplosionSFX" type="AudioStreamPlayer" parent="." unique_id=507980887]
 stream = ExtResource("25_48a3m")
 volume_db = -8.0
 
-[node name="AirExplosionSFX" type="AudioStreamPlayer" parent="."]
+[node name="AirExplosionSFX" type="AudioStreamPlayer" parent="." unique_id=1892178692]
 stream = ExtResource("27_bu51h")
 volume_db = -15.0

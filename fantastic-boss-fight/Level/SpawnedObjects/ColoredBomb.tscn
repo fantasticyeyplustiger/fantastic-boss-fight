@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bl12wgv05m73y"]
+[gd_scene format=3 uid="uid://bl12wgv05m73y"]
 
 [ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="1_325l1"]
 [ext_resource type="Script" uid="uid://l0r3ihhj1032" path="res://Level/SpawnedObjects/ColoredBomb.gd" id="1_418vc"]
@@ -162,28 +162,28 @@ _data = {
 &"explode": SubResource("Animation_8i2xh")
 }
 
-[node name="ColoredBomb" type="Node3D"]
+[node name="ColoredBomb" type="Node3D" unique_id=2059068161]
 script = ExtResource("1_418vc")
 
-[node name="Sphere" type="MeshInstance3D" parent="."]
+[node name="Sphere" type="MeshInstance3D" parent="." unique_id=1497129556]
 mesh = SubResource("SphereMesh_djslm")
 surface_material_override/0 = SubResource("StandardMaterial3D_kwn00")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." unique_id=1534204361]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_325l1")
 knockback_power = 15.0
 
-[node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox" type="CollisionShape3D" parent="Area3D" unique_id=1454322098]
 shape = SubResource("SphereShape3D_418vc")
 
-[node name="BombShockwavePart" type="MeshInstance3D" parent="."]
+[node name="BombShockwavePart" type="MeshInstance3D" parent="." unique_id=1874494910]
 transform = Transform3D(0.45, 0, 0, 0, 0.3, 0, 0, 0, 0.45, 0, 0.055, 0)
 mesh = ExtResource("3_kwn00")
 surface_material_override/0 = SubResource("StandardMaterial3D_gveoc")
 
-[node name="Shockwave" type="GPUParticles3D" parent="."]
+[node name="Shockwave" type="GPUParticles3D" parent="." unique_id=1387498195]
 emitting = false
 amount = 1
 one_shot = true
@@ -191,9 +191,7 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_qy8m4")
 draw_pass_1 = SubResource("QuadMesh_87y4g")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_fcbp6")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1312099948]
+libraries/ = SubResource("AnimationLibrary_fcbp6")
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

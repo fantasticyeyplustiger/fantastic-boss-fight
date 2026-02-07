@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3qc4bb43kwmw"]
+[gd_scene format=3 uid="uid://d3qc4bb43kwmw"]
 
 [ext_resource type="Script" uid="uid://b6m81sojar1gt" path="res://Player/WeaponProjectiles/ExplosiveShotgunPellet.gd" id="1_doh2v"]
 [ext_resource type="Texture2D" uid="uid://153guqwmo8f2" path="res://ParticleTextures/FlashTwinkle.png" id="2_op3i2"]
@@ -39,18 +39,18 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_3di4m")
 size = Vector2(0.4, 0.4)
 
-[node name="ExplosiveShotgunPellet" type="Node3D"]
+[node name="ExplosiveShotgunPellet" type="Node3D" unique_id=604301022]
 script = ExtResource("1_doh2v")
 
-[node name="LocalMovement" type="Node3D" parent="."]
+[node name="LocalMovement" type="Node3D" parent="." unique_id=1649575362]
 
-[node name="PelletTrail" type="MeshInstance3D" parent="LocalMovement"]
+[node name="PelletTrail" type="MeshInstance3D" parent="LocalMovement" unique_id=631586925]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 visible = false
 mesh = SubResource("QuadMesh_doh2v")
 skeleton = NodePath("../..")
 
-[node name="Pellet" type="GPUParticles3D" parent="LocalMovement"]
+[node name="Pellet" type="GPUParticles3D" parent="LocalMovement" unique_id=953371227]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
 amount = 1
 lifetime = 15.0
@@ -58,7 +58,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_i1lct")
 draw_pass_1 = SubResource("QuadMesh_fjg5h")
 
-[node name="EnemyDetection" type="RayCast3D" parent="LocalMovement"]
+[node name="EnemyDetection" type="RayCast3D" parent="LocalMovement" unique_id=1306325669]
 target_position = Vector3(0, 0, -1.2)
 collision_mask = 5
 collide_with_areas = true

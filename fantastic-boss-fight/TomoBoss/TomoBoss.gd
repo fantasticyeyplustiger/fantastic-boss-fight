@@ -85,17 +85,17 @@ func choose_attack() -> void:
 	
 	prev_i = i
 	
-	#match i:
-		#0: await attack_combo()
-		#1: await clap()
-		#2: await face_kick()
-		#3: await grab()
-		#4: await stomp()
-		#5: await chop()
-		#6: await low_kick()
-		#7: await large_explosion()
+	match i:
+		0: await attack_combo()
+		1: await clap()
+		2: await face_kick()
+		3: await grab()
+		4: await stomp()
+		5: await chop()
+		6: await low_kick()
+		7: await large_explosion()
 	
-	await attack_combo()
+	#await attack_combo()
 	#await clap()
 	#await face_kick()
 	#await grab()

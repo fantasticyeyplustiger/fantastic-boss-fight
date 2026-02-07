@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://clgqnfx0ro43d"]
+[gd_scene format=4 uid="uid://clgqnfx0ro43d"]
 
 [ext_resource type="Script" uid="uid://y33w333eria" path="res://Punch.gd" id="1_b1ie1"]
 [ext_resource type="AudioStream" uid="uid://gwhcrnbik0wj" path="res://SFX/BaseSFX/ParryPunch.ogg" id="2_ipp5a"]
@@ -1177,14 +1177,14 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_kjy0u"]
 radius = 5.0
 
-[node name="LeftHand" type="Node3D"]
+[node name="LeftHand" type="Node3D" unique_id=1319817982]
 process_mode = 3
 script = ExtResource("1_b1ie1")
 
-[node name="Armature" type="Node3D" parent="."]
+[node name="Armature" type="Node3D" parent="." unique_id=2075524199]
 process_mode = 1
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=592113189]
 bones/0/name = "Arm.L"
 bones/0/parent = -1
 bones/0/rest = Transform3D(-0.016971, 0.999856, 5.29913e-05, -0.999851, -0.0169711, 0.00312199, 0.00312244, -1.10504e-10, 0.999995, -0.36377, 0.00440046, -0.00275985)
@@ -1312,62 +1312,61 @@ bones/17/position = Vector3(-6.1118e-10, 0.0170136, 7.04858e-10)
 bones/17/rotation = Quaternion(-0.0526384, -0.186983, -0.755526, 0.625657)
 bones/17/scale = Vector3(1, 1, 1)
 
-[node name="LeftArm" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+[node name="LeftArm" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=232842834]
 mesh = SubResource("ArrayMesh_6y0gc")
 skin = SubResource("Skin_kjy0u")
+skeleton = NodePath("..")
 surface_material_override/0 = SubResource("StandardMaterial3D_2yu3f")
 
-[node name="ShockwavePosition" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+[node name="ShockwavePosition" type="BoneAttachment3D" parent="Armature/Skeleton3D" unique_id=1183977224]
 transform = Transform3D(0.0002769961, 0.99836826, -0.057101637, 0.000638538, 0.057101447, 0.99836826, 0.9999998, -0.00031307206, -0.00062180567, -0.06761338, 0.004400273, -0.0029396138)
 bone_name = "Wrist.L"
 bone_idx = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=60806103]
 process_mode = 1
-libraries = {
-&"": SubResource("AnimationLibrary_55y55")
-}
+libraries/ = SubResource("AnimationLibrary_55y55")
 speed_scale = 1.5
 
-[node name="SFX" type="Node" parent="."]
+[node name="SFX" type="Node" parent="." unique_id=2105118452]
 process_mode = 3
 
-[node name="ParryPunch" type="AudioStreamPlayer" parent="SFX"]
+[node name="ParryPunch" type="AudioStreamPlayer" parent="SFX" unique_id=513716500]
 stream = ExtResource("2_ipp5a")
 volume_db = -6.0
 max_polyphony = 2
 
-[node name="HeavyPunch" type="AudioStreamPlayer" parent="SFX"]
+[node name="HeavyPunch" type="AudioStreamPlayer" parent="SFX" unique_id=192395624]
 stream = ExtResource("3_tqupd")
 volume_db = -6.0
 max_polyphony = 2
 
-[node name="HeavyPunchShockwave" type="AudioStreamPlayer" parent="SFX"]
+[node name="HeavyPunchShockwave" type="AudioStreamPlayer" parent="SFX" unique_id=293499191]
 stream = ExtResource("6_kjy0u")
 volume_db = -6.0
 max_polyphony = 2
 
-[node name="HeavyPunchReload" type="AudioStreamPlayer" parent="SFX"]
+[node name="HeavyPunchReload" type="AudioStreamPlayer" parent="SFX" unique_id=40886327]
 stream = ExtResource("7_2yu3f")
 volume_db = -6.0
 max_polyphony = 2
 
-[node name="Parry" type="AudioStreamPlayer" parent="SFX"]
+[node name="Parry" type="AudioStreamPlayer" parent="SFX" unique_id=1055101518]
 stream = ExtResource("3_8kf5x")
 volume_db = -6.0
 max_polyphony = 2
 
-[node name="Shockwave" type="Area3D" parent="."]
+[node name="Shockwave" type="Area3D" parent="." unique_id=186835811]
 visible = false
 collision_layer = 32
 collision_mask = 0
 
-[node name="Hitbox" type="CollisionShape3D" parent="Shockwave"]
+[node name="Hitbox" type="CollisionShape3D" parent="Shockwave" unique_id=1947404731]
 visible = false
 shape = SubResource("SphereShape3D_kjy0u")
 disabled = true
 
-[node name="ParryFlash" type="ColorRect" parent="."]
+[node name="ParryFlash" type="ColorRect" parent="." unique_id=1192914698]
 visible = false
 offset_right = 1920.0
 offset_bottom = 1080.0

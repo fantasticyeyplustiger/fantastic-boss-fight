@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://de7s3ueac0yyk"]
+[gd_scene format=3 uid="uid://de7s3ueac0yyk"]
 
 [ext_resource type="Script" uid="uid://87ffwylcmuwn" path="res://Level/SpawnedObjects/ParticleShockwave.gd" id="1_o8g84"]
 [ext_resource type="Texture2D" uid="uid://u2crtdumyygd" path="res://ParticleTextures/BombShockwave.png" id="1_x7cs8"]
@@ -63,16 +63,14 @@ _data = {
 &"shockwave": SubResource("Animation_o8g84")
 }
 
-[node name="ParticleShockwave" type="Node3D"]
+[node name="ParticleShockwave" type="Node3D" unique_id=1745828667]
 script = ExtResource("1_o8g84")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_oa688")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=1637167709]
+libraries/ = SubResource("AnimationLibrary_oa688")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.05, 0, 0, 0, -2.18557e-09, -0.05, 0, 0.05, -2.18557e-09, 0, 0, 0)
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=551092850]
+transform = Transform3D(0.05, 0, 0, 0, -2.1855695e-09, -0.05, 0, 0.05, -2.1855695e-09, 0, 0, 0)
 pixel_size = 0.002
 billboard = 1
 texture = ExtResource("1_x7cs8")

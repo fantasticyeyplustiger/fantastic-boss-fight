@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhio6ur3mq3ol"]
+[gd_scene format=3 uid="uid://dhio6ur3mq3ol"]
 
 [ext_resource type="Script" uid="uid://dt4fgiwlsna0x" path="res://Level/SpawnedObjects/Shockwave.gd" id="1_xlq6t"]
 
@@ -95,16 +95,14 @@ _data = {
 &"shockwave": SubResource("Animation_e5xt6")
 }
 
-[node name="AirShockwave" type="MeshInstance3D"]
+[node name="AirShockwave" type="MeshInstance3D" unique_id=1754488779]
 cast_shadow = 0
 mesh = SubResource("TorusMesh_bj5n8")
 surface_material_override/0 = SubResource("StandardMaterial3D_xlq6t")
 script = ExtResource("1_xlq6t")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_q2kbe")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=807677560]
+libraries/ = SubResource("AnimationLibrary_q2kbe")
 speed_scale = 2.5
 
 [connection signal="animation_finished" from="Animation" to="." method="destroy_self"]

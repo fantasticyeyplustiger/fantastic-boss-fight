@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://s6fljpqswrgc"]
+[gd_scene format=3 uid="uid://s6fljpqswrgc"]
 
 [ext_resource type="Script" uid="uid://d1k8dqtvhim42" path="res://Player/WeaponExplosions/PistolExplosion.gd" id="1_0qmj6"]
 
@@ -151,33 +151,31 @@ _data = {
 &"explode": SubResource("Animation_j1bfy")
 }
 
-[node name="PistolExplosion" type="Node3D"]
+[node name="PistolExplosion" type="Node3D" unique_id=1727226245]
 script = ExtResource("1_0qmj6")
 
-[node name="ExplosionMesh" type="Node3D" parent="."]
+[node name="ExplosionMesh" type="Node3D" parent="." unique_id=1387862180]
 
-[node name="Core" type="MeshInstance3D" parent="ExplosionMesh"]
+[node name="Core" type="MeshInstance3D" parent="ExplosionMesh" unique_id=865515841]
 mesh = SubResource("SphereMesh_sikia")
 skeleton = NodePath("../..")
 
-[node name="InnerSphere" type="MeshInstance3D" parent="ExplosionMesh"]
+[node name="InnerSphere" type="MeshInstance3D" parent="ExplosionMesh" unique_id=629779843]
 mesh = SubResource("SphereMesh_qb6gk")
 skeleton = NodePath("../..")
 
-[node name="OuterSphere" type="MeshInstance3D" parent="ExplosionMesh"]
+[node name="OuterSphere" type="MeshInstance3D" parent="ExplosionMesh" unique_id=417468532]
 mesh = SubResource("SphereMesh_mweg2")
 skeleton = NodePath("../InnerSphere")
 
-[node name="Hitbox" type="Area3D" parent="."]
+[node name="Hitbox" type="Area3D" parent="." unique_id=1477030465]
 collision_layer = 32
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=122771309]
 shape = SubResource("SphereShape3D_0qmj6")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_r28pd")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1916991598]
+libraries/ = SubResource("AnimationLibrary_r28pd")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="destroy_self"]

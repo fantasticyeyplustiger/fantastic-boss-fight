@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc2xenywtkenk"]
+[gd_scene format=3 uid="uid://dc2xenywtkenk"]
 
 [ext_resource type="PackedScene" uid="uid://bc2fo8p0qyxuj" path="res://Player/Player.tscn" id="1_a526m"]
 [ext_resource type="Texture2D" uid="uid://bn00gyyv4tuxd" path="res://Level/Tiles.png" id="1_cyxyq"]
@@ -28,90 +28,90 @@ albedo_texture = ExtResource("1_cyxyq")
 albedo_color = Color(0, 0, 0, 1)
 metallic_specular = 0.0
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" unique_id=267655823]
 script = ExtResource("1_i5eh5")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["background"]]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=250567336 groups=["background"]]
 environment = SubResource("Environment_r3cbp")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=372278595 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, -0.179595, 0)
 use_collision = true
 size = Vector3(150, 1, 150)
 material = SubResource("StandardMaterial3D_a526m")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1966894391 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, 88.8204, 0)
 use_collision = true
 size = Vector3(150, 1, 150)
 material = SubResource("StandardMaterial3D_a526m")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1089978996 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0.5, 44.4595, -75)
 transparency = 0.75
 use_collision = true
 size = Vector3(150, 270, 1)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=879723126 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 0, 44.4595, 75)
 transparency = 0.75
 use_collision = true
 size = Vector3(150, 270, 1)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=908443689 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, 75, 44.4595, 0)
 transparency = 0.75
 use_collision = true
 size = Vector3(1, 270, 150)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="." groups=["background"]]
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=1938777306 groups=["background"]]
 transform = Transform3D(1, 0, 0, 0, 0.329352, 0, 0, 0, 1, -75, 44.4595, 0)
 transparency = 0.75
 use_collision = true
 size = Vector3(1, 270, 150)
 material = SubResource("StandardMaterial3D_r3cbp")
 
-[node name="Player" parent="." instance=ExtResource("1_a526m")]
+[node name="Player" parent="." unique_id=454065042 instance=ExtResource("1_a526m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=26057321]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
-[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=450540391]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 7, 0)
 light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
-[node name="OmniLight3D5" type="OmniLight3D" parent="."]
+[node name="OmniLight3D5" type="OmniLight3D" parent="." unique_id=347662608]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 7, 0)
 light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1085663058]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 60)
 light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
-[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1609086976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -60)
 light_energy = 0.2
 omni_range = 150.0
 omni_attenuation = 0.2
 
-[node name="BOUND_ONE" type="Node3D" parent="."]
+[node name="BOUND_ONE" type="Node3D" parent="." unique_id=956913694]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 23)
 
-[node name="BOUND_TWO" type="Node3D" parent="."]
+[node name="BOUND_TWO" type="Node3D" parent="." unique_id=652049891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -23)
 
-[node name="TomoBoss" parent="." instance=ExtResource("3_cyxyq")]
+[node name="TomoBoss" parent="." unique_id=496588610 instance=ExtResource("3_cyxyq")]
 transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, -5)

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6gda610u3aa0"]
+[gd_scene format=3 uid="uid://b6gda610u3aa0"]
 
 [ext_resource type="Script" uid="uid://dtdkpvtmmg04e" path="res://Level/SpawnObject.gd" id="1_7rg07"]
 
-[node name="GlobalSpawner" type="Node3D"]
+[node name="GlobalSpawner" type="Node3D" unique_id=1234630417]
 script = ExtResource("1_7rg07")

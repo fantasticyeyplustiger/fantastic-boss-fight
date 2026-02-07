@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://7erj412jbk28"]
+[gd_scene format=4 uid="uid://7erj412jbk28"]
 
 [ext_resource type="Script" uid="uid://7feywl8ebvrn" path="res://Rocks/Disappear.gd" id="1_1i03f"]
 
@@ -78,81 +78,69 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1i03f")
 
-[node name="SpikyRockGroup" type="Node3D"]
+[node name="SpikyRockGroup" type="Node3D" unique_id=1088722105]
 script = ExtResource("1_1i03f")
 position_range = Vector3(0.3, 0.2, 0.3)
 rotation_range = Vector3(3, 6.28, 0.1)
 scale_range_one = Vector3(0.8, 1.5, 0.8)
 scale_range_two = Vector3(1.5, 2.5, 1.5)
 
-[node name="Rock1" type="MeshInstance3D" parent="."]
+[node name="Rock1" type="MeshInstance3D" parent="." unique_id=839194637]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 2.3815882, -0.6335728)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock2" type="MeshInstance3D" parent="."]
+[node name="Rock2" type="MeshInstance3D" parent="." unique_id=1413574579]
 transform = Transform3D(0.5945293, 0, 0, 0, 0.64241487, 0, 0, 0, 0.5692053, 0, 1.0355563, -0.6335728)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock3" type="MeshInstance3D" parent="."]
+[node name="Rock3" type="MeshInstance3D" parent="." unique_id=132390804]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 2.3815882, 0.7435205)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock4" type="MeshInstance3D" parent="."]
+[node name="Rock4" type="MeshInstance3D" parent="." unique_id=1476290921]
 transform = Transform3D(0.5945293, 0, 0, 0, 0.64241487, 0, 0, 0, 0.5692053, 0, 1.0355563, 0.7435205)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock5" type="MeshInstance3D" parent="."]
+[node name="Rock5" type="MeshInstance3D" parent="." unique_id=674294665]
 transform = Transform3D(0.6079164, 0, 0.7940009, 0, 0.9999999, 0, -0.7940009, 0, 0.6079163, -0.54670674, 2.3815882, -0.36360496)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock6" type="MeshInstance3D" parent="."]
+[node name="Rock6" type="MeshInstance3D" parent="." unique_id=329585238]
 transform = Transform3D(0.3614241, 0, 0.45194957, 0, 0.64241487, 0, -0.47205678, 0, 0.3460292, -0.54670674, 1.0355563, -0.36360496)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock7" type="MeshInstance3D" parent="."]
+[node name="Rock7" type="MeshInstance3D" parent="." unique_id=1094609716]
 transform = Transform3D(0.6079164, 0, 0.7940009, 0, 0.9999999, 0, -0.7940009, 0, 0.6079163, 0.54670674, 2.3815882, 0.47355264)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock8" type="MeshInstance3D" parent="."]
+[node name="Rock8" type="MeshInstance3D" parent="." unique_id=2100190530]
 transform = Transform3D(0.3614241, 0, 0.45194957, 0, 0.64241487, 0, -0.47205678, 0, 0.3460292, 0.54670674, 1.0355563, 0.47355264)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock9" type="MeshInstance3D" parent="."]
+[node name="Rock9" type="MeshInstance3D" parent="." unique_id=1368610441]
 transform = Transform3D(-0.4627546, 0, 0.88648623, 0, 0.9999999, 0, -0.88648635, 0, -0.46275467, -0.6103872, 2.3815882, 0.37360203)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock10" type="MeshInstance3D" parent="."]
+[node name="Rock10" type="MeshInstance3D" parent="." unique_id=495277173]
 transform = Transform3D(-0.27512112, 0, 0.5045926, 0, 0.6424148, 0, -0.52704203, 0, -0.2634024, -0.6103872, 1.0355563, 0.37360203)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock11" type="MeshInstance3D" parent="."]
+[node name="Rock11" type="MeshInstance3D" parent="." unique_id=619415989]
 transform = Transform3D(-0.4627546, 0, 0.88648623, 0, 0.9999999, 0, -0.88648635, 0, -0.46275467, 0.6103872, 2.3815882, -0.26365435)
 mesh = SubResource("ArrayMesh_vaxck")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")
 
-[node name="Rock12" type="MeshInstance3D" parent="."]
+[node name="Rock12" type="MeshInstance3D" parent="." unique_id=1440159317]
 transform = Transform3D(-0.27512112, 0, 0.5045926, 0, 0.6424148, 0, -0.52704203, 0, -0.2634024, 0.6103872, 1.0355563, -0.26365435)
 mesh = SubResource("ArrayMesh_itwlh")
-skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_o1n1r")

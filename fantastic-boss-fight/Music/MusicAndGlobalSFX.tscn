@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bu07mqa2acbq7"]
+[gd_scene format=3 uid="uid://bu07mqa2acbq7"]
 
 [ext_resource type="AudioStream" uid="uid://dt1f5chjkkgnv" path="res://Music/War - NoIntro.mp3" id="1_35syu"]
 
-[node name="MusicAndGlobalSFX" type="Node"]
+[node name="MusicAndGlobalSFX" type="Node" unique_id=17938305]
 
-[node name="BGM" type="AudioStreamPlayer" parent="."]
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=681796630]
 stream = ExtResource("1_35syu")
 volume_db = -10.0
 autoplay = true

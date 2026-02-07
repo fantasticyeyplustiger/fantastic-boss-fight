@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://ca75ar5gidsur"]
+[gd_scene format=4 uid="uid://ca75ar5gidsur"]
 
 [ext_resource type="Script" uid="uid://3fm0ca44mybj" path="res://Player/Weapons.gd" id="1_uvcyd"]
 [ext_resource type="Texture2D" uid="uid://bygjv3ox3gcr" path="res://Player/Imports/Hand.png" id="2_x4g0p"]
@@ -1700,12 +1700,12 @@ _data = {
 &"swap": SubResource("Animation_uvcyd")
 }
 
-[node name="RightHand" type="Node3D"]
+[node name="RightHand" type="Node3D" unique_id=2143405831]
 script = ExtResource("1_uvcyd")
 
-[node name="Armature" type="Node3D" parent="."]
+[node name="Armature" type="Node3D" parent="." unique_id=590557292]
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=541525975]
 bones/0/name = "Forearm.R"
 bones/0/parent = -1
 bones/0/rest = Transform3D(0.0182611, -0.999833, 3.20589e-08, 0.999833, 0.0182611, 1.89365e-06, -1.89392e-06, -2.52652e-09, 1, 0.22268, 0.00153778, -0.00298578)
@@ -1826,10 +1826,11 @@ bones/16/position = Vector3(-5.82077e-11, 0.0170136, -1.98088e-09)
 bones/16/rotation = Quaternion(-0.026288316, 0.03408261, 0.76889527, 0.6379244)
 bones/16/scale = Vector3(1, 1, 1)
 
-[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=589309737]
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_tvl1k")
 skin = SubResource("Skin_hab3w")
+skeleton = NodePath("..")
 "blend_shapes/Cartoony Crying" = 0.0
 "blend_shapes/Horizontal Line" = 0.0
 "blend_shapes/Cartoony Closed" = 0.0
@@ -1958,58 +1959,54 @@ skin = SubResource("Skin_hab3w")
 "blend_shapes/KK Mouth_eating_2_op" = 0.0
 surface_material_override/0 = SubResource("StandardMaterial3D_nonic")
 
-[node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D"]
+[node name="IndexFingerEnd" type="BoneAttachment3D" parent="Armature/Skeleton3D" unique_id=1310161540]
 transform = Transform3D(0.011431039, -0.99992174, 0.0050811647, 0.09189683, 0.00611044, 0.9957499, -0.99570304, -0.010915539, 0.09195947, -0.0806676, 0.031781163, -0.0029920596)
 bone_name = "Index3.R"
 bone_idx = 7
 
-[node name="FingerTip" type="Node3D" parent="Armature/Skeleton3D/IndexFingerEnd"]
+[node name="FingerTip" type="Node3D" parent="Armature/Skeleton3D/IndexFingerEnd" unique_id=2065603534]
 transform = Transform3D(1, 0, 0, 9.31323e-10, 1, -1.28057e-09, -2.23517e-08, -1.39698e-09, 1, 0.00255033, 0.0178092, -0.000344653)
 
-[node name="Animations" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_24vl1")
-}
+[node name="Animations" type="AnimationPlayer" parent="." unique_id=200027471]
+libraries/ = SubResource("AnimationLibrary_24vl1")
 
-[node name="SwapWeapon" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_nonic")
-}
+[node name="SwapWeapon" type="AnimationPlayer" parent="." unique_id=1208544081]
+libraries/ = SubResource("AnimationLibrary_nonic")
 
-[node name="RailgunPosition" type="Node3D" parent="."]
+[node name="RailgunPosition" type="Node3D" parent="." unique_id=734846498]
 transform = Transform3D(1, 0, -1.11759e-08, 2.98023e-07, 1, 0, -3.65078e-07, -1.41561e-07, 1, -0.163, -0.037, -0.091)
 
-[node name="SFX" type="Node3D" parent="."]
+[node name="SFX" type="Node3D" parent="." unique_id=1560347608]
 
-[node name="LMBPistol" type="AudioStreamPlayer" parent="SFX"]
+[node name="LMBPistol" type="AudioStreamPlayer" parent="SFX" unique_id=122370001]
 stream = ExtResource("10_su28h")
 volume_db = -10.0
 
-[node name="RMBPistol" type="AudioStreamPlayer" parent="SFX"]
+[node name="RMBPistol" type="AudioStreamPlayer" parent="SFX" unique_id=1081879218]
 stream = ExtResource("11_taf3w")
 volume_db = -10.0
 
-[node name="LMBRailgun" type="AudioStreamPlayer" parent="SFX"]
+[node name="LMBRailgun" type="AudioStreamPlayer" parent="SFX" unique_id=1754942696]
 stream = ExtResource("12_8uhl1")
 volume_db = -10.0
 
-[node name="LMBSaw" type="AudioStreamPlayer" parent="SFX"]
+[node name="LMBSaw" type="AudioStreamPlayer" parent="SFX" unique_id=518441475]
 stream = ExtResource("13_s6chb")
 volume_db = -5.0
 max_polyphony = 5
 
-[node name="LMBShotgun" type="AudioStreamPlayer" parent="SFX"]
+[node name="LMBShotgun" type="AudioStreamPlayer" parent="SFX" unique_id=1963964636]
 process_mode = 3
 stream = ExtResource("14_mc4ke")
 volume_db = -10.0
 max_polyphony = 5
 
-[node name="ShotgunFirstPump" type="AudioStreamPlayer" parent="SFX"]
+[node name="ShotgunFirstPump" type="AudioStreamPlayer" parent="SFX" unique_id=1130828021]
 stream = ExtResource("15_773jp")
 volume_db = -5.0
 max_polyphony = 5
 
-[node name="ShotgunSecondPump" type="AudioStreamPlayer" parent="SFX"]
+[node name="ShotgunSecondPump" type="AudioStreamPlayer" parent="SFX" unique_id=1611483683]
 stream = ExtResource("16_d4scr")
 volume_db = -5.0
 max_polyphony = 5

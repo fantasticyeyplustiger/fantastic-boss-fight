@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bc2fo8p0qyxuj"]
+[gd_scene format=3 uid="uid://bc2fo8p0qyxuj"]
 
 [ext_resource type="Script" uid="uid://onliinci2kj1" path="res://Player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://clgqnfx0ro43d" path="res://Player/LeftHand.tscn" id="2_0j2ni"]
@@ -20,108 +20,108 @@ height = 0.6
 [sub_resource type="SphereShape3D" id="SphereShape3D_j23h2"]
 radius = 1.0
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=911525733]
 collision_layer = 16
 script = ExtResource("1_3qydi")
 
-[node name="DashDuringParry" type="Node" parent="."]
+[node name="DashDuringParry" type="Node" parent="." unique_id=2044120655]
 process_mode = 2
 script = ExtResource("2_j23h2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=295680500]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_j23h2")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=1980348519]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=113833752]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 fov = 90.0
 near = 0.001
 
-[node name="LeftHand" parent="Head/Camera3D" instance=ExtResource("2_0j2ni")]
+[node name="LeftHand" parent="Head/Camera3D" unique_id=1545417751 instance=ExtResource("2_0j2ni")]
 transform = Transform3D(0.326164, -0.00612869, 0.945293, 0.164646, 0.985063, -0.0504229, -0.930865, 0.172085, 0.322301, -0.148382, -0.0922889, -0.0639829)
 
-[node name="RightHand" parent="Head/Camera3D" instance=ExtResource("2_s1rgi")]
+[node name="RightHand" parent="Head/Camera3D" unique_id=938471039 instance=ExtResource("2_s1rgi")]
 transform = Transform3D(0.25111, 0.0219693, -0.967709, -0.0871557, 0.996195, 0, 0.964027, 0.0843414, 0.252069, 0.06, -0.07, -0.15)
 
-[node name="AimRay" type="RayCast3D" parent="Head/Camera3D"]
+[node name="AimRay" type="RayCast3D" parent="Head/Camera3D" unique_id=316797807]
 visible = false
 target_position = Vector3(0, 0, -400)
 collision_mask = 5
 collide_with_areas = true
 
-[node name="PunchRay" type="RayCast3D" parent="Head/Camera3D"]
+[node name="PunchRay" type="RayCast3D" parent="Head/Camera3D" unique_id=1695598870]
 visible = false
 target_position = Vector3(0, 0, -6)
 collision_mask = 261
 collide_with_areas = true
 
-[node name="Hurtbox" type="Area3D" parent="."]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=584833071]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 0
 collision_mask = 2
 
-[node name="Standing" type="CollisionShape3D" parent="Hurtbox"]
+[node name="Standing" type="CollisionShape3D" parent="Hurtbox" unique_id=765423077]
 shape = SubResource("CylinderShape3D_3qydi")
 
-[node name="Sliding" type="CollisionShape3D" parent="Hurtbox"]
+[node name="Sliding" type="CollisionShape3D" parent="Hurtbox" unique_id=1905439927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 shape = SubResource("CylinderShape3D_6ysni")
 disabled = true
 
-[node name="HealDetection" type="Area3D" parent="."]
+[node name="HealDetection" type="Area3D" parent="." unique_id=472807011]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 0
 collision_mask = 512
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HealDetection"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HealDetection" unique_id=957220024]
 shape = SubResource("SphereShape3D_j23h2")
 
-[node name="FrontOfBodyPivot" type="Node3D" parent="."]
+[node name="FrontOfBodyPivot" type="Node3D" parent="." unique_id=350288118]
 
-[node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot"]
+[node name="FrontOfBody" type="Node3D" parent="FrontOfBodyPivot" unique_id=1972233918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="FrontOfBody2" type="Node3D" parent="FrontOfBodyPivot"]
+[node name="FrontOfBody2" type="Node3D" parent="FrontOfBodyPivot" unique_id=913801023]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
 
-[node name="SecondPivot" type="Node3D" parent="FrontOfBodyPivot"]
+[node name="SecondPivot" type="Node3D" parent="FrontOfBodyPivot" unique_id=457571224]
 
-[node name="DistanceFromFloor" type="RayCast3D" parent="."]
+[node name="DistanceFromFloor" type="RayCast3D" parent="." unique_id=653154869]
 target_position = Vector3(0, -100, 0)
 
-[node name="PlayerGUI" parent="." instance=ExtResource("2_q3lat")]
+[node name="PlayerGUI" parent="." unique_id=1643865386 instance=ExtResource("2_q3lat")]
 mouse_filter = 2
 
-[node name="LandingSFX" type="AudioStreamPlayer" parent="."]
+[node name="LandingSFX" type="AudioStreamPlayer" parent="." unique_id=847680020]
 stream = ExtResource("3_tok1r")
 volume_db = -10.0
 max_polyphony = 3
 
-[node name="JumpSFX" type="AudioStreamPlayer" parent="."]
+[node name="JumpSFX" type="AudioStreamPlayer" parent="." unique_id=513059077]
 stream = ExtResource("6_6ysni")
 volume_db = -6.0
 
-[node name="SlideSFX" type="AudioStreamPlayer" parent="."]
+[node name="SlideSFX" type="AudioStreamPlayer" parent="." unique_id=817419729]
 stream = ExtResource("7_vlldt")
 volume_db = -7.0
 
-[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+[node name="DashSFX" type="AudioStreamPlayer" parent="." unique_id=1489810137]
 stream = ExtResource("9_j23h2")
 volume_db = -6.0
 pitch_scale = 1.2
 
-[node name="ResetSlideJump" type="Timer" parent="."]
+[node name="ResetSlideJump" type="Timer" parent="." unique_id=338959224]
 wait_time = 0.2
 one_shot = true
 
-[node name="ResetSlamTime" type="Timer" parent="."]
+[node name="ResetSlamTime" type="Timer" parent="." unique_id=1375792183]
 wait_time = 0.2
 one_shot = true
 
-[node name="Damaged" type="ColorRect" parent="."]
+[node name="Damaged" type="ColorRect" parent="." unique_id=1613603324]
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(1, 0, 0, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bhxminkcndok7"]
+[gd_scene format=3 uid="uid://bhxminkcndok7"]
 
 [ext_resource type="Script" uid="uid://dmkond4ke71k3" path="res://GroundSwordSlash.gd" id="1_42anq"]
 [ext_resource type="Script" uid="uid://bvhgjin7bhwg0" path="res://Knockback.gd" id="2_y4h30"]
@@ -75,106 +75,103 @@ _data = {
 &"swing": SubResource("Animation_y4h30")
 }
 
-[node name="GroundSwordSlash" type="Node3D"]
+[node name="GroundSwordSlash" type="Node3D" unique_id=390074244]
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
 script = ExtResource("1_42anq")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." unique_id=710942642]
 collision_layer = 2
 collision_mask = 8
 script = ExtResource("2_y4h30")
 knockback_power = 20.0
-parryable = true
 
-[node name="Hitbox" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox" type="CollisionShape3D" parent="Area3D" unique_id=1704392825]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 35)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox2" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox2" type="CollisionShape3D" parent="Area3D" unique_id=700014679]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 9.059, 1, 33.807)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox3" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox3" type="CollisionShape3D" parent="Area3D" unique_id=1440836875]
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -9.059, 1, 33.807)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox4" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox4" type="CollisionShape3D" parent="Area3D" unique_id=1825629540]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 17.5, 1, 30.311)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox5" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox5" type="CollisionShape3D" parent="Area3D" unique_id=662174827]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -17.5, 1, 30.311)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox6" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox6" type="CollisionShape3D" parent="Area3D" unique_id=1142210894]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 24.749, 1, 24.749)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Hitbox7" type="CollisionShape3D" parent="Area3D"]
+[node name="Hitbox7" type="CollisionShape3D" parent="Area3D" unique_id=2091761730]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -24.749, 1, 24.749)
 visible = false
 shape = SubResource("BoxShape3D_y4h30")
 disabled = true
 
-[node name="Meshes" type="Node3D" parent="."]
+[node name="Meshes" type="Node3D" parent="." unique_id=1584896810]
 
-[node name="Mesh" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh" type="MeshInstance3D" parent="Meshes" unique_id=1719405407]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 35)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh2" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh2" type="MeshInstance3D" parent="Meshes" unique_id=337758294]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 9.059, 0, 33.807)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh3" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh3" type="MeshInstance3D" parent="Meshes" unique_id=951046670]
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -9.059, 0, 33.807)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh4" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh4" type="MeshInstance3D" parent="Meshes" unique_id=1170623299]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 17.5, 0, 30.311)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh5" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh5" type="MeshInstance3D" parent="Meshes" unique_id=631405764]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -17.5, 0, 30.311)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh6" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh6" type="MeshInstance3D" parent="Meshes" unique_id=851102026]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 24.749, 0, 24.749)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Mesh7" type="MeshInstance3D" parent="Meshes"]
+[node name="Mesh7" type="MeshInstance3D" parent="Meshes" unique_id=1548380723]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -24.749, 0, 24.749)
 mesh = SubResource("BoxMesh_y4h30")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y4h30")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_f6deo")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=455353175]
+libraries/ = SubResource("AnimationLibrary_f6deo")
 
 [connection signal="animation_finished" from="Animation" to="." method="attack"]

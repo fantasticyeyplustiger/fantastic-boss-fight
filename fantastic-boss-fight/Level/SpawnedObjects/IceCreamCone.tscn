@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cpmqgdsynm3d8"]
+[gd_scene format=3 uid="uid://cpmqgdsynm3d8"]
 
 [ext_resource type="ArrayMesh" uid="uid://c5rntv2ar8bgq" path="res://Boss/BossOBJ/IceCreamCone.obj" id="1_ci0rk"]
 [ext_resource type="Texture2D" uid="uid://daydynn6s5wfd" path="res://ParticleTextures/Flash.png" id="2_df0p0"]
@@ -201,18 +201,18 @@ _data = {
 &"appear": SubResource("Animation_wbqxm")
 }
 
-[node name="IceCreamCone" type="MeshInstance3D"]
+[node name="IceCreamCone" type="MeshInstance3D" unique_id=216224411]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 mesh = ExtResource("1_ci0rk")
 surface_material_override/0 = SubResource("StandardMaterial3D_ci0rk")
 script = ExtResource("2_wbqxm")
 
-[node name="ConeCap" type="MeshInstance3D" parent="."]
+[node name="ConeCap" type="MeshInstance3D" parent="." unique_id=525366026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 mesh = SubResource("CylinderMesh_px67a")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlbve")
 
-[node name="Twinkle" type="GPUParticles3D" parent="."]
+[node name="Twinkle" type="GPUParticles3D" parent="." unique_id=1607158751]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.766667, 0)
 emitting = false
 amount = 1
@@ -221,7 +221,7 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_px67a")
 draw_pass_1 = SubResource("QuadMesh_muj7o")
 
-[node name="Sparks" type="GPUParticles3D" parent="."]
+[node name="Sparks" type="GPUParticles3D" parent="." unique_id=1416832106]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 emitting = false
 amount = 20
@@ -232,9 +232,7 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_gxpvo")
 draw_pass_1 = SubResource("QuadMesh_eieo0")
 
-[node name="Animation" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_tlbve")
-}
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=836723149]
+libraries/ = SubResource("AnimationLibrary_tlbve")
 
 [connection signal="finished" from="Twinkle" to="." method="attack"]
